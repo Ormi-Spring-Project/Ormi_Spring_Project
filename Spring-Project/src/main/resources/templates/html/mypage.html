@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/signupstyles.css">
+    <link rel="stylesheet" href="../css/mypagestyles.css">
 </head>
 <body>
 <header>
@@ -30,13 +30,19 @@
     <div class="login_icon"><img src="../images/login_icon.png"/></div>
 
     <div class="signup-container">
-        <h2>Sign Up</h2>
+        <h2>My page</h2>
         <form>
             <div class="input-group">
                 <div class="icon-wrapper">
-                    <img src="../images/mail_icon.png"/>
+                    <img src="../images/mail_icon.png" alt="Email icon"/>
                 </div>
                 <input type="email" placeholder="Input your [email]" required>
+            </div>
+            <div class="input-group">
+                <div class="icon-wrapper">
+                    <img src="../images/password_icon.png" alt="Password icon"/>
+                </div>
+                <input type="password" placeholder="Input your [password]" required>
             </div>
             <div class="input-group">
                 <div class="icon-wrapper">
@@ -46,23 +52,20 @@
             </div>
             <div class="input-group">
                 <div class="icon-wrapper">
-                    <img src="../images/password_icon.png"/>
-                </div>
-                <input type="password" placeholder="Input your [password]" required>
-            </div>
-            <div class="input-group">
-                <div class="icon-wrapper">
-                    <img src="../images/password_icon.png"/>
-                </div>
-                <input type="password" placeholder="Input your [password confirm]" required>
-            </div>
-            <div class="input-group">
-                <div class="icon-wrapper">
                     <img src="../images/phone-icon.png" alt="Phone icon">
                 </div>
                 <input type="tel" placeholder="Input your [phone number]" required>
             </div>
-            <button type="submit" class="signup-btn">Sign Up</button>
+            <div class="input-group">
+                <div class="icon-wrapper">
+                    <img src="../images/authority-icon.png" alt="Authority icon">
+                </div>
+                <input type="text" placeholder="confirm your [authority]" required>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="modify-btn">Modify</button>
+                <button type="button" class="delete-btn">Delete Account</button>
+            </div>
         </form>
     </div>
 </main>
