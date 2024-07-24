@@ -1,5 +1,4 @@
-네, 이해했습니다. 버튼과 로고 스타일을 주어진 CSS와 동일하게 적용하겠습니다. 여기 수정된 CSS 코드입니다:
-cssCopyhtml, body {
+html, body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -54,8 +53,6 @@ main {
     background-color: #fff;
     padding: 20px;
     margin: 0 300px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 h2 {
@@ -85,7 +82,6 @@ h2 {
     width: 100%;
     padding: 10px 10px 10px 35px;
     border: none;
-    border-bottom: 1px solid #ddd;
     box-sizing: border-box;
 }
 
