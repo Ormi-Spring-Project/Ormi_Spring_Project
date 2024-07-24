@@ -1,0 +1,146 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+footer {
+    background-color: #EFF0F3;
+    flex-shrink: 0;
+}
+
+/* 기존 footer 관련 스타일은 유지 */
+
+.footer-container {
+    /* 기존 스타일 유지 */
+    padding: 20px 20px 0; /* 하단 패딩 제거 */
+}
+
+/* 마지막 요소의 마진 제거 */
+.footer-container li:last-child,
+.footer-container p:last-child {
+    margin-bottom: 0;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+
+.login_icon {
+    text-align: center;
+    margin-top : 100px;
+}
+
+.login_icon img {
+    max-width: 200px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.go-back {
+    display: inline-block;
+    background-color: #CD31AB; /* 밝은 분홍색 */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px; /* 완전한 타원형을 만들기 위해 큰 값 사용 */
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    top: 200px;
+    left: 50px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* 약간의 그림자 효과 */
+}
+
+nav a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+.go-back {
+    display: inline-block;
+    background-color: #CD31AB;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+.signin-container {
+    background-color: #fff;
+    padding: 20px;
+    margin: 0 300px 0 300px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.user-icon {
+    text-align: center;
+    font-size: 80px;
+    color: #CD31AB;
+    margin-bottom: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+input {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.signin-btn {
+    width: 80%; /* 버튼 너비를 줄임 */
+    max-width: 300px; /* 최대 너비 설정 */
+    padding: 10px;
+    background-color: #CD31AB;
+    color: white;
+    border: none;
+    border-radius: 25px; /* 더 둥근 모서리 */
+    cursor: pointer;
+    font-size: 16px;
+    display: block; /* 블록 레벨 요소로 변경 */
+    /* 좌우 마진을 auto로 설정하여 중앙 정렬 */
+    margin: 20px auto 0;
+}
+
