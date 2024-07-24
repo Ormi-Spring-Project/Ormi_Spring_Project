@@ -144,3 +144,17 @@ input {
     margin: 20px auto 0;
 }
 
+.mail-icon,
+.password-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.mail-icon img,
+.password-icon img {
+    width: 20px; /* 아이콘 너비 */
+    height: auto; /* 비율 유지 */
+}
