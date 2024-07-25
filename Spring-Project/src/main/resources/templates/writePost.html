@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/editPost.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" th:href="@{/css/writePost.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
     <title>Your App? My App! YAMA - 게시글 작성</title>
 </head>
 <body>
 <header>
     <div class="header-container">
         <div class="logo">
-            <img src="../images/yama_logo.png" alt="YAMA Logo">
+            <img src="/images/yama_logo.png" alt="YAMA Logo">
         </div>
         <nav>
             <ul>
@@ -28,8 +28,8 @@
     </div>
     <section class="post-container">
         <div class="icon">
-            <img class="icon-img" src="../images/img-place-holder.png">
-            <button class="icon-img-add-button">Edit Icon</button>
+            <img class="icon-img" src="/images/img-place-holder.png">
+            <button class="icon-img-add-button">Add Icon</button>
         </div>
         <form class="input">
             <input class="input-title input-img" type="text" placeholder="Input your [title]">
@@ -45,14 +45,14 @@
             <textarea placeholder="사용해 본 Application에 대한 후기를 남겨주세요!"></textarea>
         </form>
         <div class="back-button-container">
-            <button class="back-button">Edit</button>
+            <button class="back-button">Post</button>
         </div>
     </section>
 </main>
 <footer>
     <div class="footer-container">
         <div class="footer-logo">
-            <img src="../images/yama_logo.png" alt="YAMA Logo">
+            <img src="/images/yama_logo.png" alt="YAMA Logo">
         </div>
         <div class="footer-info">
             <div class="footer-contact">

@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YAMA - Your App? My App!</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/signupstyles.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/mypagestyles.css}">
 </head>
 <body>
 <header>
     <div class="header-container">
         <div class="logo">
-            <img src="../images/yama_logo.png" alt="YAMA Logo">
+            <img src="/images/yama_logo.png" alt="YAMA Logo">
         </div>
         <nav>
             <ul>
@@ -27,42 +27,45 @@
 
 <main>
     <a href="#" class="go-back">Go To Back</a>
-    <div class="login_icon"><img src="../images/login_icon.png"/></div>
+    <div class="login_icon"><img src="/images/login_icon.png"/></div>
 
     <div class="signup-container">
-        <h2>Sign Up</h2>
+        <h2>My page</h2>
         <form>
             <div class="input-group">
                 <div class="icon-wrapper">
-                    <img src="../images/mail_icon.png"/>
+                    <img src="/images/mail_icon.png" alt="Email icon"/>
                 </div>
                 <input type="email" placeholder="Input your [email]" required>
             </div>
             <div class="input-group">
                 <div class="icon-wrapper">
-                    <img src="../images/nickname-icon.png" alt="Nickname icon">
-                </div>
-                <input type="text" placeholder="Input your [nickname]" required>
-            </div>
-            <div class="input-group">
-                <div class="icon-wrapper">
-                    <img src="../images/password_icon.png"/>
+                    <img src="/images/password_icon.png" alt="Password icon"/>
                 </div>
                 <input type="password" placeholder="Input your [password]" required>
             </div>
             <div class="input-group">
                 <div class="icon-wrapper">
-                    <img src="../images/password_icon.png"/>
+                    <img src="/images/nickname-icon.png" alt="Nickname icon">
                 </div>
-                <input type="password" placeholder="Input your [password confirm]" required>
+                <input type="text" placeholder="Input your [nickname]" required>
             </div>
             <div class="input-group">
                 <div class="icon-wrapper">
-                    <img src="../images/phone-icon.png" alt="Phone icon">
+                    <img src="/images/phone-icon.png" alt="Phone icon">
                 </div>
                 <input type="tel" placeholder="Input your [phone number]" required>
             </div>
-            <button type="submit" class="signup-btn">Sign Up</button>
+            <div class="input-group">
+                <div class="icon-wrapper">
+                    <img src="/images/authority-icon.png" alt="Authority icon">
+                </div>
+                <input type="text" placeholder="confirm your [authority]" required>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="modify-btn">Modify</button>
+                <button type="button" class="delete-btn">Delete Account</button>
+            </div>
         </form>
     </div>
 </main>
@@ -70,7 +73,7 @@
 <footer>
     <div class="footer-container">
         <div class="footer-logo">
-            <img src="../images/yama_logo.png" alt="YAMA Logo">
+            <img src="/images/yama_logo.png" alt="YAMA Logo">
         </div>
         <div class="footer-info">
             <div class="footer-contact">
