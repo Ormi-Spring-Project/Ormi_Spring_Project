@@ -17,8 +17,11 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Admin</a></li>
-                <li><a th:href="@{/v1/signup}">Sign Up</a></li>
+                <li th:if="${userDTO != null and userDTO.getAuthority().name() != 'BANNED'}">
+                    <a th:if="${userDTO.getAuthority().name() == 'USER'}" th:href="@{/v1/user/{id}(id=${userDTO.getId()})}">My Page</a>
+                    <a th:if="${userDTO.getAuthority().name() == 'ADMIN'}" th:href="@{/v1/admin}">Admin</a>
+                </li>
+                <li><a th:if="${userDTO == null}" th:href="@{/v1/signup}">Sign Up</a></li>
                 <li th:if="${userDTO == null}"><a th:href="@{/v1/login}">Log In</a></li>
                 <li th:if="${userDTO != null}"><a th:href="@{/v1/logout}" onclick="logoutMessage()">Log Out</a></li>
             </ul>
