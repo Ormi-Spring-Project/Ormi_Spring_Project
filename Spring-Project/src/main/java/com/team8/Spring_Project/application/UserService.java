@@ -1,6 +1,7 @@
 package com.team8.Spring_Project.application;
 
 import com.team8.Spring_Project.application.dto.UserDTO;
+import com.team8.Spring_Project.domain.Authority;
 import com.team8.Spring_Project.domain.User;
 import com.team8.Spring_Project.infrastructure.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,18 @@ public class UserService {
             return null;
         }
 
+        return userDTO;
+    }
+
+    public UserDTO signUp(UserDTO userDTO) {
+        User user = userRepository.findByEmail(userDTO.getEmail());
+
+        if (user != null) {
+            return null;
+        }
+
+        userDTO.setAuthority(Authority.USER);
+        userRepository.save(userDTO.toEntity());
         return userDTO;
     }
 }

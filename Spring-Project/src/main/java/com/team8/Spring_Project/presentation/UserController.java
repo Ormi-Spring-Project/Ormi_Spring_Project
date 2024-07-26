@@ -27,9 +27,25 @@ public class UserController {
         return "main";
     }
 
+    @GetMapping("/signup")
+    public String getSignUpPage(Model model) {
+        model.addAttribute("userDTO", new UserDTO());
+        return "signup";
+    }
+
+    @PostMapping("/signup")
+    public String signUp(@ModelAttribute UserDTO userDTO) {
+        userDTO = userService.signUp(userDTO);
+        System.out.println("새로운 유저 정보: " + userDTO);
+        if (userDTO == null) {
+            return "redirect:signup";
+        }
+        return "redirect:main";
+    }
+
     @GetMapping("/login")
     public String getLoginPage(Model model) {
-        model.addAttribute("userDTO", new UserDTO());
+
         return "signin";
     }
 

@@ -6,7 +6,7 @@ spring:
     name: yama
 
   datasource:
-    url: jdbc:mysql://localhost:3306/bookstore
+    url: jdbc:mysql://localhost:3306/yama
     username: root
     password: '0000'
     driver-class-name: com.mysql.cj.jdbc.Driver
