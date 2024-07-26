@@ -3,6 +3,8 @@ package com.team8.Spring_Project.presentation;
 import com.team8.Spring_Project.application.UserService;
 import com.team8.Spring_Project.application.dto.UserDTO;
 import com.team8.Spring_Project.domain.User;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 @Controller
 @RequestMapping("/v1")
@@ -23,7 +27,16 @@ public class UserController {
     }
 
     @GetMapping("/main")
-    public String getMainPage() {
+    public String getMainPage(Model model, HttpSession session) {
+
+        Object object = session.getAttribute("login");
+
+        if (object == null) {
+            return "main";
+        }
+
+        UserDTO userDTO = (UserDTO) object;
+        model.addAttribute(userDTO);
         return "main";
     }
 
@@ -45,17 +58,27 @@ public class UserController {
 
     @GetMapping("/login")
     public String getLoginPage(Model model) {
-
+        model.addAttribute("userDTO", new UserDTO());
         return "signin";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute UserDTO userDTO) {
+    public String login(@ModelAttribute UserDTO userDTO, Model model, HttpServletRequest request) {
         userDTO = userService.login(userDTO);
+        HttpSession session = request.getSession();
         if (userDTO == null) {
             return "redirect:login";
         }
+
+        session.setAttribute("login", userDTO);
+        model.addAttribute("userDTO", userDTO);
         return "redirect:main";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return "main";
     }
 
 }
