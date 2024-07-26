@@ -67,7 +67,7 @@ public class UserController {
         userDTO = userService.login(userDTO);
         HttpSession session = request.getSession();
         if (userDTO == null) {
-            return "redirect:login";
+            return "signin";
         }
 
         session.setAttribute("login", userDTO);
@@ -78,7 +78,7 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();
-        return "main";
+        return "redirect:main";
     }
 
 }
