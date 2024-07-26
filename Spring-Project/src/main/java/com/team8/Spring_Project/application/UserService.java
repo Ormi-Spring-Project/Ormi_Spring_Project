@@ -28,7 +28,7 @@ public class UserService {
             return null;
         }
 
-        return userDTO;
+        return userDTO.fromEntity(user);
     }
 
     public UserDTO signUp(UserDTO userDTO) {
@@ -41,5 +41,13 @@ public class UserService {
         userDTO.setAuthority(Authority.USER);
         userRepository.save(userDTO.toEntity());
         return userDTO;
+    }
+
+    public UserDTO findUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 id를 가진 User가 존재하지 않습니다."));
+
+        UserDTO userDTO = new UserDTO();
+        return userDTO.fromEntity(user);
     }
 }

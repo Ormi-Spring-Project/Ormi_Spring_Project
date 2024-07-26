@@ -2,6 +2,7 @@ package com.team8.Spring_Project.presentation;
 
 import com.team8.Spring_Project.application.UserService;
 import com.team8.Spring_Project.application.dto.UserDTO;
+import com.team8.Spring_Project.domain.Authority;
 import com.team8.Spring_Project.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -22,21 +23,23 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, HttpServletRequest request) {
         this.userService = userService;
     }
 
     @GetMapping("/main")
-    public String getMainPage(Model model, HttpSession session) {
+    public String getMainPage(Model model, HttpServletRequest request) {
 
-        Object object = session.getAttribute("login");
+        HttpSession session = request.getSession();
+        UserDTO userDTO  = (UserDTO) session.getAttribute("login");
 
-        if (object == null) {
+        if (userDTO == null) {
+            System.out.println("비어있는데용~");
+            model.addAttribute("userDTO", null);
             return "main";
         }
 
-        UserDTO userDTO = (UserDTO) object;
-        model.addAttribute(userDTO);
+        model.addAttribute("userDTO", userDTO);
         return "main";
     }
 
@@ -63,15 +66,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute UserDTO userDTO, Model model, HttpServletRequest request) {
-        userDTO = userService.login(userDTO);
-        HttpSession session = request.getSession();
-        if (userDTO == null) {
-            return "signin";
+    public String login(@ModelAttribute UserDTO userDTO, HttpServletRequest request) {
+        UserDTO loginedUserDTO = userService.login(userDTO);
+
+        if (loginedUserDTO == null) {
+            return "redirect:login";
         }
 
-        session.setAttribute("login", userDTO);
-        model.addAttribute("userDTO", userDTO);
+        HttpSession session = request.getSession();
+        session.setAttribute("login", loginedUserDTO);
+
         return "redirect:main";
     }
 
@@ -79,6 +83,24 @@ public class UserController {
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:main";
+    }
+
+    @GetMapping("/user/{id}")
+    public String getMyPage(@PathVariable("id") Long id, Model model) {
+        UserDTO userDTO = userService.findUser(id);
+        model.addAttribute("userDTO", userDTO);
+        return "mypage";
+    }
+
+    @GetMapping("/admin")
+    public String getAdminPage(HttpSession httpSession) {
+        UserDTO userDTO = (UserDTO) httpSession.getAttribute("login");
+
+        if (userDTO.getAuthority() != Authority.ADMIN) {
+            return "redirect:main";
+        }
+
+        return "admin";
     }
 
 }
