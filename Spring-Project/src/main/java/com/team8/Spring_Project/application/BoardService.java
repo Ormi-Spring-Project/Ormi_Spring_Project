@@ -11,6 +11,7 @@ import com.team8.Spring_Project.domain.User;
 import com.team8.Spring_Project.infrastructure.persistence.CategoryRepository;
 import com.team8.Spring_Project.infrastructure.persistence.UserRepository;
 import com.team8.Spring_Project.presentation.PostController;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,23 @@ public class BoardService {
         boardList.addAll(postList);
 
         return boardList;
+    }
+
+    @Transactional
+    public BoardDto getBoardById(Long id) {
+
+        // 분기로 나눠서 null값에 따라 처리하는게 맞나 싶다.
+        PostDto postDto = postService.getPostById(id);
+        if(postDto != null) {
+            return convertPostToBoardDto(postDto.toEntity(userRepository, categoryRepository));
+        }
+
+        NoticeDto noticeDto = noticeService.getNoticeById(id);
+        if(noticeDto != null) {
+            return convertNoticeToBoardDto(noticeDto.toEntity(userRepository));
+        }
+
+        throw new EntityNotFoundException("해당 id의 데이터가 없습니다. id : " + id);
     }
 
     @Transactional
@@ -161,6 +179,7 @@ public class BoardService {
     private BoardDto convertPostToBoardDto(Post post) {
 
         return BoardDto.builder()
+                .id(post.getId()) // 상세보기를 위한 BoardDto id 필드 추가에 따른 id 변환
                 .title(post.getTitle())
                 //.userId(post.getUser().getId()) // 이게 필요한 건가?
                 //.authority(post.getUser().getAuthority())
@@ -178,6 +197,7 @@ public class BoardService {
     private BoardDto convertNoticeToBoardDto(Notice notice) {
 
         return BoardDto.builder()
+                .id(notice.getId()) // 상세보기를 위한 BoardDto id 필드 추가에 따른 id 변환
                 .title(notice.getTitle())
                 //.userId(notice.getUser().getId()) // 이게 필요한 건가?
                 //.authority(notice.getUser().getAuthority())

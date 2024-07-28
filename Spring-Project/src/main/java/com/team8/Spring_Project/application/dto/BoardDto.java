@@ -17,6 +17,9 @@ import java.sql.Timestamp;
 
 public class BoardDto {
 
+    // 상세보기를 위한 BoardDto id 필드 추가.
+    private Long id;
+
     private String authorName;
 
     private String title;

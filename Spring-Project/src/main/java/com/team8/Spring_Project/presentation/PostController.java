@@ -3,6 +3,7 @@ package com.team8.Spring_Project.presentation;
 import com.team8.Spring_Project.application.BoardService;
 import com.team8.Spring_Project.application.CategoryService;
 import com.team8.Spring_Project.application.dto.BoardDto;
+import com.team8.Spring_Project.application.dto.PostDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,19 @@ public class PostController {
         logger.info("Number of boards retrieved: {}", boards.size());
         return "categoryPost";
     }
+
+    // 게시글 상세보기 요청
+    @GetMapping("/{id}")
+    public String getPost(@PathVariable("id") Long id,
+                          Model model,
+                          @ModelAttribute("post") PostDto postDto) {
+
+        BoardDto board = boardService.getBoardById(id);
+        model.addAttribute("board", board);
+
+        return "viewPost";
+    }
+
 
     // 게시글 작성 페이지 요청
     @GetMapping("/write")
