@@ -31,9 +31,7 @@
             <button class="back-button" th:onclick="|location.href='@{main} '|">Go To Back</button>
         </div>
 
-
         <p class="category-title">Business</p>
-
 
         <div class="category-list-container">
             <select class="category-list">
@@ -57,20 +55,18 @@
             <tbody>
             <tr th:each="board : ${boards}">
                 <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
-                <td th:text="${board.title}">공지사항</td>
+                <td>
+                    <a th:href="@{/v1/posts/{id}(id=${board.id})}" th:text="${board.title}"></a>
+                </td>
                 <td th:text="${board.authorName}">관리자</td>
                 <td th:text="${board.createdAt}">2024-07-24</td>
             </tr>
             <tr>
-                <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
-                <td>공지사항</td>
-                <td>관리자</td>
-                <td>2024-07-20</td>
             </tr>
             </tbody>
         </table>
 
-        <button onclick="location.href='/v1/posts/write'">글쓰기 버튼</button>
+        <button th:onclick="|location.href='@{/v1/posts/write}'|">글쓰기 버튼</button>
 
 
     </main>
