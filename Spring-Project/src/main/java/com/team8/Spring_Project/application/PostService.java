@@ -37,6 +37,14 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    // 일반 게시글 상세보기
+    @Transactional(readOnly = true)
+    public PostDto getPostById(Long id) {
+        return postRepository.findById(id)
+                .map(PostDto::fromEntity)
+                .orElse(null);
+    }
+
 
     @Transactional
     // 게시글 작성

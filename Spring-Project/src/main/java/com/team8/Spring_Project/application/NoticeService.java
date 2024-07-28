@@ -30,6 +30,14 @@ public class NoticeService {
                 .collect(Collectors.toList());
     }
 
+    // 공지사항 상세보기
+    @Transactional(readOnly = true)
+    public NoticeDto getNoticeById(Long id) {
+        return noticeRepository.findById(id)
+                .map(NoticeDto::fromEntity)
+                .orElse(null);
+    }
+
     @Transactional
     public void createNotice(NoticeDto noticeDto) {
         Notice notice = noticeDto.toEntity(userRepository);
