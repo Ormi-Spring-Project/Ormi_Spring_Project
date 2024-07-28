@@ -7,9 +7,7 @@ import com.team8.Spring_Project.infrastructure.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +28,13 @@ public class NoticeService {
         return noticeRepository.findAll().stream()
                 .map(NoticeDto::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void createNotice(NoticeDto noticeDto) {
+        Notice notice = noticeDto.toEntity(userRepository);
+        Notice createNotice = noticeRepository.save(notice);
+        //return NoticeDto.fromEntity(createNotice);
     }
 
 

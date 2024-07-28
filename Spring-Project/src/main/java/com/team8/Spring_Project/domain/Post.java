@@ -1,16 +1,18 @@
 package com.team8.Spring_Project.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Timestamp;
 
+@DynamicUpdate
+@DynamicInsert
 @Entity
 @Table(name = "Post")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,9 +28,6 @@ public class Post{
 
     @Column
     private String content;
-
-    @Column
-    private String tag;
 
     @Column
     private String application;
@@ -49,14 +48,12 @@ public class Post{
 
     public void update(String title,
                        String content,
-                       String tag,
                        String application,
                        Timestamp createdAt,
                        Timestamp updatedAt) {
 
         this.title = title;
         this.content = content;
-        this.tag = tag;
         this.application = application;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

@@ -1,14 +1,12 @@
 package com.team8.Spring_Project.application.dto;
 
-import ch.qos.logback.core.joran.action.TimestampAction;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.team8.Spring_Project.domain.User;
+import lombok.*;
 
 import java.sql.Timestamp;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -18,7 +16,6 @@ import java.sql.Timestamp;
   */
 
 public class BoardDto {
-    private Long id;
 
     private String authorName;
 
@@ -32,12 +29,10 @@ public class BoardDto {
 
     private String authority;
 
-    private Long userId;
+    private User user;
 
     // Post에만 해당하는 필드들
     private String application;
-
-    private String tag;
 
     private String categoryName;
 
