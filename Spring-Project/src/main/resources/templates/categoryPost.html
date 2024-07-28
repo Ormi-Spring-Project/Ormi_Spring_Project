@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>CategoryPost</title>
@@ -28,7 +28,7 @@
     <main>
 
         <div class="back-button-container">
-            <button class="back-button">Go To Back</button>
+            <button class="back-button" th:onclick="|location.href='@{main} '|">Go To Back</button>
         </div>
 
 
@@ -55,11 +55,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr th:each="board : ${boards}">
                 <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
-                <td>공지사항</td>
-                <td>관리자</td>
-                <td>2024-07-24</td>
+                <td th:text="${board.title}">공지사항</td>
+                <td th:text="${board.authorName}">관리자</td>
+                <td th:text="${board.createdAt}">2024-07-24</td>
             </tr>
             <tr>
                 <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
@@ -67,26 +67,10 @@
                 <td>관리자</td>
                 <td>2024-07-20</td>
             </tr>
-            <tr>
-                <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
-                <td>노트 앱 소개</td>
-                <td>최의현</td>
-                <td>2024-07-23</td>
-            </tr>
-            <tr>
-                <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
-                <td>그림 앱 소개</td>
-                <td>의현최</td>
-                <td>2024-07-21</td>
-            </tr>
-            <tr>
-                <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
-                <td>개발 앱 소개</td>
-                <td>스프링</td>
-                <td>2024-07-22</td>
-            </tr>
             </tbody>
         </table>
+
+        <button onclick="location.href='/v1/posts/write'">글쓰기 버튼</button>
 
 
     </main>
