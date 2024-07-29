@@ -84,4 +84,9 @@ public class UserService {
 
         return userDTO.fromEntity(user);
     }
+
+    @Transactional
+    public void deleteUser(UserDTO userDTO) {
+        userRepository.deleteUserById(userDTO.getId());
+    }
 }
