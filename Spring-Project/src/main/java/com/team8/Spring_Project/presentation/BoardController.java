@@ -32,10 +32,22 @@ public class BoardController {
     // 게시글 리스트 페이지 요청
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public String getAllPosts(Model model) {
+    public String getAllBoards(Model model, HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+
+        // 권한이 없으면 게시글 리스트를 못본다.
+        if (userDTO == null) {
+            model.addAttribute("userDTO", null);
+            return "redirect:/login";
+        }
+
+        model.addAttribute("userDTO", userDTO);
+
         List<BoardDto> boards = boardService.getAllBoards();
         model.addAttribute("boards", boards);
-        logger.info("Number of boards retrieved: {}", boards.size());
+
         return "categoryPost";
     }
 

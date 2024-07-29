@@ -3,11 +3,8 @@ package com.team8.Spring_Project.application;
 import com.team8.Spring_Project.application.dto.BoardDto;
 import com.team8.Spring_Project.application.dto.NoticeDto;
 import com.team8.Spring_Project.application.dto.PostDto;
-import com.team8.Spring_Project.application.dto.UserService;
-import com.team8.Spring_Project.domain.Category;
-import com.team8.Spring_Project.domain.Notice;
-import com.team8.Spring_Project.domain.Post;
-import com.team8.Spring_Project.domain.User;
+import com.team8.Spring_Project.application.dto.UserDTO;
+import com.team8.Spring_Project.domain.*;
 import com.team8.Spring_Project.presentation.BoardController;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -16,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.AccessDeniedException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +21,6 @@ import java.util.List;
 @Service
 public class BoardService {
 
-    // 일단 해결을 위해 Service, Repository가 과도하게 선언되어 있다.
-    // Repository -> Service로 변환하여 줄일 수 있도록 리팩토링 해야한다.
     private final PostService postService;
     private final NoticeService noticeService;
     private final CategoryService categoryService;
@@ -49,9 +45,8 @@ public class BoardService {
         // Repository 안쓰고 Service단으로 끝내면 초기화 할 객체가 줄어든다.
         List<BoardDto> noticeList = noticeService.getAllNotices().stream()
                 .map(notice -> convertNoticeToBoardDto(notice.toEntity(userService)))
-                .toList(); // 여긴 왜 그냥 toList()?
+                .toList();
 
-        // Repository 안쓰고 Service단으로 끝내면 초기화 할 객체가 줄어든다.
         List<BoardDto> postList = postService.getAllPosts().stream()
                 .map(post -> convertPostToBoardDto(post.toEntity(userService, categoryService)))
                 .toList();
@@ -163,7 +158,6 @@ public class BoardService {
         return BoardDto.builder()
                 .id(post.getId()) // 상세보기를 위한 BoardDto id 필드 추가에 따른 id 변환
                 .title(post.getTitle())
-                .authority(post.getUser().getAuthority())
                 .userId(post.getUser().getId())
                 .content(post.getContent())
                 .application(post.getApplication())
@@ -172,22 +166,24 @@ public class BoardService {
                 .authorName(post.getUser().getNickname())
                 .categoryId(post.getCategory().getId())
                 .categoryName(post.getCategory().getName())
+                .type("Post")
                 .build();
 
     }
 
     // NoticeDto -> BoardDto
+    // NoticeDto에 User에 대한 정보가 없기 때문에 notice를 parameter로 사용.
     private BoardDto convertNoticeToBoardDto(Notice notice) {
 
         return BoardDto.builder()
                 .id(notice.getId()) // 상세보기를 위한 BoardDto id 필드 추가에 따른 id 변환
                 .title(notice.getTitle())
                 .userId(notice.getUser().getId())
-                .authority(notice.getUser().getAuthority())
                 .content(notice.getContent())
                 .createdAt(notice.getCreatedAt())
                 .updatedAt(notice.getUpdatedAt())
                 .authorName(notice.getUser().getNickname())
+                .type("Notice")
                 .build();
 
     }
