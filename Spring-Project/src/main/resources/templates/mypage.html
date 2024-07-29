@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/mypagestyles.css}">
+    <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
 <header>
@@ -17,9 +18,7 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Admin</a></li>
-                <li><a href="#">Sign Up</a></li>
-                <li><a href="#">Log In</a></li>
+                <li><a th:href="@{/v1/logout}" onclick="logoutMessage()">Log Out</a></li>
             </ul>
         </nav>
     </div>
@@ -31,41 +30,46 @@
 
     <div class="signup-container">
         <h2>My page</h2>
-        <form>
+        <form th:action="@{/v1/user/{id}(id=${userDTO.getId()})}" method="post">
+            <input type="hidden" name="_method" value="put">
             <div class="input-group">
                 <div class="icon-wrapper">
                     <img src="/images/mail_icon.png" alt="Email icon"/>
                 </div>
-                <input type="email" placeholder="Input your [email]" required>
+                <input th:field="${userDTO.email}" th:value="${userDTO.getEmail()}" type="email" placeholder="Input your [email]" required>
             </div>
             <div class="input-group">
                 <div class="icon-wrapper">
                     <img src="/images/password_icon.png" alt="Password icon"/>
                 </div>
-                <input type="password" placeholder="Input your [password]" required>
+                <input th:field="${userDTO.password}" th:value="${userDTO.getPassword()}" type="password" placeholder="Input your [password]" required>
             </div>
             <div class="input-group">
                 <div class="icon-wrapper">
                     <img src="/images/nickname-icon.png" alt="Nickname icon">
                 </div>
-                <input type="text" placeholder="Input your [nickname]" required>
+                <input th:field="${userDTO.nickname}" th:value="${userDTO.getNickname()}" type="text" placeholder="Input your [nickname]" required>
             </div>
             <div class="input-group">
                 <div class="icon-wrapper">
                     <img src="/images/phone-icon.png" alt="Phone icon">
                 </div>
-                <input type="tel" placeholder="Input your [phone number]" required>
+                <input th:field="${userDTO.phoneNumber}" th:value="${userDTO.getPhoneNumber()}" type="tel" placeholder="Input your [phone number]" required>
             </div>
             <div class="input-group">
                 <div class="icon-wrapper">
                     <img src="/images/authority-icon.png" alt="Authority icon">
                 </div>
-                <input type="text" placeholder="confirm your [authority]" required>
+                <input th:field="${userDTO.authority}" th:value="${userDTO.getAuthority()}" readonly="readonly" type="text" placeholder="confirm your [authority]" required>
             </div>
             <div class="button-group">
                 <button type="submit" class="modify-btn">Modify</button>
-                <button type="button" class="delete-btn">Delete Account</button>
+<!--                <button type="button" class="delete-btn">Delete Account</button>-->
             </div>
+        </form>
+        <form th:action="@{/v1/user/{id}(id=${userDTO.getId()})}" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit" class="delete-btn">Delete Account</button>
         </form>
     </div>
 </main>

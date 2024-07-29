@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
@@ -17,9 +17,8 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#">Admin</a></li>
-                    <li><a href="#">Sign Up</a></li>
-                    <li><a href="#">Log In</a></li>
+                    <li><a href="">Admin</a></li>
+                    <li><a th:href="@{/v1/logout}">Log Out</a></li>
                 </ul>
             </nav>
         </div>
@@ -40,20 +39,23 @@
                 <th>이메일</th>
                 <th>닉네임</th>
                 <th>권한</th>
+                <th>권한 변경</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>0</td>
-                <td>sdf@naver.com</td>
-                <td>CatCat</td>
-                <td>관리자</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>sdfsdf@naver.com</td>
-                <td>DogDog</td>
-                <td>일반</td>
+            <tr th:each="user : ${userList}">
+                <td th:text="${user.getId()}"></td>
+                <td th:text="${user.getEmail()}"></td>
+                <td th:text="${user.getNickname()}"></td>
+                <td th:text="${user.getAuthority()}"></td>
+                <td>
+                    <form th:action="@{/v1/admin/{id}(id=${user.getId()})}" method="post">
+                        <input type="hidden" name="_method" value="put">
+                        <input type="hidden" name="id" th:value="${user.id}">
+                        <button type="submit" th:if="${user.getAuthority().name() == 'USER'}">BAN</button>
+                        <button type="submit" th:if="${user.getAuthority().name() == 'BANNED'}">ACTIVE</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

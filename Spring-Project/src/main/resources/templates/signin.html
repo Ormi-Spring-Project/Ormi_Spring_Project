@@ -18,9 +18,8 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Admin</a></li>
-                <li><a href="#">Sign Up</a></li>
-                <li><a href="#">Log In</a></li>
+                <li><a th:href="@{/v1/signup}">Sign Up</a></li>
+                <li><a href="">Log In</a></li>
             </ul>
         </nav>
     </div>
@@ -37,20 +36,20 @@
                 <i class="fas fa-user-circle"></i>
             </div>
             <h2>Sign In</h2>
-            <form>
+            <form th:action="@{/v1/login}" method="post">
                 <div class="input-group">
                     <div class="mail-icon">
                         <i class="mail-icon"></i><img src="/images/mail_icon.png"/>
                     </div>
                     <i class="fas fa-envelope"></i>
-                    <input type="email" placeholder="email" required>
+                    <input th:field="${userDTO.email}" type="email" placeholder="email" required>
                 </div>
                 <div class="input-group">
                     <div class="password-icon">
                         <i class="password-icon"></i><img src="/images/password_icon.png"/>
                     </div>
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="password" required>
+                    <input th:field="${userDTO.password}" type="password" placeholder="password" required>
                 </div>
                 <button type="submit" class="signin-btn">Log In</button>
             </form>
