@@ -22,6 +22,8 @@ public class NoticeDto {
 
     private Timestamp updatedAt;
 
+    private String authority;
+
     private Long userId;
 
     // 엔티티를 DTO로 변환하는 정적 메서드
@@ -38,12 +40,12 @@ public class NoticeDto {
     }
 
     // DTO를 엔티티로 변환하는 메서드
-    public Notice toEntity(UserRepository userRepository) {
+    public Notice toEntity(UserService userService) {
         return Notice.builder()
                 .id(this.id)
                 .title(this.title)
                 .content(this.content)
-                .user(userRepository.findById(this.getUserId()).orElse(null))
+                .user(userService.getUserById(this.getUserId()))
                 .createdAt(this.createdAt)
                 .updatedAt(this.updatedAt)
                 .build();

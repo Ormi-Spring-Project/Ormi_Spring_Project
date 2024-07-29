@@ -1,9 +1,10 @@
 package com.team8.Spring_Project.application;
 
 import com.team8.Spring_Project.application.dto.NoticeDto;
+import com.team8.Spring_Project.application.dto.UserService;
 import com.team8.Spring_Project.domain.Notice;
 import com.team8.Spring_Project.infrastructure.persistence.NoticeRepository;
-import com.team8.Spring_Project.infrastructure.persistence.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +15,12 @@ import java.util.stream.Collectors;
 public class NoticeService {
 
     private final NoticeRepository noticeRepository;
-    private final UserRepository userRepository; // 이거는 좀 생각해봐야함.
+    private final UserService userService; // 이거는 좀 생각해봐야함.
 
     @Autowired
-    public NoticeService(NoticeRepository noticeRepository, UserRepository userRepository) {
+    public NoticeService(NoticeRepository noticeRepository, UserService userService) {
         this.noticeRepository = noticeRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     // NoticeList 조회
@@ -40,8 +41,8 @@ public class NoticeService {
 
     @Transactional
     public void createNotice(NoticeDto noticeDto) {
-        Notice notice = noticeDto.toEntity(userRepository);
-        Notice createNotice = noticeRepository.save(notice);
+        Notice notice = noticeDto.toEntity(userService);
+        noticeRepository.save(notice);
         //return NoticeDto.fromEntity(createNotice);
     }
 
