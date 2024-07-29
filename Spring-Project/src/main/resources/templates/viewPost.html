@@ -24,13 +24,13 @@
 </header>
 <main>
     <div class="back-button-container">
-        <button th:onclick="|location.href='@{/v1/posts}'|" class="back-button">Go To Back</button>
+        <button th:onclick="|location.href='@{/v1/posts/{id}/edit(id=${board.id})}'|" class="back-button">Go To Back</button>
     </div>
     <section class="post-container">
         <h1 th:text="${board.getTitle()}"></h1>
         <div class="icon">
             <img class="icon-img" src="/images/img-place-holder.png">
-            <button class="icon-img-add-button">Edit Post</button>
+            <button th:onclick="|location.href='@{/v1/posts/{id}/edit(id=${board.id})}'|" class="icon-img-add-button">Edit Post</button>
         </div>
         <div class="user-information">
             <div>
