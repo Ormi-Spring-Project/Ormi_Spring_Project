@@ -26,28 +26,35 @@ public class NoticeService {
     // NoticeList 조회
     @Transactional(readOnly = true)
     public List<NoticeDto> getAllNotices() {
+
         return noticeRepository.findAll().stream()
                 .map(NoticeDto::fromEntity)
                 .collect(Collectors.toList());
+
     }
 
     // 공지사항 상세보기
     @Transactional(readOnly = true)
     public NoticeDto getNoticeById(Long id) {
+
         return noticeRepository.findById(id)
                 .map(NoticeDto::fromEntity)
                 .orElse(null);
+
     }
 
     @Transactional
     public void createNotice(NoticeDto noticeDto) {
+
         Notice notice = noticeDto.toEntity(userService);
         noticeRepository.save(notice);
         //return NoticeDto.fromEntity(createNotice);
+
     }
 
     @Transactional
     public void updateNotice(Long id, NoticeDto noticeDto) {
+
         Notice notice = noticeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
         notice.update(
                 noticeDto.getTitle(),

@@ -1,10 +1,7 @@
 package com.team8.Spring_Project.application.dto;
 
-import com.team8.Spring_Project.domain.Category;
+import com.team8.Spring_Project.application.CategoryService;
 import com.team8.Spring_Project.domain.Post;
-import com.team8.Spring_Project.domain.User;
-import com.team8.Spring_Project.infrastructure.persistence.CategoryRepository;
-import com.team8.Spring_Project.infrastructure.persistence.UserRepository;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -15,15 +12,15 @@ import java.sql.Timestamp;
 @Builder
 public class PostDto {
 
-    Long id;
+    private Long id;
 
-    String title;
+    private String title;
 
-    String content;
+    private String content;
 
-    String application;
+    private String application;
 
-    Timestamp createdAt;
+    private Timestamp createdAt;
 
     private Timestamp updatedAt;
 
