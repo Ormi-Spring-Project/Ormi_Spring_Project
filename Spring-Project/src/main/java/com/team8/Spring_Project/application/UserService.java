@@ -6,6 +6,10 @@ import com.team8.Spring_Project.domain.User;
 import com.team8.Spring_Project.infrastructure.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -17,6 +21,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Transactional(readOnly = true)
     public UserDTO login(UserDTO userDTO) {
         User user = userRepository.findByEmail(userDTO.getEmail());
 
@@ -43,11 +48,40 @@ public class UserService {
         return userDTO;
     }
 
+    @Transactional(readOnly = true)
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findByAuthorityNot(Authority.ADMIN);
+        List<UserDTO> userDTOList = new ArrayList<>();
+
+        for (User user : users) {
+            UserDTO userDTO = new UserDTO();
+            userDTOList.add(userDTO.fromEntity(user));
+        }
+
+        return userDTOList;
+    }
+
+    @Transactional(readOnly = true)
     public UserDTO findUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 id를 가진 User가 존재하지 않습니다."));
 
         UserDTO userDTO = new UserDTO();
+        return userDTO.fromEntity(user);
+    }
+
+    @Transactional
+    public UserDTO updateUser(UserDTO userDTO) {
+        User user = userRepository.findById(userDTO.getId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 id를 가진 User가 존재하지 않습니다."));
+
+        user.updateUser(
+                userDTO.getEmail(),
+                userDTO.getNickname(),
+                userDTO.getPassword(),
+                userDTO.getPhoneNumber()
+        );
+
         return userDTO.fromEntity(user);
     }
 }
