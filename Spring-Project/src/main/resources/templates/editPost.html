@@ -48,6 +48,11 @@
             </div>
         </form>
 
+        <form th:action="@{/v1/posts/{id}(id=${board.id})}" method="post">
+            <input type="hidden" name="_method" value="delete"/>
+            <button type="submit" class="delete-button" onclick="return confirm('정말로 이 게시글을 삭제하시겠습니까?')">Delete</button>
+        </form>
+
     </section>
 </main>
 <footer>
