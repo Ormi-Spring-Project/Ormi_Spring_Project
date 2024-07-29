@@ -48,15 +48,14 @@ public class Post{
 
     public void update(String title,
                        String content,
-                       String application,
-                       Timestamp createdAt,
-                       Timestamp updatedAt) {
+                       String application) {
+
 
         this.title = title;
         this.content = content;
         this.application = application;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.updatedAt = new Timestamp(System.currentTimeMillis());
+        this.createdAt = updatedAt;
 
     }
 

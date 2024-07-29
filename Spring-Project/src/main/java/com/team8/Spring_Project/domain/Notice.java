@@ -46,7 +46,8 @@ public class Notice{
                        String content) {
         this.title = title;
         this.content = content;
-
+        this.updatedAt = new Timestamp(System.currentTimeMillis());
+        this.createdAt = updatedAt;
     }
 
 }

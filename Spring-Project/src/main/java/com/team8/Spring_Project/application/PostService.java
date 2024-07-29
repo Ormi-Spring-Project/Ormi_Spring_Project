@@ -2,9 +2,8 @@ package com.team8.Spring_Project.application;
 
 import com.team8.Spring_Project.application.dto.PostDto;
 import com.team8.Spring_Project.domain.Post;
-import com.team8.Spring_Project.infrastructure.persistence.CategoryRepository;
 import com.team8.Spring_Project.infrastructure.persistence.PostRepository;
-import com.team8.Spring_Project.infrastructure.persistence.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +59,16 @@ public class PostService {
         log.info("Creating new updateAt: {}", post.getUpdatedAt());
         log.info("Creating new userId: {}", post.getUser().getId());
         postRepository.save(post);
+    }
+
+    @Transactional
+    public void updatePost(Long id, PostDto postDto) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
+        post.update(
+                postDto.getTitle(),
+                postDto.getContent(),
+                postDto.getApplication()
+        );
     }
 
 

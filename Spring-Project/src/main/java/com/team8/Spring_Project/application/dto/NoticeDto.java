@@ -32,6 +32,7 @@ public class NoticeDto {
                 .content(notice.getContent())
                 .createdAt(notice.getCreatedAt())
                 .updatedAt(notice.getUpdatedAt())
+                .authority(notice.getUser().getAuthority())
                 .userId(notice.getUser().getId())
                 .build();
     }

@@ -32,7 +32,7 @@ public class BoardDto {
 
     private String authority;
 
-    private User user;
+    private Long userId;
 
     // Post에만 해당하는 필드들
     private String application;
