@@ -1,6 +1,7 @@
 package com.team8.Spring_Project.application;
 
 import com.team8.Spring_Project.application.dto.PostDto;
+import com.team8.Spring_Project.application.dto.UserService;
 import com.team8.Spring_Project.domain.Post;
 import com.team8.Spring_Project.infrastructure.persistence.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,15 +18,17 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private static final Logger log = LoggerFactory.getLogger(PostService.class);
+
+    // PostService는 Post 데이터에만 접근해야한다고 생각해서 postRepository 에 의존성을 갖고, 나머지는 Repository가 아닌 Service에 의존성을 갖도록 구현.
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
-    private final CategoryRepository categoryRepository;
+    private final UserService userService;
+    private final CategoryService categoryService;
 
     @Autowired
-    public PostService(PostRepository postRepository, UserRepository userRepository, CategoryRepository categoryRepository) {
+    public PostService(PostRepository postRepository,  UserService userService, CategoryService categoryService) {
         this.postRepository = postRepository;
-        this.userRepository = userRepository;
-        this.categoryRepository = categoryRepository;
+        this.userService = userService;
+        this.categoryService = categoryService;
     }
 
     // PostList 조회
@@ -49,7 +52,7 @@ public class PostService {
     // 게시글 작성
     public void createPost(PostDto postDto) {
 
-        Post post = postDto.toEntity(userRepository, categoryRepository);
+        Post post = postDto.toEntity(userService, categoryService);
 
         log.info("Creating new id: {}", post.getId());
         log.info("Creating new title: {}", post.getTitle());

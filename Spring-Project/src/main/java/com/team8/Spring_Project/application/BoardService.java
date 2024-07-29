@@ -8,9 +8,7 @@ import com.team8.Spring_Project.domain.Category;
 import com.team8.Spring_Project.domain.Notice;
 import com.team8.Spring_Project.domain.Post;
 import com.team8.Spring_Project.domain.User;
-import com.team8.Spring_Project.infrastructure.persistence.CategoryRepository;
-import com.team8.Spring_Project.infrastructure.persistence.UserRepository;
-import com.team8.Spring_Project.presentation.PostController;
+import com.team8.Spring_Project.presentation.BoardController;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +28,6 @@ public class BoardService {
     private final PostService postService;
     private final NoticeService noticeService;
     private final CategoryService categoryService;
-    private final UserRepository userRepository;
     private final UserService userService;
     private final CategoryRepository categoryRepository;
     Logger logger = LoggerFactory.getLogger(PostController.class);
@@ -38,16 +35,12 @@ public class BoardService {
     @Autowired
     public BoardService(PostService postService,
                         NoticeService noticeService,
-                        UserRepository userRepository,
                         UserService userService,
-                        CategoryService categoryService,
-                        CategoryRepository categoryRepository) {
+                        CategoryService categoryService) {
         this.postService = postService;
         this.noticeService = noticeService;
-        this.userRepository = userRepository;
         this.userService = userService;
         this.categoryService = categoryService;
-        this.categoryRepository = categoryRepository;
     }
 
     // BoardList 조회
@@ -56,12 +49,12 @@ public class BoardService {
 
         // Repository 안쓰고 Service단으로 끝내면 초기화 할 객체가 줄어든다.
         List<BoardDto> noticeList = noticeService.getAllNotices().stream()
-                .map(notice -> convertNoticeToBoardDto(notice.toEntity(userRepository)))
+                .map(notice -> convertNoticeToBoardDto(notice.toEntity(userService)))
                 .toList(); // 여긴 왜 그냥 toList()?
 
         // Repository 안쓰고 Service단으로 끝내면 초기화 할 객체가 줄어든다.
         List<BoardDto> postList = postService.getAllPosts().stream()
-                .map(post -> convertPostToBoardDto(post.toEntity(userRepository, categoryRepository)))
+                .map(post -> convertPostToBoardDto(post.toEntity(userService, categoryService)))
                 .toList();
 
         List<BoardDto> boardList = new ArrayList<>();
@@ -83,12 +76,6 @@ public class BoardService {
             return convertNoticeToBoardDto(notice);
         }
 
-        NoticeDto noticeDto = noticeService.getNoticeById(id);
-        if(noticeDto != null) {
-            return convertNoticeToBoardDto(noticeDto.toEntity(userRepository));
-        }
-
-        throw new EntityNotFoundException("해당 id의 데이터가 없습니다. id : " + id);
     }
 
     @Transactional
@@ -97,12 +84,9 @@ public class BoardService {
         // 테스트 하기 위해서 유저 생성하는 코드
         User testUser = userService.createTestUser();
 
-        Category category = null;
-        if (boardDto.getCategoryId() != null) {
-            category = categoryService.getCategoryById(boardDto.getCategoryId());
-        }
+        Category category = categoryService.getCategoryById(boardDto.getCategoryId());
 
-        boardDto.setUser(testUser);
+        boardDto.setUserId(testUser.getId());
         boardDto.setAuthorName(testUser.getNickname());
         boardDto.setCategoryName(category.getName());
         boardDto.setCategoryId(category.getId());
@@ -110,40 +94,15 @@ public class BoardService {
         boardDto.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         boardDto.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
-        // 데이터 들어오는지 확인을 위한 로그 코드.
-        logger.info("Received BoardDto - " +
-                        "title: {}, " +
-                        "content: {}, " +
-                        "application: {}, " +
-                        "categoryId: {}, " +
-                        "categoryName: {}, " +
-                        "authorName: {}, " +
-                        "createdAt: {}, " +
-                        "updatedAt: {}, " +
-                        "authority: {}, " +
-                        "userId: {}",
-                boardDto.getTitle(),
-                boardDto.getContent(),
-                boardDto.getApplication(),
-                boardDto.getCategoryId(),
-                boardDto.getCategoryName(),
-                boardDto.getAuthorName(),
-                boardDto.getCreatedAt(),
-                boardDto.getUpdatedAt(),
-                boardDto.getAuthority(),
-                boardDto.getUser() != null ? boardDto.getUser().getId() : null);
-
         if ("USER".equals(authority)) {
 
             PostDto postDto = convertBoardDtoToPostDto(boardDto);
             postService.createPost(postDto);
-            //return convertPostToBoardDto(createdPost.toEntity(userRepository));
 
         } else if ("ADMIN".equals(authority)) {
 
             NoticeDto noticeDto = convertBoardDtoToNoticeDto(boardDto);
             noticeService.createNotice(noticeDto);
-            //return convertNoticeToBoardDto(createdNotice.toEntity(userRepository));
 
         }
 
