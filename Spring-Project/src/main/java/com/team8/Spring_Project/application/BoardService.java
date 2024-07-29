@@ -71,13 +71,16 @@ public class BoardService {
         return boardList;
     }
 
+    // 현재는 id기준으로만 상세보기 화면으로 들어가기 때문에 현재는 임의로 설정한 유저 권한이 무엇이냐에 따라 Post / Notice Entity id로 들어간다.
     @Transactional
     public BoardDto getBoardById(Long id) {
 
-        // 분기로 나눠서 null값에 따라 처리하는게 맞나 싶다.
-        PostDto postDto = postService.getPostById(id);
-        if(postDto != null) {
-            return convertPostToBoardDto(postDto.toEntity(userRepository, categoryRepository));
+        try {
+            Post post = postService.getPostById(id).toEntity(userService, categoryService);
+            return convertPostToBoardDto(post);
+        } catch (EntityNotFoundException e) {
+            Notice notice = noticeService.getNoticeById(id).toEntity(userService);
+            return convertNoticeToBoardDto(notice);
         }
 
         NoticeDto noticeDto = noticeService.getNoticeById(id);
