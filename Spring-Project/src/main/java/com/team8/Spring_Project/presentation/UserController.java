@@ -3,18 +3,14 @@ package com.team8.Spring_Project.presentation;
 import com.team8.Spring_Project.application.UserService;
 import com.team8.Spring_Project.application.dto.UserDTO;
 import com.team8.Spring_Project.domain.Authority;
-import com.team8.Spring_Project.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/v1")
@@ -23,7 +19,7 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    public UserController(UserService userService, HttpServletRequest request) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -34,7 +30,6 @@ public class UserController {
         UserDTO userDTO  = (UserDTO) session.getAttribute("login");
 
         if (userDTO == null) {
-            System.out.println("비어있는데용~");
             model.addAttribute("userDTO", null);
             return "main";
         }
@@ -92,13 +87,22 @@ public class UserController {
         return "mypage";
     }
 
+    @PutMapping("/user/{id}")
+    public String updateMyInformation(@ModelAttribute UserDTO userDTO) {
+        userService.updateUser(userDTO);
+        return "redirect:" + userDTO.getId();
+    }
+
     @GetMapping("/admin")
-    public String getAdminPage(HttpSession httpSession) {
+    public String getAdminPage(HttpSession httpSession, Model model) {
         UserDTO userDTO = (UserDTO) httpSession.getAttribute("login");
 
         if (userDTO.getAuthority() != Authority.ADMIN) {
             return "redirect:main";
         }
+
+        List<UserDTO> userDTOList = userService.getAllUsers();
+        model.addAttribute("userList", userDTOList);
 
         return "admin";
     }
