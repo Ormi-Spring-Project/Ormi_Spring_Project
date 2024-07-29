@@ -123,6 +123,13 @@ public class BoardService {
 
     }
 
+    @Transactional
+    public void deleteBoard(Long id) {
+
+        postService.deletePost(id);
+
+    }
+
     // 아래의 메서드들은 Dto로 옮길 필요가 있다?
     // boardDto -> PostDto
     private PostDto convertBoardDtoToPostDto(BoardDto boardDto) {

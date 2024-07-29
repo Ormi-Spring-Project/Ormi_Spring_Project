@@ -56,6 +56,16 @@ public class NoticeService {
 
     }
 
+    @Transactional
+    public void deleteNotice(Long id) {
+
+        Notice notice = noticeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다: " + id));
+
+        noticeRepository.delete(notice);
+
+    }
+
 
 
 }
