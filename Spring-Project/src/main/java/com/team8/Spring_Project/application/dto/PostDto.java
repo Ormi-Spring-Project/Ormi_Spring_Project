@@ -25,7 +25,9 @@ public class PostDto {
 
     Timestamp createdAt;
 
-    Timestamp updatedAt;
+    private Timestamp updatedAt;
+
+    private String authority;
 
     private Long userId;
 
@@ -40,6 +42,7 @@ public class PostDto {
                 .application(post.getApplication())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
+                .authority(post.getUser().getAuthority())
                 .userId(post.getUser().getId())
                 .categoryId(post.getCategory().getId())
                 .build();

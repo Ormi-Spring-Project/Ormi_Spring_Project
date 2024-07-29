@@ -147,17 +147,30 @@ public class BoardService {
     }
 
 
+    // 게시글 수정
+    @Transactional
+    public void updateBoard(Long id, BoardDto boardDto) {
+
+        // 일반 게시글 수정
+        PostDto postDto = convertBoardDtoToPostDto(boardDto);
+        postService.updatePost(id, postDto);
+
+        // 공지사항 수정
+        // NoticeDto noticeDto = convertBoardDtoToNoticeDto(boardDto);
+        // noticeService.updateNotice(id,  noticeDto);
+
+    }
+
     // 아래의 메서드들은 Dto로 옮길 필요가 있다?
     // boardDto -> PostDto
     private PostDto convertBoardDtoToPostDto(BoardDto boardDto) {
         return PostDto.builder()
                 .title(boardDto.getTitle())
                 .content(boardDto.getContent())
-                .userId(boardDto.getUser().getId()) // 이게 필요한 건가?
                 .application(boardDto.getApplication())
                 .createdAt(boardDto.getCreatedAt())
                 .updatedAt(boardDto.getUpdatedAt())
-                .userId(boardDto.getUser().getId())
+                .userId(boardDto.getUserId())
                 .categoryId(boardDto.getCategoryId())
                 .build();
     }
@@ -168,7 +181,7 @@ public class BoardService {
         return NoticeDto.builder()
                 .title(boardDto.getTitle())
                 .content(boardDto.getContent())
-                .userId(boardDto.getUser().getId()) // 이게 필요한 건가?
+                .userId(boardDto.getUserId())
                 .createdAt(boardDto.getCreatedAt())
                 .updatedAt(boardDto.getUpdatedAt())
                 .build();
@@ -181,14 +194,15 @@ public class BoardService {
         return BoardDto.builder()
                 .id(post.getId()) // 상세보기를 위한 BoardDto id 필드 추가에 따른 id 변환
                 .title(post.getTitle())
-                //.userId(post.getUser().getId()) // 이게 필요한 건가?
-                //.authority(post.getUser().getAuthority())
+                .authority(post.getUser().getAuthority())
+                .userId(post.getUser().getId())
                 .content(post.getContent())
                 .application(post.getApplication())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
-                .authorName(post.getUser() != null ? post.getUser().getNickname() : "Unknown")
-                //.categoryName(post.getCategory().getName())
+                .authorName(post.getUser().getNickname())
+                .categoryId(post.getCategory().getId())
+                .categoryName(post.getCategory().getName())
                 .build();
 
     }
@@ -199,12 +213,12 @@ public class BoardService {
         return BoardDto.builder()
                 .id(notice.getId()) // 상세보기를 위한 BoardDto id 필드 추가에 따른 id 변환
                 .title(notice.getTitle())
-                //.userId(notice.getUser().getId()) // 이게 필요한 건가?
-                //.authority(notice.getUser().getAuthority())
+                .userId(notice.getUser().getId())
+                .authority(notice.getUser().getAuthority())
                 .content(notice.getContent())
                 .createdAt(notice.getCreatedAt())
                 .updatedAt(notice.getUpdatedAt())
-                .authorName(notice.getUser() != null ? notice.getUser().getNickname() : "Unknown")
+                .authorName(notice.getUser().getNickname())
                 .build();
 
     }
