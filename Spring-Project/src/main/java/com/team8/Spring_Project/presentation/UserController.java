@@ -113,4 +113,10 @@ public class UserController {
         return "admin";
     }
 
+    @PutMapping("/admin/{user_id}")
+    public String changeUserAuthority(@PathVariable("user_id") Long id) {
+        userService.changeUserAuthority(id);
+        return "redirect:/v1/admin";
+    }
+
 }

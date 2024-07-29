@@ -89,4 +89,19 @@ public class UserService {
     public void deleteUser(UserDTO userDTO) {
         userRepository.deleteUserById(userDTO.getId());
     }
+
+    @Transactional
+    public void changeUserAuthority(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 id를 가진 User가 존재하지 않습니다."));
+
+        if (user.getAuthority().equals(Authority.USER)) {
+            user.banUser(Authority.BANNED);
+            return;
+        }
+
+        if (user.getAuthority().equals(Authority.BANNED)) {
+            user.activateUser(Authority.USER);
+        }
+    }
 }
