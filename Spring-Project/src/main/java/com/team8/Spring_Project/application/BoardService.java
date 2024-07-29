@@ -29,8 +29,7 @@ public class BoardService {
     private final NoticeService noticeService;
     private final CategoryService categoryService;
     private final UserService userService;
-    private final CategoryRepository categoryRepository;
-    Logger logger = LoggerFactory.getLogger(PostController.class);
+    Logger logger = LoggerFactory.getLogger(BoardController.class);
 
     @Autowired
     public BoardService(PostService postService,
@@ -78,6 +77,7 @@ public class BoardService {
 
     }
 
+    // 게시글 생성
     @Transactional
     public void createBoard(BoardDto boardDto, String authority) {
 

@@ -1,7 +1,6 @@
 package com.team8.Spring_Project.application.dto;
 
 import com.team8.Spring_Project.domain.Notice;
-import com.team8.Spring_Project.infrastructure.persistence.UserRepository;
 import lombok.*;
 
 import java.sql.Timestamp;

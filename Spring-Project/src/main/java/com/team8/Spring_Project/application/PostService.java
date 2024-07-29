@@ -31,7 +31,7 @@ public class PostService {
         this.categoryService = categoryService;
     }
 
-    // PostList 조회
+    // 일반 게시글 리스트 조회
     @Transactional(readOnly = true)
     public List<PostDto> getAllPosts() {
         return postRepository.findAll().stream()
@@ -49,7 +49,7 @@ public class PostService {
 
 
     @Transactional
-    // 게시글 작성
+    // 일반 게시글 작성
     public void createPost(PostDto postDto) {
 
         Post post = postDto.toEntity(userService, categoryService);
@@ -66,6 +66,7 @@ public class PostService {
 
     @Transactional
     public void updatePost(Long id, PostDto postDto) {
+
         Post post = postRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
         post.update(
                 postDto.getTitle(),
