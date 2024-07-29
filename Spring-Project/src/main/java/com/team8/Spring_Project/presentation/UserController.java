@@ -51,7 +51,7 @@ public class UserController {
         if (userDTO == null) {
             return "redirect:signup";
         }
-        return "redirect:main";
+        return "redirect:/v1/main";
     }
 
     @GetMapping("/login")
@@ -65,19 +65,19 @@ public class UserController {
         UserDTO loginedUserDTO = userService.login(userDTO);
 
         if (loginedUserDTO == null) {
-            return "redirect:login";
+            return "redirect:/v1/login";
         }
 
         HttpSession session = request.getSession();
         session.setAttribute("login", loginedUserDTO);
 
-        return "redirect:main";
+        return "redirect:/v1/main";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();
-        return "redirect:main";
+        return "redirect:/v1/main";
     }
 
     @GetMapping("/user/{id}")
@@ -90,7 +90,13 @@ public class UserController {
     @PutMapping("/user/{id}")
     public String updateMyInformation(@ModelAttribute UserDTO userDTO) {
         userService.updateUser(userDTO);
-        return "redirect:" + userDTO.getId();
+        return "redirect:/v1/user/" + userDTO.getId();
+    }
+
+    @DeleteMapping("/user/{id}")
+    public String deleteUser(@ModelAttribute UserDTO userDTO) {
+        userService.deleteUser(userDTO);
+        return "redirect:/v1/main";
     }
 
     @GetMapping("/admin")
@@ -98,7 +104,7 @@ public class UserController {
         UserDTO userDTO = (UserDTO) httpSession.getAttribute("login");
 
         if (userDTO.getAuthority() != Authority.ADMIN) {
-            return "redirect:main";
+            return "redirect:/v1/main";
         }
 
         List<UserDTO> userDTOList = userService.getAllUsers();
