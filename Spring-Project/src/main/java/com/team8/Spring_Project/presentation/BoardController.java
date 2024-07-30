@@ -51,14 +51,52 @@ public class BoardController {
         return "categoryPost";
     }
 
-    // 게시글 상세보기 요청
-    @GetMapping("/{id}")
-    public String getBoard(@PathVariable("id") Long id, Model model) {
+    @GetMapping({"post/{id}", "notice/{id}"})
+    public String getBoard(@PathVariable Long id, HttpServletRequest request, Model model) throws AccessDeniedException {
 
-        BoardDto board = boardService.getBoardById(id);
+        HttpSession session = request.getSession();
+        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+        String path = request.getRequestURI();
+
+        BoardDto board;
+        String type;
+
+        if (path.contains("/notice/")) {
+            board = boardService.getNoticeById(id, userDTO);
+            type = "notice";
+        } else {
+            board = boardService.getPostById(id, userDTO);
+            type = "post";
+        }
 
         model.addAttribute("board", board);
+        model.addAttribute("type", type);
+        return "viewPost";
+    }
 
+
+    // 기존의 RequestParam 으로 나눴던 코드
+/*    @GetMapping("/{id}")
+    public String getBoard(@PathVariable("id") Long id,
+                           @RequestParam(required = false) String type,
+                           Model model,
+                           HttpServletRequest request) throws AccessDeniedException {
+
+        HttpSession session = request.getSession();
+        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+
+        if ("Notice".equals(type)) {
+            BoardDto board = boardService.getNoticeById(id, userDTO);
+            model.addAttribute("notice", board);
+        }
+
+        if ("Post".equals(type)) {
+            BoardDto board = boardService.getPostById(id, userDTO);
+            model.addAttribute("post", board);
+        }
+
+        model.addAttribute("type", type);
+        model.addAttribute("userDTO", userDTO);
         return "viewPost";
 
     }

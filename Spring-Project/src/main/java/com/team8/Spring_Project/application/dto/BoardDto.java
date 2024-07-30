@@ -40,4 +40,7 @@ public class BoardDto {
     private String categoryName;
 
     private Long categoryId;
+
+    // BoardDto 리스트에서 게시글, 공지사항 구분하기 위한 type
+    private String type;
 }

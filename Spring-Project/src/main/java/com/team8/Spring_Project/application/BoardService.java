@@ -58,17 +58,26 @@ public class BoardService {
         return boardList;
     }
 
-    // 현재는 id기준으로만 상세보기 화면으로 들어가기 때문에 현재는 임의로 설정한 유저 권한이 무엇이냐에 따라 Post / Notice Entity id로 들어간다.
+    // 일반 게시글 상세보기
     @Transactional
-    public BoardDto getBoardById(Long id) {
+    public BoardDto getPostById(Long id, UserDTO userDTO) throws AccessDeniedException {
 
-        try {
-            Post post = postService.getPostById(id).toEntity(userService, categoryService);
-            return convertPostToBoardDto(post);
-        } catch (EntityNotFoundException e) {
-            Notice notice = noticeService.getNoticeById(id).toEntity(userService);
-            return convertNoticeToBoardDto(notice);
+        if (userDTO.getAuthority() == Authority.BANNED) {
+            throw new AccessDeniedException("일반 게시글에 대해 접근 권한이 없습니다.");
         }
+
+        Post post = postService.getPostById(id).toEntity(userService, categoryService);
+        return convertPostToBoardDto(post);
+
+    }
+
+    // 공지사항 상세보기
+    // 예외 던지기는 하는데 흠..
+    @Transactional
+    public BoardDto getNoticeById(Long id, UserDTO userDTO) throws AccessDeniedException {
+
+        Notice notice = noticeService.getNoticeById(id).toEntity(userService);
+        return convertNoticeToBoardDto(notice);
 
     }
 
