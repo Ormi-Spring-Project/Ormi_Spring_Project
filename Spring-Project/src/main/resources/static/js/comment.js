@@ -11,8 +11,8 @@ function addComment() {
                 <span class="createdAt">${new Date().toISOString().split('T')[0]}</span>
             </div>
             <div class="delete-update-container">
-                <button class="edit-btn" onclick="editComment(this)">수정</button>
-                <button class="delete-btn" onclick="deleteComment(this)">삭제</button>
+                <span class="edit-btn" onclick="editComment(this)">수정</span>
+                <span class="delete-btn" onclick="deleteComment(this)">삭제</span>
             </div>
         </div>
         <div class="content-container">
@@ -20,12 +20,12 @@ function addComment() {
         </div>
     `;
 
-    document.querySelector('.comment-write').before(commentContainer);
+    document.getElementById('comments-container').appendChild(commentContainer);
     document.getElementById('newCommentContent').value = '';
 }
 
-function editComment(button) {
-    const commentContainer = button.closest('.comment-container');
+function editComment(element) {
+    const commentContainer = element.closest('.comment-container');
     const contentContainer = commentContainer.querySelector('.content-container');
     const content = contentContainer.querySelector('.comment-content').textContent;
 
@@ -43,9 +43,9 @@ function editComment(button) {
     contentContainer.appendChild(saveButton);
 }
 
-function deleteComment(button) {
+function deleteComment(element) {
     if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
-        const commentContainer = button.closest('.comment-container');
+        const commentContainer = element.closest('.comment-container');
         commentContainer.remove();
     }
 }

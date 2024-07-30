@@ -41,12 +41,16 @@ input {
 
 textarea {
     width: 740px;
-    height: 300px;
+    height: 16x;
     font-size: 20px;
     resize: none;
-
     margin-top: 25px;
+    background: none;  /* 배경 제거 */
+    padding: 8px 0;  /* 상하 패딩 추가 */
+    line-height: 16px;  /* 줄 높이를 textarea 높이와 동일하게 설정 */
+    vertical-align: middle;  /* 수직 정렬 */
 }
+
 
 input:focus {
     outline: none;
@@ -165,7 +169,7 @@ input:focus {
 .comment-container {
     width: 750px;
     background-color: #ded4d4;
-    border-radius: 16px;
+    border-radius: 15px;
 }
 
 .author-createdAt-delete-update-container {
