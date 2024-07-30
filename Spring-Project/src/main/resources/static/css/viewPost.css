@@ -40,7 +40,7 @@ input {
 }
 
 textarea {
-    width: 740px;
+    width: 730px;
     height: 16x;
     font-size: 20px;
     resize: none;
@@ -170,6 +170,7 @@ input:focus {
     width: 750px;
     background-color: #ded4d4;
     border-radius: 15px;
+    margin-bottom: 20px;
 }
 
 .author-createdAt-delete-update-container {
