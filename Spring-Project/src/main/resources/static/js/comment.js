@@ -1,4 +1,4 @@
-function addComment() {
+   function addComment() {
     const content = document.getElementById('newCommentContent').value;
     if (!content.trim()) return;
 
@@ -11,8 +11,8 @@ function addComment() {
                 <span class="createdAt">${new Date().toISOString().split('T')[0]}</span>
             </div>
             <div class="delete-update-container">
-                <span class="edit-btn" onclick="editComment(this)">수정</span>
-                <span class="delete-btn" onclick="deleteComment(this)">삭제</span>
+                <span onclick="editComment(this)">수정</span>
+                <span class="delete" onclick="deleteComment(this)">삭제</span>
             </div>
         </div>
         <div class="content-container">
@@ -20,12 +20,12 @@ function addComment() {
         </div>
     `;
 
-    document.getElementById('comments-container').appendChild(commentContainer);
+    document.querySelector('.comment-write').before(commentContainer);
     document.getElementById('newCommentContent').value = '';
 }
 
-function editComment(element) {
-    const commentContainer = element.closest('.comment-container');
+    function editComment(button) {
+    const commentContainer = button.closest('.comment-container');
     const contentContainer = commentContainer.querySelector('.content-container');
     const content = contentContainer.querySelector('.comment-content').textContent;
 
@@ -37,15 +37,15 @@ function editComment(element) {
     const saveButton = document.createElement('button');
     saveButton.textContent = '저장';
     saveButton.onclick = function() {
-        const newContent = textarea.value;
-        contentContainer.innerHTML = `<p class="comment-content">${newContent}</p>`;
-    };
+    const newContent = textarea.value;
+    contentContainer.innerHTML = `<p class="comment-content">${newContent}</p>`;
+};
     contentContainer.appendChild(saveButton);
 }
 
-function deleteComment(element) {
+    function deleteComment(button) {
     if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
-        const commentContainer = element.closest('.comment-container');
-        commentContainer.remove();
-    }
+    const commentContainer = button.closest('.comment-container');
+    commentContainer.remove();
+}
 }
