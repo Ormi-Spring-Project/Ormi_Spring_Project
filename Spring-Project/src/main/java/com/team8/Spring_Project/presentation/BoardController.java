@@ -89,14 +89,6 @@ public class BoardController {
         HttpSession session = request.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("login");
 
-        if ("Notice".equals(type)) {
-            BoardDto board = boardService.getNoticeById(id, userDTO);
-            model.addAttribute("notice", board);
-        }
-
-        if ("Post".equals(type)) {
-            BoardDto board = boardService.getPostById(id, userDTO);
-            model.addAttribute("post", board);
         // 권한이 없으면 글쓰기 버튼 누를 경우 예외 던짐.
         if (userDTO.getAuthority() == Authority.BANNED) {
             throw new AccessDeniedException("권한 정지로 인해 글을 생성할 수 없습니다.");
