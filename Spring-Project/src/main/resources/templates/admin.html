@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <script th:src="@{/js/scroll.js}"></script>
 </head>
 <body>
 <!-- footer가 아래에 안붙어서 만든 div -->
@@ -27,7 +28,7 @@
     <main>
 
         <div class="back-button-container">
-            <button class="back-button">Go To Back</button>
+            <a th:href="@{/v1/main}" class="back-button">Go To Back</a>
         </div>
 
         <p class="AdminManagement-title">Admin Management</p>
@@ -53,7 +54,7 @@
                         <input type="hidden" name="_method" value="put">
                         <input type="hidden" name="id" th:value="${user.id}">
                         <button type="submit" th:if="${user.getAuthority().name() == 'USER'}">BAN</button>
-                        <button type="submit" th:if="${user.getAuthority().name() == 'BANNED'}">ACTIVE</button>
+                        <button type="submit" th:if="${user.getAuthority().name() == 'BANNED'}">ACTIVATE</button>
                     </form>
                 </td>
             </tr>

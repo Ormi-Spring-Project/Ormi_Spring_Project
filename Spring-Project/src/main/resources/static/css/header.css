@@ -30,3 +30,7 @@ nav ul {
 nav ul li {
     margin-left: 20px;
 }
+
+header nav ul li a {
+    text-decoration-line: none;
+}
