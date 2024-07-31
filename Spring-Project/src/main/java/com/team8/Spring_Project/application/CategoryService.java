@@ -26,9 +26,16 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
-    public Category getCategoryById(Long id) {
+    public CategoryDTO getCategoryById(Long id) {
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+                .map(CategoryDTO::fromEntity)
+                .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
+
+    }
+
+    public Category findCategoryEntity(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
     }
 
 

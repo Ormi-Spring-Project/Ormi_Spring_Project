@@ -80,13 +80,11 @@ public class BoardController {
         return "viewPost";
     }
 
-
-    // 기존의 RequestParam 으로 나눴던 코드
-/*    @GetMapping("/{id}")
-    public String getBoard(@PathVariable("id") Long id,
-                           @RequestParam(required = false) String type,
-                           Model model,
-                           HttpServletRequest request) throws AccessDeniedException {
+    // 게시글 작성 페이지 요청
+    @GetMapping("/write")
+    @ResponseStatus(HttpStatus.OK)
+    public String getWritePost(Model model,
+                               HttpServletRequest request) throws AccessDeniedException {
 
         HttpSession session = request.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("login");
@@ -99,63 +97,31 @@ public class BoardController {
         if ("Post".equals(type)) {
             BoardDto board = boardService.getPostById(id, userDTO);
             model.addAttribute("post", board);
+        // 권한이 없으면 글쓰기 버튼 누를 경우 예외 던짐.
+        if (userDTO.getAuthority() == Authority.BANNED) {
+            throw new AccessDeniedException("권한 정지로 인해 글을 생성할 수 없습니다.");
         }
 
-        model.addAttribute("type", type);
-        model.addAttribute("userDTO", userDTO);
-        return "viewPost";
-
-    }
-
-    // 게시글 상세보기 요청
-    // 이런식으로 권한으로 나누거나 post/notice로 나누는게 좋아보인다.
-/*    @GetMapping("/{id}/user")
-    public String getPost(@PathVariable("id") Long id,
-                          Model model) {
-
-        BoardDto board = boardService.getPostById(id);
-
-        model.addAttribute("board", board);
-
-        return "viewPost";
-    }*/
-
-/*    @GetMapping("/{id}/admin")
-    public String getNotice(@PathVariable("id") Long id,
-                          Model model) {
-
-        BoardDto board = boardService.getNoticeById(id);
-
-        model.addAttribute("board", board);
-
-        return "viewPost";
-    }*/
-
-    // 게시글 작성 페이지 요청
-    @GetMapping("/write")
-    @ResponseStatus(HttpStatus.OK)
-    public String getWritePost(Model model) {
-        model.addAttribute("board", new BoardDto());
-
-        // 이거 카테고리 Entity -> Dto 변환 안했는데?
+        model.addAttribute("board", new BoardDTO());
         model.addAttribute("categories", categoryService.getAllCategories());
-        logger.info("Received UserID: {}", categoryService.getAllCategories());
         return "writePost";
+
     }
 
-    // User가 새로운 게시글 작성 요청
+    // 게시글 생성
     @PostMapping
-    // @ResponseStatus(HttpStatus.CREATED) 무지성으로 이거 붙였는데 이게 리다이렉트 시 빈 화면이 뜨는 주범이었습니다.
-    public String createPost(@ModelAttribute("board") BoardDto boardDto) {
+    public String createPost(@ModelAttribute("board") BoardDTO boardDto, HttpServletRequest request) {
 
-        try {
-            boardService.createBoard(boardDto, "USER");
-            logger.info("Board created successfully, redirecting to /v1/posts");
-            return "redirect:/v1/posts";
-        } catch (Exception e) {
-            logger.error("Error occurred while creating post", e);
-            return "redirect:/v1/posts/write";
-        }
+        HttpSession session = request.getSession();
+        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+        Long categoryId = boardDto.getCategoryId();
+
+        CategoryDTO categoryDto = categoryService.getCategoryById(categoryId);
+        boardService.createBoard(boardDto, userDTO, categoryDto);
+
+        return "redirect:/v1/posts";
+
+    }
 
     }
 

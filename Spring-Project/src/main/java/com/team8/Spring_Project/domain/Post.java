@@ -7,8 +7,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Timestamp;
 
-@DynamicUpdate
-@DynamicInsert
 @Entity
 @Table(name = "Post")
 @Getter
@@ -43,19 +41,23 @@ public class Post{
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = true) // 이거 false로 교체 해야함.
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     public void update(String title,
                        String content,
-                       String application) {
+                       String tag,
+                       String application,
+                       Timestamp updatedAt,
+                       Category category) {
 
 
         this.title = title;
         this.content = content;
+        this.tag = tag;
         this.application = application;
-        this.updatedAt = new Timestamp(System.currentTimeMillis());
-        this.createdAt = updatedAt;
+        this.updatedAt = updatedAt;
+        this.category = category;
 
     }
 
