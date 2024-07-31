@@ -42,14 +42,15 @@ public class PostService {
 
     }
 
-    // 일반 게시글 상세보기
+    //
     @Transactional(readOnly = true)
-    public PostDto getPostById(Long id) {
-        return postRepository.findById(id)
-                .map(PostDto::fromEntity)
-                .orElse(null);
-    }
+    public PostDTO getPostById(Long id) {
 
+        return postRepository.findById(id)
+                .map(PostDTO::fromEntity)
+                .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
+
+    }
 
     @Transactional
     // 일반 게시글 작성

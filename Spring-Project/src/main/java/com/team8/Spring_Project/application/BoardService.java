@@ -57,26 +57,27 @@ public class BoardService {
         return boardList;
     }
 
-    // 일반 게시글 상세보기
+    // 게시글 상세보기
     @Transactional
-    public BoardDto getPostById(Long id, UserDTO userDTO) throws AccessDeniedException {
+    public BoardDTO getBoardById(Long boardId, UserDTO userDTO, String type) throws AccessDeniedException {
 
-        if (userDTO.getAuthority() == Authority.BANNED) {
+        if (!"notice".equals(type) && userDTO.getAuthority() == Authority.BANNED) {
             throw new AccessDeniedException("일반 게시글에 대해 접근 권한이 없습니다.");
         }
 
-        Post post = postService.getPostById(id).toEntity(userService, categoryService);
-        return convertPostToBoardDto(post);
+        if("notice".equals(type)) {
 
-    }
+            // 공지사항 상세보기
+            NoticeDTO noticeDTO = noticeService.getNoticeById(boardId);
+            return NoticeDTO.convertNoticeDtoToBoardDto(noticeDTO, type);
 
-    // 공지사항 상세보기
-    // 예외 던지기는 하는데 흠..
-    @Transactional
-    public BoardDto getNoticeById(Long id, UserDTO userDTO) throws AccessDeniedException {
+        } else {
 
-        Notice notice = noticeService.getNoticeById(id).toEntity(userService);
-        return convertNoticeToBoardDto(notice);
+            // 일반 게시글 상세보기
+            PostDTO postDTO = postService.getPostById(boardId);
+            return PostDTO.convertPostDtoToBoardDto(postDTO, type);
+
+        }
 
     }
 

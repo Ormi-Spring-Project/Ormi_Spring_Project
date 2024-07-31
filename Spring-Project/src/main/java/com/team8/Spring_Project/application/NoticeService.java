@@ -39,11 +39,11 @@ public class NoticeService {
 
     // 공지사항 상세보기
     @Transactional(readOnly = true)
-    public NoticeDto getNoticeById(Long id) {
+    public NoticeDTO getNoticeById(Long id) {
 
         return noticeRepository.findById(id)
-                .map(NoticeDto::fromEntity)
-                .orElse(null);
+                .map(NoticeDTO::fromEntity)
+                .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
 
     }
 
