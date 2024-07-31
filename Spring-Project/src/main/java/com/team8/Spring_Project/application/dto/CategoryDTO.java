@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryDto {
+public class CategoryDTO {
 
     Long id;
 
@@ -15,12 +15,23 @@ public class CategoryDto {
 
     String icon;
 
-    public static CategoryDto fromEntity(Category category) {
+    // Entity -> DTO
+    public static CategoryDTO fromEntity(Category category) {
 
-        return CategoryDto.builder()
+        return CategoryDTO.builder()
                 .id(category.getId())
                 .name(category.getName())
                 .icon(category.getIcon())
+                .build();
+
+    }
+
+    // DTO -> Entity
+    public Category toEntity() {
+
+        return Category.builder()
+                .name(this.getName())
+                .icon(this.getIcon())
                 .build();
 
     }
