@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/categoryPost.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
 <body>
 <!-- footer가 아래에 안붙어서 만든 div -->
@@ -26,15 +27,10 @@
     </header>
 
     <main>
-
         <div class="back-button-container">
-            <button class="back-button">Go To Back</button>
+            <a th:href="@{/v1/main}" class="back-button">Go To Back</a>
         </div>
-
-
         <p class="category-title">Business</p>
-
-
         <div class="category-list-container">
             <select class="category-list">
                 <option value="1">Business</option>

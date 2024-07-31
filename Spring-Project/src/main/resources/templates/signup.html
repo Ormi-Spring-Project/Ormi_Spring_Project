@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/signupstyles.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
     <script th:src="@{/js/signup.js}"></script>
 </head>
 <body>
@@ -26,7 +27,7 @@
 </header>
 
 <main>
-    <a href="#" class="go-back">Go To Back</a>
+    <a th:href="@{/v1/main}" class="back-button">Go To Back</a>
     <div class="login_icon"><img src="/images/login_icon.png"/></div>
 
     <div class="signup-container">

@@ -23,14 +23,10 @@ footer {
     flex-shrink: 0;
 }
 
-/* 기존 footer 관련 스타일은 유지 */
-
 .footer-container {
-    /* 기존 스타일 유지 */
-    padding: 20px 20px 0; /* 하단 패딩 제거 */
+    padding: 20px 20px 0;
 }
 
-/* 마지막 요소의 마진 제거 */
 .footer-container li:last-child,
 .footer-container p:last-child {
     margin-bottom: 0;
@@ -55,31 +51,6 @@ body {
     height: auto;
     display: block;
     margin: 0 auto;
-}
-
-.go-back {
-    display: inline-block;
-    background-color: #CD31AB; /* 밝은 분홍색 */
-    color: white;
-    padding: 10px 20px;
-    border-radius: 50px; /* 완전한 타원형을 만들기 위해 큰 값 사용 */
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    position: absolute;
-    top: 200px;
-    left: 50px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* 약간의 그림자 효과 */
-}
-
-.go-back {
-    display: inline-block;
-    background-color: #CD31AB;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    text-decoration: none;
-    margin-bottom: 20px;
 }
 
 .signin-container {
@@ -124,17 +95,16 @@ input {
 }
 
 .signin-btn {
-    width: 80%; /* 버튼 너비를 줄임 */
-    max-width: 300px; /* 최대 너비 설정 */
+    width: 80%;
+    max-width: 300px;
     padding: 10px;
     background-color: #CD31AB;
     color: white;
     border: none;
-    border-radius: 25px; /* 더 둥근 모서리 */
+    border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
-    display: block; /* 블록 레벨 요소로 변경 */
-    /* 좌우 마진을 auto로 설정하여 중앙 정렬 */
+    display: block;
     margin: 20px auto 0;
 }
 
@@ -149,6 +119,6 @@ input {
 
 .mail-icon img,
 .password-icon img {
-    width: 20px; /* 아이콘 너비 */
-    height: auto; /* 비율 유지 */
+    width: 20px;
+    height: auto;
 }
