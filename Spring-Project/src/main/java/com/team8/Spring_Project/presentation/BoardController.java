@@ -2,15 +2,19 @@ package com.team8.Spring_Project.presentation;
 
 import com.team8.Spring_Project.application.BoardService;
 import com.team8.Spring_Project.application.CategoryService;
-import com.team8.Spring_Project.application.dto.BoardDto;
-import com.team8.Spring_Project.application.dto.CategoryDto;
+import com.team8.Spring_Project.application.dto.BoardDTO;
+import com.team8.Spring_Project.application.dto.CategoryDTO;
+import com.team8.Spring_Project.application.dto.UserDTO;
+import com.team8.Spring_Project.domain.Authority;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @Controller
@@ -18,9 +22,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-    private final CategoryService categoryService; // 이것도 여기서 사용하지 않고 boardService로 밀 수 있을 것 같은데.
-
-    Logger logger = LoggerFactory.getLogger(BoardController.class);
+    private final CategoryService categoryService;
 
     @Autowired
     public BoardController(BoardService boardService,

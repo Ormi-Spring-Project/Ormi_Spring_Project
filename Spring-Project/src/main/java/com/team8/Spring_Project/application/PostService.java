@@ -6,8 +6,6 @@ import com.team8.Spring_Project.domain.Post;
 import com.team8.Spring_Project.domain.User;
 import com.team8.Spring_Project.infrastructure.persistence.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +17,6 @@ import java.util.stream.Collectors;
 @Service
 public class PostService {
 
-    private static final Logger log = LoggerFactory.getLogger(PostService.class);
-
-    // PostService는 Post 데이터에만 접근해야한다고 생각해서 postRepository 에 의존성을 갖고, 나머지는 Repository가 아닌 Service에 의존성을 갖도록 구현.
     private final PostRepository postRepository;
     private final UserService userService;
     private final CategoryService categoryService;
@@ -43,7 +38,7 @@ public class PostService {
 
     }
 
-    //
+    // 일반 게시글 조회
     @Transactional(readOnly = true)
     public PostDTO getPostById(Long id) {
 

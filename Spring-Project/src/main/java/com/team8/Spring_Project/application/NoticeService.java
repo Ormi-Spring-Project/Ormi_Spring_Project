@@ -1,13 +1,16 @@
 package com.team8.Spring_Project.application;
 
-import com.team8.Spring_Project.application.dto.NoticeDto;
-import com.team8.Spring_Project.application.dto.UserService;
+import com.team8.Spring_Project.application.dto.NoticeDTO;
 import com.team8.Spring_Project.domain.Notice;
+import com.team8.Spring_Project.domain.User;
 import com.team8.Spring_Project.infrastructure.persistence.NoticeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
