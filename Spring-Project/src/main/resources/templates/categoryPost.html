@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>CategoryPost</title>
@@ -17,9 +17,13 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#">Admin</a></li>
-                    <li><a href="#">Sign Up</a></li>
-                    <li><a href="#">Log In</a></li>
+                    <li th:if="${userDTO != null and userDTO.getAuthority().name() != 'BANNED'}">
+                        <a th:if="${userDTO.getAuthority().name() == 'USER'}" th:href="@{/v1/user/{id}(id=${userDTO.getId()})}">My Page</a>
+                        <a th:if="${userDTO.getAuthority().name() == 'ADMIN'}" th:href="@{/v1/admin}">Admin</a>
+                    </li>
+                    <li><a th:if="${userDTO == null}" th:href="@{/v1/signup}">Sign Up</a></li>
+                    <li th:if="${userDTO == null}"><a th:href="@{/v1/login}">Log In</a></li>
+                    <li th:if="${userDTO != null}"><a th:href="@{/v1/logout}" onclick="logoutMessage()">Log Out</a></li>
                 </ul>
             </nav>
         </div>
@@ -28,19 +32,19 @@
     <main>
 
         <div class="back-button-container">
-            <button class="back-button">Go To Back</button>
+            <button class="back-button" th:onclick="|location.href='@{main} '|">Go To Back</button>
         </div>
-
 
         <p class="category-title">Business</p>
 
-
         <div class="category-list-container">
-            <select class="category-list">
-                <option value="1">Business</option>
-                <option value="2">Fitness</option>
-                <option value="3">Finance</option>
-                <option value="4">Art</option>
+            <select class="category-list" name="categoryId"
+                    th:onchange="'location.href=\'' + @{/v1/posts} + '?categoryId=\' + this.value'">
+                <option th:each="category : ${categories}"
+                        th:value="${category.id}"
+                        th:text="${category.name}"
+                        th:selected="${category.id == selectedCategoryId}">
+                </option>
             </select>
         </div>
 
@@ -55,38 +59,23 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr th:each="board : ${boards}">
                 <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
-                <td>공지사항</td>
-                <td>관리자</td>
-                <td>2024-07-24</td>
+                <td>
+                    <a th:href="@{/v1/posts/{type}/{id}(type=${board.type == 'notice' ? 'notice' : 'post'},
+                     id=${board.id}, categoryId=${selectedCategoryId})}"
+                       th:text="${board.title}">
+                    </a>
+                </td>
+                <td th:text="${board.authorName}">관리자</td>
+                <td th:text="${board.updatedAt}">2024-07-24</td>
             </tr>
             <tr>
-                <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
-                <td>공지사항</td>
-                <td>관리자</td>
-                <td>2024-07-20</td>
-            </tr>
-            <tr>
-                <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
-                <td>노트 앱 소개</td>
-                <td>최의현</td>
-                <td>2024-07-23</td>
-            </tr>
-            <tr>
-                <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
-                <td>그림 앱 소개</td>
-                <td>의현최</td>
-                <td>2024-07-21</td>
-            </tr>
-            <tr>
-                <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
-                <td>개발 앱 소개</td>
-                <td>스프링</td>
-                <td>2024-07-22</td>
             </tr>
             </tbody>
         </table>
+
+        <button th:onclick="|location.href='@{/v1/posts/write}'|">글쓰기 버튼</button>
 
 
     </main>

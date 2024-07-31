@@ -27,7 +27,7 @@ public class UserController {
     public String getMainPage(Model model, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        UserDTO userDTO  = (UserDTO) session.getAttribute("login");
+        UserDTO userDTO = (UserDTO) session.getAttribute("login");
 
         if (userDTO == null) {
             model.addAttribute("userDTO", null);

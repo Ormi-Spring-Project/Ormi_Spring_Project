@@ -1,18 +1,20 @@
 package com.team8.Spring_Project.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "Post")
+@Table(name = "Notice")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Post{
+public class Notice{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,40 +28,21 @@ public class Post{
     private String content;
 
     @Column
-    private String tag;
-
-    @Column
-    private String application;
-
-    @Column(name = "created_at")
     private Timestamp createdAt;
 
-    @Column(name = "updated_at")
+    @Column
     private Timestamp updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
-
     public void update(String title,
                        String content,
-                       String tag,
-                       String application,
-                       Timestamp updatedAt,
-                       Category category) {
-
-
+                       Timestamp updatedAt) {
         this.title = title;
         this.content = content;
-        this.tag = tag;
-        this.application = application;
         this.updatedAt = updatedAt;
-        this.category = category;
-
     }
 
 }
