@@ -70,6 +70,12 @@ public class UserService {
         return userDTO.fromEntity(user);
     }
 
+    @Transactional(readOnly = true)
+    public User findUserEntity(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 id를 가진 User가 존재하지 않습니다."));
+    }
+
     @Transactional
     public UserDTO updateUser(UserDTO userDTO) {
         User user = userRepository.findById(userDTO.getId())

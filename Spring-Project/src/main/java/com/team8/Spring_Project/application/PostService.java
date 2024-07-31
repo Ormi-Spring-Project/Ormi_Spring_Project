@@ -1,8 +1,9 @@
 package com.team8.Spring_Project.application;
 
-import com.team8.Spring_Project.application.dto.PostDto;
-import com.team8.Spring_Project.application.dto.UserService;
+import com.team8.Spring_Project.application.dto.PostDTO;
+import com.team8.Spring_Project.domain.Category;
 import com.team8.Spring_Project.domain.Post;
+import com.team8.Spring_Project.domain.User;
 import com.team8.Spring_Project.infrastructure.persistence.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -52,18 +53,16 @@ public class PostService {
 
     @Transactional
     // 일반 게시글 작성
-    public void createPost(PostDto postDto) {
+    public PostDTO createPost(PostDTO postDto) {
 
-        Post post = postDto.toEntity(userService, categoryService);
+        User user = userService.findUserEntity(postDto.getUserId());
 
-        log.info("Creating new id: {}", post.getId());
-        log.info("Creating new title: {}", post.getTitle());
-        log.info("Creating new content: {}", post.getContent());
-        log.info("Creating new application: {}", post.getApplication());
-        log.info("Creating new createAt: {}", post.getCreatedAt());
-        log.info("Creating new updateAt: {}", post.getUpdatedAt());
-        log.info("Creating new userId: {}", post.getUser().getId());
+        Category category = categoryService.findCategoryEntity(postDto.getCategoryId());
+
+        Post post = postDto.toEntity(user, category);
         postRepository.save(post);
+
+        return PostDTO.fromEntity(post);
     }
 
     @Transactional

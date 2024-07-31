@@ -15,10 +15,11 @@ import java.util.stream.Collectors;
 public class NoticeService {
 
     private final NoticeRepository noticeRepository;
-    private final UserService userService; // 이거는 좀 생각해봐야함.
+    private final UserService userService;
 
     @Autowired
-    public NoticeService(NoticeRepository noticeRepository, UserService userService) {
+    public NoticeService(NoticeRepository noticeRepository,
+                         UserService userService) {
         this.noticeRepository = noticeRepository;
         this.userService = userService;
     }
@@ -46,12 +47,16 @@ public class NoticeService {
 
     }
 
+    // 공지사항 생성
     @Transactional
-    public void createNotice(NoticeDto noticeDto) {
+    public NoticeDTO createNotice(NoticeDTO noticeDto) {
 
-        Notice notice = noticeDto.toEntity(userService);
+        User user = userService.findUserEntity(noticeDto.getUserId());
+
+        Notice notice = noticeDto.toEntity(user);
         noticeRepository.save(notice);
-        //return NoticeDto.fromEntity(createNotice);
+
+        return NoticeDTO.fromEntity(notice);
 
     }
 

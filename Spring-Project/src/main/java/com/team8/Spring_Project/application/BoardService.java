@@ -82,29 +82,20 @@ public class BoardService {
 
     // 게시글 생성
     @Transactional
-    public void createBoard(BoardDto boardDto, String authority) {
+    public void createBoard(BoardDTO boardDto, UserDTO userDTO, CategoryDTO categoryDTO) {
 
-        // 테스트 하기 위해서 유저 생성하는 코드
-        User testUser = userService.createTestUser();
+        BoardDTO createdBoardDTO = BoardDTO.createFrom(boardDto, userDTO, categoryDTO);
 
-        Category category = categoryService.getCategoryById(boardDto.getCategoryId());
+        if (userDTO.getAuthority() == Authority.USER) {
 
-        boardDto.setUserId(testUser.getId());
-        boardDto.setAuthorName(testUser.getNickname());
-        boardDto.setCategoryName(category.getName());
-        boardDto.setCategoryId(category.getId());
-        boardDto.setAuthority(authority);
-        boardDto.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        boardDto.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-
-        if ("USER".equals(authority)) {
-
-            PostDto postDto = convertBoardDtoToPostDto(boardDto);
+            PostDTO postDto = BoardDTO.convertBoardDtoToPostDto(createdBoardDTO);
             postService.createPost(postDto);
 
-        } else if ("ADMIN".equals(authority)) {
+        }
 
-            NoticeDto noticeDto = convertBoardDtoToNoticeDto(boardDto);
+        if (userDTO.getAuthority() == Authority.ADMIN) {
+
+            NoticeDTO noticeDto = BoardDTO.convertBoardDtoToNoticeDto(createdBoardDTO);
             noticeService.createNotice(noticeDto);
 
         }
