@@ -35,10 +35,6 @@ textarea {
     resize: none;
 }
 
-input:focus {
-    outline: none;
-}
-
 .back-button-container {
     display: flex;
     justify-content: start;
