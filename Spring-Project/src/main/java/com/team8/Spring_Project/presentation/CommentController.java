@@ -1,18 +1,19 @@
 package com.team8.Spring_Project.presentation;
 
 import com.team8.Spring_Project.application.CommentService;
-import com.team8.Spring_Project.domain.Comment;
+import com.team8.Spring_Project.application.dto.CommentDTO;
+import com.team8.Spring_Project.application.dto.UserDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
-@Controller
-@RequestMapping("/v1/comment")
+@RestController
+@RequestMapping("/api/posts/{postId}/comments")
 public class CommentController {
-
     private final CommentService commentService;
 
     @Autowired
@@ -20,22 +21,60 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping("/add")
-    public String addComment(@RequestParam Long postId, @RequestParam String content, @RequestParam String author) {
-        Comment comment = commentService.addComment(postId, content, author);
-        // 여기서 comment 객체에 createdAt 정보가 포함되어 있습니다.
-        return "redirect:/v1/post/" + postId;
+    @GetMapping
+    public ResponseEntity<List<CommentDTO>> getCommentsByPostId(@PathVariable Long postId) {
+        return ResponseEntity.ok(commentService.getCommentsByPostId(postId));
     }
 
-    @PostMapping("/{id}/edit")
-    public String editComment(@PathVariable Long id, @RequestParam String content, @RequestParam Long postId) {
-        commentService.editComment(id, content);
-        return "redirect:/v1/post/" + postId;
+    @PostMapping
+    public ResponseEntity<CommentDTO> createComment(
+            @PathVariable Long postId,
+            @RequestBody CommentDTO commentDto,
+            HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+
+        if (userDTO == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        commentDto.setPostId(postId);
+        commentDto.setUserId(userDTO.getId());
+
+        CommentDTO createdComment = commentService.createComment(commentDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 
-    @PostMapping("/{id}/delete")
-    public String deleteComment(@PathVariable Long id, @RequestParam Long postId) {
-        commentService.deleteComment(id);
-        return "redirect:/v1/post/" + postId;
+    @PutMapping("/{commentId}")
+    public ResponseEntity<CommentDTO> updateComment(
+            @PathVariable Long postId,
+            @PathVariable Long commentId,
+            @RequestBody CommentDTO commentDto,
+            HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+
+        if (userDTO == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        CommentDTO updatedComment = commentService.updateComment(commentId, commentDto, userDTO.getId());
+        return ResponseEntity.ok(updatedComment);
+    }
+
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> deleteComment(
+            @PathVariable Long postId,
+            @PathVariable Long commentId,
+            HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+
+        if (userDTO == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        commentService.deleteComment(commentId, userDTO.getId());
+        return ResponseEntity.noContent().build();
     }
 }

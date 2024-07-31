@@ -1,66 +1,138 @@
-function addComment() {
-    const content = document.getElementById('newCommentContent').value;
-    if (!content.trim()) return;
+let postId, currentUserId;
 
-    const commentContainer = document.createElement('div');
-    commentContainer.className = 'comment-container';
-    commentContainer.innerHTML = `
+document.addEventListener('DOMContentLoaded', function() {
+    postId = document.getElementById('postId')?.value;
+    currentUserId = document.getElementById('currentUserId')?.value;
+
+    if (postId && currentUserId) {
+        loadComments();
+    } else {
+        console.error('Required data is missing');
+    }
+});
+
+function loadComments() {
+    fetch(`/api/posts/${postId}/comments`)
+        .then(response => response.json())
+        .then(comments => {
+            const commentContainer = document.getElementById('commentContainer');
+            commentContainer.innerHTML = '';
+            comments.forEach(comment => {
+                const commentElement = createCommentElement(comment);
+                commentContainer.appendChild(commentElement);
+            });
+        });
+}
+
+function createCommentElement(comment) {
+    const commentDiv = document.createElement('div');
+    commentDiv.className = 'comment-container';
+    commentDiv.id = `comment-${comment.id}`;
+
+    const formattedDate = new Date(comment.createdAt).toLocaleString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+
+    commentDiv.innerHTML = `
         <div class="author-createdAt-delete-update-container">
             <div class="author-createdAt-container">
-                <span class="author">사용자</span>
-                <span class="createdAt">${new Date().toISOString().split('T')[0]}</span>
+                <p class="author">${comment.authorNickname}</p>
+                <p class="createdAt">${formattedDate}</p>
             </div>
             <div class="delete-update-container">
-                <span onclick="editComment(this)">수정</span>
-                <span class="delete" onclick="deleteComment(this)">삭제</span>
+                ${currentUserId == comment.userId ? `
+                    <p class="update" onclick="editComment(${comment.id})">수정</p>
+                    <p class="delete" onclick="deleteComment(${comment.id})">삭제</p>
+                ` : ''}
             </div>
         </div>
         <div class="content-container">
-            <p class="comment-content">${content}</p>
+            <p>${comment.content}</p>
         </div>
     `;
 
-    document.querySelector('.comment-write').before(commentContainer);
-    document.getElementById('newCommentContent').value = '';
+    return commentDiv;
 }
 
-function editComment(button) {
-    const commentContainer = button.closest('.comment-container');
-    const contentContainer = commentContainer.querySelector('.content-container');
-    const content = contentContainer.querySelector('.comment-content').textContent;
+function submitComment() {
+    const content = document.getElementById('commentContent').value;
+    fetch(`/api/posts/${postId}/comments`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: content }),
+    })
+        .then(response => response.json())
+        .then(comment => {
+            document.getElementById('commentContent').value = '';
+            loadComments();
+        });
+}
+
+function editComment(commentId) {
+    const commentDiv = document.getElementById(`comment-${commentId}`);
+    const contentContainer = commentDiv.querySelector('.content-container');
+    const contentP = contentContainer.querySelector('p');
+    const originalContent = contentP.textContent;
 
     const textarea = document.createElement('textarea');
-    textarea.value = content;
-    contentContainer.innerHTML = '';
-    contentContainer.appendChild(textarea);
+    textarea.value = originalContent;
+    contentP.replaceWith(textarea);
 
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'edit-button-container';
-
-    const saveButton = document.createElement('button');
-    saveButton.textContent = '저장';
-    saveButton.className = 'edit-button save-button';
-    saveButton.onclick = function() {
-        const newContent = textarea.value;
-        contentContainer.innerHTML = `<p class="comment-content">${newContent}</p>`;
-    };
-
-    const cancelButton = document.createElement('button');
-    cancelButton.textContent = '취소';
-    cancelButton.className = 'edit-button cancel-button';
-    cancelButton.onclick = function() {
-        contentContainer.innerHTML = `<p class="comment-content">${content}</p>`;
-    };
-
-    // 버튼 순서 변경: 저장 버튼을 먼저, 그 다음 취소 버튼
-    buttonContainer.appendChild(saveButton);
-    buttonContainer.appendChild(cancelButton);
+    buttonContainer.innerHTML = `
+        <button class="edit-button save-button" onclick="saveEditedComment(${commentId})">저장</button>
+        <button class="edit-button cancel-button" onclick="cancelEdit(${commentId}, '${originalContent}')">취소</button>
+    `;
     contentContainer.appendChild(buttonContainer);
 }
 
-function deleteComment(button) {
+function saveEditedComment(commentId) {
+    const commentDiv = document.getElementById(`comment-${commentId}`);
+    const textarea = commentDiv.querySelector('textarea');
+    const newContent = textarea.value;
+
+    fetch(`/api/posts/${postId}/comments/${commentId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: newContent }),
+    })
+        .then(response => response.json())
+        .then(comment => {
+            loadComments();
+        });
+}
+
+function cancelEdit(commentId, originalContent) {
+    const commentDiv = document.getElementById(`comment-${commentId}`);
+    const contentContainer = commentDiv.querySelector('.content-container');
+    const textarea = contentContainer.querySelector('textarea');
+    const contentP = document.createElement('p');
+    contentP.textContent = originalContent;
+    textarea.replaceWith(contentP);
+
+    const buttonContainer = contentContainer.querySelector('.edit-button-container');
+    buttonContainer.remove();
+}
+
+function deleteComment(commentId) {
     if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
-        const commentContainer = button.closest('.comment-container');
-        commentContainer.remove();
+        fetch(`/api/posts/${postId}/comments/${commentId}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (response.ok) {
+                    loadComments();
+                }
+            });
     }
 }

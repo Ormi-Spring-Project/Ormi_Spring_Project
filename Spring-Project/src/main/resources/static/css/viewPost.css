@@ -1,6 +1,8 @@
 body {
     display: flex;
     flex-direction: column;
+    /*알수 없는이유로  body vcs margin 8px가 생김... 해당부분 없애는 코드 적용*/
+    margin: 0;
 }
 
 main {
@@ -25,7 +27,6 @@ form {
     flex-direction: row;
     margin-bottom: 50px;
     gap: 50px;
-
     padding-left: 300px;
     padding-right: 300px;
 }
@@ -39,21 +40,20 @@ input {
     padding-right: 70px;
 }
 
+input:focus {
+    outline: none;
+}
+
 textarea {
     width: 730px;
     height: 16px;
     font-size: 20px;
     resize: none;
     margin-top: 25px;
-    background: none;  /* 배경 제거 */
-    padding: 8px 0;  /* 상하 패딩 추가 */
-    line-height: 16px;  /* 줄 높이를 textarea 높이와 동일하게 설정 */
-    vertical-align: middle;  /* 수직 정렬 */
-}
-
-
-input:focus {
-    outline: none;
+    background: none;
+    padding: 8px 0;
+    line-height: 16px;
+    vertical-align: middle;
 }
 
 .back-button-container {
@@ -64,11 +64,10 @@ input:focus {
 .back-button {
     font-size: 16px;
     border-radius: 32px;
-    padding: 8px 16px 8px 16px;
+    padding: 8px 16px;
     margin: 30px;
     background-color: #CD31AB;
     color: white;
-
     width: 150px;
     align-items: center;
 }
@@ -77,6 +76,15 @@ input:focus {
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+/*게시판 제목 및 내용 가운데 정렬 추가*/
+.post-container h1 {
+    text-align: center;
+    width: 100%;
+}
+.post-container .content {
+    text-align: center;
 }
 
 .icon {
@@ -97,7 +105,6 @@ input:focus {
     height: 50px;
     margin-left: 50px;
     margin-top: 200px;
-
     align-items: center;
     line-height: 45px;
 }
@@ -106,6 +113,8 @@ input:focus {
     display: flex;
     flex-direction: row;
     gap: 340px;
+    /*게시글 작성정보 유저,시간 위치이동*/
+    margin-left: 150px;
 }
 
 .user-information div {
@@ -164,6 +173,8 @@ input:focus {
 
 .comment-content {
     width: 450px;
+    border-color: black;
+    border-width: 1px;
 }
 
 .comment-container {
@@ -197,24 +208,19 @@ input:focus {
     color: red;
 }
 
+.content-container {
+    position: relative;
+    padding-bottom: 40px;
+}
+
 .content-container p {
     padding: 0 16px 16px 16px;
 }
 
-.comment-write {
-    display: flex;
-    flex-direction: column;
-
-    margin-top: 40px;
-}
-
-.comment-write button {
-
-}
-
-.content-container {
-    position: relative;
-    padding-bottom: 40px; /* 버튼 공간 확보 */
+.content-container textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
 }
 
 .edit-button-container {
@@ -241,8 +247,24 @@ input:focus {
     color: white;
 }
 
-.content-container textarea {
-    width: 100%;
-    height: 100px;
-    margin-bottom: 10px;
+.comment-write {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}
+
+.comment-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.comment-button {
+    font-size: 16px;
+    border-radius: 32px;
+    padding: 8px 16px;
+    background-color: #CD31AB;
+    color: white;
+    border: none;
+    cursor: pointer;
 }

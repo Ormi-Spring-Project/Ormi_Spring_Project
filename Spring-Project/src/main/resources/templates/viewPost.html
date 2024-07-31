@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/viewPost.css}">
-    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <title>Your App? My App! YAMA - 게시글 보기</title>
+    <script th:src="@{/js/comment.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
-    <title>Your App? My App! YAMA - 게시글 작성</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/viewPost.css}">
 </head>
 <body>
 <header>
@@ -29,12 +30,10 @@
 </header>
 <main>
     <div class="back-button-container">
-        <button th:onclick="|location.href='@{/v1/posts'|" class="back-button">Go To Back
-        </button>
+        <button th:onclick="|location.href='@{/v1/posts}'|" class="back-button">Go To Back</button>
     </div>
     <section class="post-container">
-
-        <!-- type == notice 일 경우 뷰 -->
+        <!-- notice 유형 게시글 -->
         <div th:if="${type == 'notice'}">
             <h1 th:text="${board.getTitle()}"></h1>
             <div class="icon">
@@ -53,7 +52,6 @@
                         </button>
                     </form>
                 </div>
-
             </div>
 
             <div class="user-information">
@@ -62,23 +60,19 @@
                         <img class="nickname-img" src="/images/nickname-icon.png">
                         <div class="nickname" th:text="${board.authorName}">Nickname</div>
                     </div>
-                    <div th:text="${board.createdAt}"></div>
+                    <div th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></div>
                 </div>
 
                 <div class="download" th:if="${board.application != null}">
                     <img class="download-img" src="/images/link.png">
-                    <a href="${board.application}" th:text="${board.application}">애플리케이션 링크</a>
+                    <a th:href="${board.application}" th:text="${board.application}">애플리케이션 링크</a>
                 </div>
-
             </div>
-            <form class="input">
-                <textarea th:utext="${board.content}" placeholder="사용해 본 Application에 대한 후기를 남겨주세요!"></textarea>
-            </form>
+            <div class="content" th:utext="${board.content}"></div>
         </div>
 
-        <!-- type == post 일 경우 뷰 -->
+        <!-- post 유형 게시글 -->
         <div th:if="${type == 'post'}">
-
             <h1 th:text="${board.getTitle()}"></h1>
             <div class="icon">
                 <img class="icon-img" src="/images/img-place-holder.png">
@@ -96,7 +90,6 @@
                         </button>
                     </form>
                 </div>
-
             </div>
 
             <div class="user-information">
@@ -105,47 +98,29 @@
                         <img class="nickname-img" src="/images/nickname-icon.png">
                         <div class="nickname" th:text="${board.authorName}">Nickname</div>
                     </div>
-                    <div th:text="${board.createdAt}"></div>
+                    <div th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></div>
                 </div>
 
                 <div class="download" th:if="${board.application != null}">
                     <img class="download-img" src="/images/link.png">
-                    <a href="${board.application}" th:text="${board.application}">애플리케이션 링크</a>
+                    <a th:href="${board.application}" th:text="${board.application}">애플리케이션 링크</a>
                 </div>
-
             </div>
-            <form class="input">
-                <textarea th:utext="${board.content}" placeholder="사용해 본 Application에 대한 후기를 남겨주세요!"></textarea>
-            </form>
+            <div class="content" th:utext="${board.content}"></div>
         </div>
 
-        <div class="comment-container">
-            <div class="author-createdAt-delete-update-container">
-
-                <div class="author-createdAt-container">
-                    <p class="author">최의현</p>
-                    <p class="createdAt">2024-07-23</p>
-                </div>
-
-                <div class="delete-update-container">
-                    <p class="update">수정</p>
-                    <p class="delete">삭제</p>
-                </div>
-
+        <!-- 댓글 섹션 (두 유형 모두에 적용) -->
+        <div class="comment-section">
+            <h2>댓글</h2>
+            <div id="commentContainer">
+                <!-- 댓글들이 여기에 동적으로 추가됩니다 -->
             </div>
-
-            <div class="content-container">
-                <p>안녕하세요 첫 댓글입니다.안녕하세요 첫 댓글입니다.안녕하세요 첫 댓글입니다.안녕하세요 첫 댓글입니다.안녕하세요 첫 댓글입니다.안녕하세요 첫 댓글입니다.안녕하세요 첫
-                    댓글입니다.안녕하세요 첫 댓글입니다.안녕하세요 첫 댓글입니다.안녕하세요 첫 댓글입니다.안녕하세요 첫 댓글입니다.안녕하세요 첫 댓글입니다.안녕하세요 첫 댓글입니다.안녕하세요 첫
-                    댓글입니다.</p>
+            <div class="comment-write">
+                <textarea id="commentContent" placeholder="댓글을 입력하세요"></textarea>
+                <div class="comment-button-container">
+                    <button class="comment-button" onclick="submitComment()">Comment</button>
+                </div>
             </div>
-        </div>
-        <div class="comment-write">
-            댓글 작성
-            <textarea></textarea>
-        </div>
-        <div class="back-button-container">
-            <button class="back-button">Comment</button>
         </div>
     </section>
 </main>
@@ -173,5 +148,14 @@
         </div>
     </div>
 </footer>
+
+<input type="hidden" id="postId" th:value="${board.id}">
+<input type="hidden" id="currentUserId" th:value="${userDTO != null ? userDTO.getId() : ''}">
+
+<script>
+    function logoutMessage() {
+        alert('로그아웃 되었습니다.');
+    }
+</script>
 </body>
 </html>
