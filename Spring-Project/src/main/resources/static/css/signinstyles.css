@@ -72,12 +72,6 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* 약간의 그림자 효과 */
 }
 
-nav a {
-    margin-left: 15px;
-    text-decoration: none;
-    color: #333;
-}
-
 .go-back {
     display: inline-block;
     background-color: #CD31AB;
