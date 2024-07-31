@@ -23,12 +23,15 @@ public class NoticeService {
         this.userService = userService;
     }
 
-    // NoticeList 조회
+    // 공지사항 리스트
     @Transactional(readOnly = true)
-    public List<NoticeDto> getAllNotices() {
+    public List<NoticeDTO> getAllNotices() {
 
+        // 여기서 정렬하거나 or DB에서 정렬해서 받아오거나
         return noticeRepository.findAll().stream()
-                .map(NoticeDto::fromEntity)
+                .sorted(Comparator.comparing(Notice::getUpdatedAt).reversed())
+                .limit(5)
+                .map(NoticeDTO::fromEntity)
                 .collect(Collectors.toList());
 
     }

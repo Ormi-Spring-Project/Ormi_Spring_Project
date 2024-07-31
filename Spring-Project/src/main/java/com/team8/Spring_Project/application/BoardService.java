@@ -38,20 +38,19 @@ public class BoardService {
         this.categoryService = categoryService;
     }
 
-    // BoardList 조회
+    // 카테고리 id 기반 게시판 리스트
     @Transactional
-    public List<BoardDto> getAllBoards() {
+    public List<BoardDTO> getAllBoards(CategoryDTO categoryDTO) {
 
-        // Repository 안쓰고 Service단으로 끝내면 초기화 할 객체가 줄어든다.
-        List<BoardDto> noticeList = noticeService.getAllNotices().stream()
-                .map(notice -> convertNoticeToBoardDto(notice.toEntity(userService)))
+        List<BoardDTO> noticeList = noticeService.getAllNotices().stream()
+                .map(noticeDTO -> NoticeDTO.convertNoticeDtoToBoardDto(noticeDTO, "notice"))
                 .toList();
 
-        List<BoardDto> postList = postService.getAllPosts().stream()
-                .map(post -> convertPostToBoardDto(post.toEntity(userService, categoryService)))
+        List<BoardDTO> postList = postService.getAllPostsByCategory(categoryDTO.getId()).stream()
+                .map(postDTO -> PostDTO.convertPostDtoToBoardDto(postDTO, "post"))
                 .toList();
 
-        List<BoardDto> boardList = new ArrayList<>();
+        List<BoardDTO> boardList = new ArrayList<>();
         boardList.addAll(noticeList);
         boardList.addAll(postList);
 
