@@ -186,9 +186,22 @@ public class BoardController {
         return "redirect:/v1/posts";
     }
 
-    @DeleteMapping("/{id}")
-    public String deletePost(@PathVariable("id") Long id) {
-        boardService.deleteBoard(id);
+    // 게시글 삭제
+    @DeleteMapping({"post/{id}", "notice/{id}"})
+    public String deletePost(@PathVariable("id") Long id,
+                             HttpServletRequest request) {
+
+        String path = request.getRequestURI();
+        String type;
+
+        if (path.contains("/notice/")) {
+            type = "notice";
+            boardService.deleteBoard(id, type);
+        } else {
+            type = "post";
+            boardService.deleteBoard(id, type);
+        }
+
         return "redirect:/v1/posts";
     }
 

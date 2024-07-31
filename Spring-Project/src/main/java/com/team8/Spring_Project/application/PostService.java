@@ -89,8 +89,8 @@ public class PostService {
     @Transactional
     public void deletePost(Long id) {
 
-        Post post = postRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다: " + id));
-
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
         postRepository.delete(post);
 
     }
