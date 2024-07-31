@@ -124,10 +124,14 @@ public class BoardService {
 
     }
 
+    // 게시글 삭제
     @Transactional
-    public void deleteBoard(Long id) {
+    public void deleteBoard(Long id, String type) {
 
-        postService.deletePost(id);
+        if ("notice".equals(type)) {
+            noticeService.deleteNotice(id);
+        } else
+            postService.deletePost(id);
 
     }
 

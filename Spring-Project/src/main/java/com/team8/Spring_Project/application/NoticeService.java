@@ -76,6 +76,7 @@ public class NoticeService {
 
     }
 
+    // 공지사항 삭제
     @Transactional
     public void deleteNotice(Long id) {
 
