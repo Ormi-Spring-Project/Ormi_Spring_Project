@@ -94,8 +94,9 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{id}")
-    public String deleteUser(@ModelAttribute UserDTO userDTO) {
+    public String deleteUser(@ModelAttribute UserDTO userDTO, HttpSession httpSession) {
         userService.deleteUser(userDTO);
+        httpSession.invalidate();
         return "redirect:/v1/main";
     }
 
