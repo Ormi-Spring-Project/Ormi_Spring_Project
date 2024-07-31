@@ -1,6 +1,6 @@
 package com.team8.Spring_Project.application;
 
-import com.team8.Spring_Project.application.dto.CategoryDto;
+import com.team8.Spring_Project.application.dto.CategoryDTO;
 import com.team8.Spring_Project.domain.Category;
 import com.team8.Spring_Project.infrastructure.persistence.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,9 +20,9 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<CategoryDto> getAllCategories() {
+    public List<CategoryDTO> getAllCategories() {
         return categoryRepository.findAll().stream()
-                .map(CategoryDto::fromEntity)
+                .map(CategoryDTO::fromEntity)
                 .collect(Collectors.toList());
     }
 
