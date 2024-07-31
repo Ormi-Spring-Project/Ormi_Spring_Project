@@ -133,45 +133,56 @@ public class BoardController {
 
     }
 
-    }
+    // 수정 페이지 요청
+    @GetMapping({"post/{id}/edit", "notice/{id}/edit"})
+    public String getEditPost(@PathVariable("id") Long id,
+                              HttpServletRequest request,
+                              Model model) throws AccessDeniedException {
 
-    // 원래는 이렇게 권한에 따라 나눠야 한다고 생각한다.
-    // @권한 관련
-    // 이렇게 안할꺼면 BoardDto에 type 필드를 만들어서 나누는 정도? --> 좋은지 모르겠다.
-    // 협업을 위해 이렇게 해놓아야 하나?
-/*    @GetMapping("/{id}/user/edit")
-    public String getEditUserPost(@PathVariable("id") Long id, Model model) {
-        BoardDto board = boardService.getPostById(id);
-        List<CategoryDto> categories = categoryService.getAllCategories();
-        model.addAttribute("post", board);
-        model.addAttribute("categories", categories);
-        return "editPost";
-    }*/
+        // 내부 주석 다 풀면 된다.
+        HttpSession session = request.getSession();
+        String path = request.getRequestURI();
+        UserDTO userDTO = (UserDTO) session.getAttribute("login");
 
-    // 원래는 이렇게 권한에 따라 나눠야 한다고 생각한다.
-    // @권한 관련
-    // 이렇게 안할꺼면 BoardDto에 type 필드를 만들어서 나누는 정도? --> 좋은지 모르겠다.
-/*    @GetMapping("/{id}/admin/edit")
-    public String getEditAdminNotice(@PathVariable("id") Long id, Model model) {
-        BoardDto board = boardService.getNoticeById(id);
-        List<CategoryDto> categories = categoryService.getAllCategories();
-        model.addAttribute("notice", board);
-        model.addAttribute("categories", categories);
-        return "editPost";
-    }*/
+        BoardDTO board;
+        String type;
 
-    @GetMapping("/{id}/edit")
-    public String getEditPost(@PathVariable("id") Long id, Model model) {
-        BoardDto board = boardService.getBoardById(id);
-        List<CategoryDto> categories = categoryService.getAllCategories();
+        if (path.contains("/notice/")) {
+            type = "notice";
+            board = boardService.getBoardById(id, userDTO, type);
+        } else {
+            type = "post";
+            board = boardService.getBoardById(id, userDTO, type);
+        }
+
+        List<CategoryDTO> categories = categoryService.getAllCategories();
+
         model.addAttribute("board", board);
+        model.addAttribute("type", type);
         model.addAttribute("categories", categories);
+        model.addAttribute("userDTO", userDTO);
+
         return "editPost";
+
     }
 
-    @PutMapping("/{id}/edit")
-    public String updatePost(@PathVariable("id") Long id, @ModelAttribute BoardDto boardDto) {
-        boardService.updateBoard(id, boardDto);
+    // 게시글 수정
+    @PutMapping({"post/{id}/edit", "notice/{id}/edit"})
+    public String updatePost(@PathVariable("id") Long id,
+                             @ModelAttribute("board") BoardDTO boardDto,
+                             HttpServletRequest request) {
+
+        String path = request.getRequestURI();
+        String type;
+
+        if (path.contains("/notice/")) {
+            type = "notice";
+        } else {
+            type = "post";
+        }
+
+        boardService.updateBoard(id, boardDto, type);
+
         return "redirect:/v1/posts";
     }
 

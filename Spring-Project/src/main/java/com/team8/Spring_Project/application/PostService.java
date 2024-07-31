@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,13 +68,20 @@ public class PostService {
     }
 
     @Transactional
-    public void updatePost(Long id, PostDto postDto) {
+    // 일반 게시글 수정
+    public void updatePost(Long id, PostDTO postDto) {
 
-        Post post = postRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
+        Category category = categoryService.findCategoryEntity(postDto.getCategoryId());
+
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
         post.update(
                 postDto.getTitle(),
                 postDto.getContent(),
-                postDto.getApplication()
+                postDto.getTag(),
+                postDto.getApplication(),
+                new Timestamp(System.currentTimeMillis()),
+                category
         );
 
     }
