@@ -42,14 +42,14 @@ footer .footer-container h4 {
 }
 
 footer .footer-container ul {
-    list-style-type: disc; /* 리스트 문양 표시 */
-    padding-left: 20px; /* 왼쪽 패딩 추가 */
+    list-style-type: disc;
+    padding-left: 20px;
     margin: 0;
 }
 
 footer .footer-container li {
     margin-bottom: 15px;
-    text-align: left; /* 리스트 항목 왼쪽 정렬 */
+    text-align: left;
 }
 
 footer .footer-container a {

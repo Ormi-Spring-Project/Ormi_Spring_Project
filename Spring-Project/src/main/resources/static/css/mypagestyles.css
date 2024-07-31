@@ -72,14 +72,14 @@ h2 {
 
 .button-group {
     display: flex;
-    justify-content: center; /* 중앙 정렬로 변경 */
+    justify-content: center;
     margin-top: 20px;
-    gap: 20px; /* 버튼 사이의 간격 유지 */
+    gap: 20px;
 }
 
 .modify-btn, .delete-btn {
-    width: 40%; /* 버튼 너비를 40%로 줄임 */
-    max-width: 200px; /* 최대 너비도 줄임 */
+    width: 40%;
+    max-width: 200px;
     padding: 10px;
     background-color: #CD31AB;
     color: white;
@@ -96,7 +96,7 @@ h2 {
 
 .delete-btn {
     background-color: #CD31AB;
-    color: red; /* 글자색을 빨간색으로 변경 */
+    color: orange;
 }
 
 footer {
