@@ -1,20 +1,12 @@
 package com.team8.Spring_Project.application;
 
-import com.team8.Spring_Project.application.dto.BoardDto;
-import com.team8.Spring_Project.application.dto.NoticeDto;
-import com.team8.Spring_Project.application.dto.PostDto;
-import com.team8.Spring_Project.application.dto.UserDTO;
+import com.team8.Spring_Project.application.dto.*;
 import com.team8.Spring_Project.domain.*;
-import com.team8.Spring_Project.presentation.BoardController;
-import jakarta.persistence.EntityNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.AccessDeniedException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,19 +15,12 @@ public class BoardService {
 
     private final PostService postService;
     private final NoticeService noticeService;
-    private final CategoryService categoryService;
-    private final UserService userService;
-    Logger logger = LoggerFactory.getLogger(BoardController.class);
 
     @Autowired
     public BoardService(PostService postService,
-                        NoticeService noticeService,
-                        UserService userService,
-                        CategoryService categoryService) {
+                        NoticeService noticeService) {
         this.postService = postService;
         this.noticeService = noticeService;
-        this.userService = userService;
-        this.categoryService = categoryService;
     }
 
     // 카테고리 id 기반 게시판 리스트

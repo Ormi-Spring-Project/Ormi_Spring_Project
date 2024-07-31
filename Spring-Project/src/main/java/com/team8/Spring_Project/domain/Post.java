@@ -2,8 +2,6 @@ package com.team8.Spring_Project.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Timestamp;
 
