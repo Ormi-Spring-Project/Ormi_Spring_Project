@@ -60,14 +60,19 @@ public class NoticeService {
 
     }
 
+    // 공지사항 수정
     @Transactional
-    public void updateNotice(Long id, NoticeDto noticeDto) {
+    public NoticeDTO updateNotice(Long id, NoticeDTO noticeDto) {
 
-        Notice notice = noticeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
+        Notice notice = noticeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
         notice.update(
                 noticeDto.getTitle(),
-                noticeDto.getContent()
+                noticeDto.getContent(),
+                new Timestamp(System.currentTimeMillis())
         );
+
+        return NoticeDTO.fromEntity(notice);
 
     }
 

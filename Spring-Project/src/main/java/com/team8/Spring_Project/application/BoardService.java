@@ -106,15 +106,21 @@ public class BoardService {
 
     // 게시글 수정
     @Transactional
-    public void updateBoard(Long id, BoardDto boardDto) {
+    public void updateBoard(Long id, BoardDTO boardDto, String type) {
 
-        // 일반 게시글 수정
-        PostDto postDto = convertBoardDtoToPostDto(boardDto);
-        postService.updatePost(id, postDto);
+        if("notice".equals(type)) {
 
-        // 공지사항 수정
-        // NoticeDto noticeDto = convertBoardDtoToNoticeDto(boardDto);
-        // noticeService.updateNotice(id,  noticeDto);
+            // 공지사항 수정
+            NoticeDTO noticeDto = BoardDTO.convertBoardDtoToNoticeDto(boardDto);
+            noticeService.updateNotice(id, noticeDto);
+
+        } else {
+
+            // 일반 게시글 수정
+            PostDTO postDto = BoardDTO.convertBoardDtoToPostDto(boardDto);
+            postService.updatePost(id, postDto);
+
+        }
 
     }
 
