@@ -57,26 +57,44 @@ public class BoardController {
         return "categoryPost";
     }
 
+    // 게시글 상세보기
     @GetMapping({"post/{id}", "notice/{id}"})
-    public String getBoard(@PathVariable Long id, HttpServletRequest request, Model model) throws AccessDeniedException {
+    public String getBoardById(@PathVariable Long id,
+                           @RequestParam(required = false) Long categoryId,
+                           HttpServletRequest request,
+                           Model model) {
 
         HttpSession session = request.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("login");
         String path = request.getRequestURI();
 
-        BoardDto board;
+        BoardDTO board;
         String type;
 
-        if (path.contains("/notice/")) {
-            board = boardService.getNoticeById(id, userDTO);
-            type = "notice";
-        } else {
-            board = boardService.getPostById(id, userDTO);
-            type = "post";
+        try {
+            if (path.contains("/notice/")) {
+                type = "notice";
+                board = boardService.getBoardById(id, userDTO, type);
+            } else {
+                type = "post";
+                board = boardService.getBoardById(id, userDTO, type);
+            }
+        } catch (AccessDeniedException e) {
+            // 원래는 뭐 에러 페이지나 다른 것을 띄워줘야 할 것 같다.
+            return "권한이 없습니다.";
         }
 
+        // 본인 인증
+        boolean isAuthor = userDTO.getId().equals(board.getUserId());
+
+        // ( 본인은 본인 글만 or 관리자 ) 일 경우 수정 가능
+        boolean canEdit = isAuthor || userDTO.getAuthority() == Authority.ADMIN;
+
+        model.addAttribute("userDTO", userDTO);
         model.addAttribute("board", board);
         model.addAttribute("type", type);
+        model.addAttribute("canEdit", canEdit);
+        model.addAttribute("categoryId", categoryId);
         return "viewPost";
     }
 
