@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/writePost.css}">
@@ -31,22 +31,20 @@
             <img class="icon-img" src="/images/img-place-holder.png">
             <button class="icon-img-add-button">Add Icon</button>
         </div>
-        <form class="input">
-            <input class="input-title input-img" type="text" placeholder="Input your [title]">
-            <input class="input-link input-img" type="text" placeholder="Input your [application download link]">
-            <select class="input-tag-select">
-                <option value="" selected>-- 선택 --</option>
-                <option value="Docs">Docs</option>
-                <option value="Financial">Financial</option>
-                <option value="Lifestyle">Lifestyle</option>
-                <option value="Fitness">Fitness</option>
-                <option value="Music">Music</option>
+        <form th:action="@{/v1/posts}" th:object="${board}" method="post" class="input">
+            <input th:field="*{title}" class="input-title input-img" type="text" placeholder="Input your [title]">
+            <input th:field="*{application}" class="input-link input-img" type="text" placeholder="Input your [application download link]">
+            <select th:field="*{categoryId}" class="input-tag-select">
+                <option th:each="category : ${categories}"
+                        th:value="${category.id}"
+                        th:text="${category.name}">General</option>
             </select>
-            <textarea placeholder="사용해 본 Application에 대한 후기를 남겨주세요!"></textarea>
+            <textarea th:field="*{content}" placeholder="사용해 본 Application에 대한 후기를 남겨주세요!"></textarea>
+
+            <div class="back-button-container">
+                <button type="submit" class="back-button">Post</button>
+            </div>
         </form>
-        <div class="back-button-container">
-            <button class="back-button">Post</button>
-        </div>
     </section>
 </main>
 <footer>
