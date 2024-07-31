@@ -28,6 +28,9 @@ public class Post{
     private String content;
 
     @Column
+    private String tag;
+
+    @Column
     private String application;
 
     @Column(name = "created_at")

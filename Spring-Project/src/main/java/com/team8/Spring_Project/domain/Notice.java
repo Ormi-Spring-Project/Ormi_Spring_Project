@@ -5,13 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Timestamp;
 
-@DynamicUpdate
-@DynamicInsert
 @Entity
 @Table(name = "Notice")
 @Getter
@@ -41,13 +37,12 @@ public class Notice{
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // set 메서드를 해결하기 위한 코드.
     public void update(String title,
-                       String content) {
+                       String content,
+                       Timestamp updatedAt) {
         this.title = title;
         this.content = content;
-        this.updatedAt = new Timestamp(System.currentTimeMillis());
-        this.createdAt = updatedAt;
+        this.updatedAt = updatedAt;
     }
 
 }
