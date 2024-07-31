@@ -31,12 +31,14 @@ public class PostService {
         this.categoryService = categoryService;
     }
 
-    // 일반 게시글 리스트 조회
+    // 카테고리 id 기반 일반 게시글 리스트
     @Transactional(readOnly = true)
-    public List<PostDto> getAllPosts() {
-        return postRepository.findAll().stream()
-                .map(PostDto::fromEntity)
+    public List<PostDTO> getAllPostsByCategory(Long categoryId) {
+
+        return postRepository.findByCategoryId(categoryId).stream()
+                .map(PostDTO::fromEntity)
                 .collect(Collectors.toList());
+
     }
 
     // 일반 게시글 상세보기
