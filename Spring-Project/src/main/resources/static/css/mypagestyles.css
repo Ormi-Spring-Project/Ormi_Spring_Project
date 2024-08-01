@@ -35,9 +35,23 @@ main {
 }
 
 .signup-container {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     padding: 20px;
+    align-items: center;
     margin: 0 300px;
+}
+
+.user-form {
+    width: 60%;
+}
+
+.delete-form {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin: 16px;
 }
 
 h2 {

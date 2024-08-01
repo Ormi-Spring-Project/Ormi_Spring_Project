@@ -25,12 +25,12 @@
 </header>
 
 <main>
-    <button th:onclick="|location.href='@{/v1/main}'|" class="back-button">Go To Back</button>
+
     <div class="login_icon"><img src="/images/login_icon.png"/></div>
 
     <div class="signup-container">
         <h2>My page</h2>
-        <form th:action="@{/v1/user/{id}(id=${userDTO.getId()})}" method="post">
+        <form class="user-form" th:action="@{/v1/user/{id}(id=${userDTO.getId()})}" method="post">
             <input type="hidden" name="_method" value="put">
             <div class="input-group">
                 <div class="icon-wrapper">
@@ -66,10 +66,12 @@
                 <button type="submit" class="modify-btn">Modify</button>
             </div>
         </form>
-        <form th:action="@{/v1/user/{id}(id=${userDTO.getId()})}" method="post">
+        <form class="delete-form" th:action="@{/v1/user/{id}(id=${userDTO.getId()})}" method="post">
             <input type="hidden" name="_method" value="delete">
             <button type="submit" class="delete-btn">Delete Account</button>
         </form>
+
+        <button th:onclick="|location.href='@{/v1/main}'|" class="back-button">Go To Back</button>
     </div>
 </main>
 
