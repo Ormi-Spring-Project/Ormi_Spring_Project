@@ -68,9 +68,7 @@ input:focus {
     height: 50px;
     margin-left: 50px;
     margin-top: 200px;
-
     align-items: center;
-    line-height: 45px;
 }
 
 .input {

@@ -13,9 +13,11 @@ button {
 }
 
 .back-button {
-    position: absolute;
-    top: 200px;
-    left: 50px;
+    font-size: 16px;
+    padding: 8px 16px 8px 16px;
+    margin: 56px;
+    background-color: #CD31AB;
+    color: white;
 }
 
 input:focus {

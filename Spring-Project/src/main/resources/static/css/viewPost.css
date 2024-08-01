@@ -12,12 +12,7 @@ main {
 
 form {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: row;
-    margin-bottom: 50px;
-    gap: 50px;
-    padding-left: 300px;
-    padding-right: 300px;
 }
 
 input {
@@ -67,6 +62,10 @@ textarea {
     flex-direction: column;
 }
 
+.admin-notice-container {
+    width: 750px;
+}
+
 /*게시판 제목 및 내용 가운데 정렬 추가*/
 .post-container h1 {
     text-align: center;
@@ -74,40 +73,55 @@ textarea {
 }
 .post-container .content {
     text-align: center;
+    margin-top: 50px;
+}
+
+.post-container .user-post-container {
+    width: 750px;
 }
 
 .icon {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    margin-left: 150px;
-    margin-bottom: 100px;
+    align-items: center;
 }
 
 .icon-img {
+    justify-content: center;
     width: 250px;
     height: 250px;
+    margin-bottom: 50px;
+}
+
+.edit-delete-container {
+
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.delete-form {
+    width: 85px;
+    height: 50px;
 }
 
 .icon-img-add-button {
     width: 85px;
     height: 50px;
-    margin-left: 50px;
-    margin-top: 200px;
     align-items: center;
-    line-height: 45px;
+    margin-right: 100px;
 }
+
 
 .user-information {
     display: flex;
     flex-direction: row;
-    gap: 340px;
+    justify-content: space-between;
     /*게시글 작성정보 유저,시간 위치이동*/
-    margin-left: 150px;
 }
 
 .user-information div {
-    width: 200px;
     word-break: break-all;
 }
 
@@ -245,7 +259,8 @@ textarea {
 .comment-button-container {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 30px;
+    margin-bottom: 50px;
 }
 
 .comment-button {
