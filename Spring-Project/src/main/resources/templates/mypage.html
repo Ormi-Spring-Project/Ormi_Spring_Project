@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YAMA - Your App? My App!</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/mypagestyles.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
     <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
@@ -25,7 +25,7 @@
 </header>
 
 <main>
-    <a href="#" class="go-back">Go To Back</a>
+    <button th:onclick="|location.href='@{/v1/main}'|" class="back-button">Go To Back</button>
     <div class="login_icon"><img src="/images/login_icon.png"/></div>
 
     <div class="signup-container">
@@ -64,7 +64,6 @@
             </div>
             <div class="button-group">
                 <button type="submit" class="modify-btn">Modify</button>
-<!--                <button type="button" class="delete-btn">Delete Account</button>-->
             </div>
         </form>
         <form th:action="@{/v1/user/{id}(id=${userDTO.getId()})}" method="post">

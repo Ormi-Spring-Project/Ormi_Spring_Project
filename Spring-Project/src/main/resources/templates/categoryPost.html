@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/categoryPost.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
 <body>
 <!-- footer가 아래에 안붙어서 만든 div -->
@@ -21,7 +22,7 @@
                         <a th:if="${userDTO.getAuthority().name() == 'USER'}" th:href="@{/v1/user/{id}(id=${userDTO.getId()})}">My Page</a>
                         <a th:if="${userDTO.getAuthority().name() == 'ADMIN'}" th:href="@{/v1/admin}">Admin</a>
                     </li>
-                    <li><a th:if="${userDTO == null}" th:href="@{/v1/signup}">Sign Up</a></li>
+                    <li th:if="${userDTO == null}"><a th:href="@{/v1/signup}">Sign Up</a></li>
                     <li th:if="${userDTO == null}"><a th:href="@{/v1/login}">Log In</a></li>
                     <li th:if="${userDTO != null}"><a th:href="@{/v1/logout}" onclick="logoutMessage()">Log Out</a></li>
                 </ul>

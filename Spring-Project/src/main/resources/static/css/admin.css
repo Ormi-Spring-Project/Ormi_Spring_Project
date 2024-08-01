@@ -18,18 +18,6 @@ main {
     justify-content: start;
 }
 
-.back-button {
-
-    font-size: 16px;
-    border-radius: 32px;
-    padding: 8px 16px 8px 16px;
-    margin: 16px;
-    background-color: #CD31AB;
-    color: white;
-
-    text-decoration: none;
-}
-
 .AdminManagement-title {
     font-size: 36px;
     font-weight: bold;

@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
     <script th:src="@{/js/scroll.js}"></script>
 </head>
 <body>
@@ -28,7 +29,7 @@
     <main>
 
         <div class="back-button-container">
-            <a th:href="@{/v1/main}" class="back-button">Go To Back</a>
+            <button th:onclick="|location.href='@{/v1/main}'|" class="back-button">Go To Back</button>
         </div>
 
         <p class="AdminManagement-title">Admin Management</p>

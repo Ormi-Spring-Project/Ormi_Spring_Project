@@ -35,26 +35,9 @@ textarea {
     resize: none;
 }
 
-input:focus {
-    outline: none;
-}
-
 .back-button-container {
     display: flex;
     justify-content: start;
-}
-
-.back-button {
-
-    font-size: 16px;
-    border-radius: 32px;
-    padding: 8px 16px 8px 16px;
-    margin: 30px;
-    background-color: #CD31AB;
-    color: white;
-
-    width: 150px;
-    align-items: center;
 }
 
 .post-container {

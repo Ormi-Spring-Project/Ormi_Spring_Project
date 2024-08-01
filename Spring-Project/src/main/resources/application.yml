@@ -13,7 +13,7 @@ spring:
       static-locations: classpath:/static/
 
   datasource:
-    url: jdbc:mysql://localhost:3306/yama_db
+    url: jdbc:mysql://localhost:3306/yama
     username: root
     password: '0000'
     driver-class-name: com.mysql.cj.jdbc.Driver

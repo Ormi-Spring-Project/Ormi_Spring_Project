@@ -5,6 +5,7 @@
     <link rel="stylesheet" th:href="@{/css/writePost.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
     <title>Your App? My App! YAMA - 게시글 작성</title>
 </head>
 <body>
@@ -24,7 +25,7 @@
 </header>
 <main>
     <div class="back-button-container">
-        <button class="back-button">Go To Back</button>
+        <button th:onclick="|location.href='@{/v1/posts}'|" class="back-button">Go To Back</button>
     </div>
     <section class="post-container">
         <div class="icon">
@@ -42,7 +43,7 @@
             <textarea th:field="*{content}" placeholder="사용해 본 Application에 대한 후기를 남겨주세요!"></textarea>
 
             <div class="back-button-container">
-                <button type="submit" class="back-button">Post</button>
+                <button type="submit">Post</button>
             </div>
         </form>
     </section>

@@ -23,11 +23,8 @@ footer {
     flex-shrink: 0;
 }
 
-/* 기존 footer 관련 스타일은 유지 */
-
 .footer-container {
-    /* 기존 스타일 유지 */
-    padding: 20px 20px 0; /* 하단 패딩 제거 */
+    padding: 20px 20px 0;
 }
 
 /* 마지막 요소의 마진 제거 */
@@ -36,7 +33,6 @@ footer {
     margin-bottom: 0;
 }
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #ffffff;
@@ -72,20 +68,10 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* 약간의 그림자 효과 */
 }
 
-.go-back {
-    display: inline-block;
-    background-color: #CD31AB;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    text-decoration: none;
-    margin-bottom: 20px;
-}
-
 .signin-container {
     background-color: #fff;
     padding: 20px;
-    margin: 0 300px 0 300px;
+    margin: 0 600px 0 600px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
