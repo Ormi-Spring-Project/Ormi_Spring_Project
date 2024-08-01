@@ -28,6 +28,9 @@ public class Post{
     @Column
     private String tag;
 
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] picture;
+
     @Column
     private String application;
 

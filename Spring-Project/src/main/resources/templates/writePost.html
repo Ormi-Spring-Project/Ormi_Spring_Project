@@ -31,11 +31,14 @@
         <button class="back-button" onclick="history.back()">Go To Back</button>
     </div>
     <section class="post-container">
-        <div th:if="${userDTO.getAuthority().name() == 'USER'}" class="icon">
-            <img class="icon-img" src="/images/img-place-holder.png">
-            <button class="icon-img-add-button">Add Icon</button>
-        </div>
-        <form th:action="@{/v1/posts}" th:object="${board}" method="post" class="input">
+        <form th:action="@{/v1/posts}" th:object="${board}" method="post" id="write" class="input">
+
+            <div th:if="${userDTO.getAuthority().name() == 'USER'}" class="icon">
+                <img src="" class="icon-img" onerror="this.src='/images/img-place-holder.png'">
+                <!--            <button class="icon-img-add-button">Add Icon</button>-->
+                <input type="file" onchange="preview(this)" id="file" class="icon-img-add-button" accept="image/*">
+            </div>
+
             <input th:field="*{title}" class="input-title input-img" type="text" placeholder="Input your [title]">
             <input th:if="${userDTO.getAuthority().name() == 'USER'}" th:field="*{application}" class="input-link input-img" type="text"
                    placeholder="Input your [application download link]">
@@ -76,5 +79,6 @@
         </div>
     </div>
 </footer>
+<script th:src="@{/js/sendImage.js}"></script>
 </body>
 </html>

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.AccessDeniedException;
 import java.util.List;
@@ -123,7 +124,9 @@ public class BoardController {
 
     // 게시글 생성
     @PostMapping
-    public String createPost(@ModelAttribute("board") BoardDTO boardDto, HttpServletRequest request) {
+    public String createPost(@ModelAttribute("board") BoardDTO boardDto,
+                             @ModelAttribute("file") MultipartFile file,
+                             HttpServletRequest request) {
 
         HttpSession session = request.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("login");
