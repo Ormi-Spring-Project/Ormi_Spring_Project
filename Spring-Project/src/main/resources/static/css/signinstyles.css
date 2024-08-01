@@ -53,19 +53,6 @@ body {
     margin: 0 auto;
 }
 
-.go-back {
-    width: 150px;
-    display: inline-block;
-    background-color: #CD31AB; /* 밝은 분홍색 */
-    color: white;
-    padding: 10px 20px;
-    border-radius: 50px; /* 완전한 타원형을 만들기 위해 큰 값 사용 */
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* 약간의 그림자 효과 */
-}
-
 .signin-container {
     background-color: #fff;
     padding: 20px;

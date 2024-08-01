@@ -8,13 +8,13 @@
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/mypagestyles.css}">
     <link rel="stylesheet" th:href="@{/css/common.css}">
-    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/logout.js}"></script>
 </head>
 <body>
 <header>
     <div class="header-container">
         <div class="logo">
-            <img src="/images/yama_logo.png" alt="YAMA Logo">
+            <a th:href="@{/v1/main}"><img src="/images/yama_logo.png" alt="YAMA Logo"></a>
         </div>
         <nav>
             <ul>
@@ -71,14 +71,14 @@
             <button type="submit" class="delete-btn">Delete Account</button>
         </form>
 
-        <button th:onclick="|location.href='@{/v1/main}'|" class="back-button">Go To Back</button>
+        <button class="back-button" onclick="history.back()">Go To Back</button>
     </div>
 </main>
 
 <footer>
     <div class="footer-container">
         <div class="footer-logo">
-            <img src="/images/yama_logo.png" alt="YAMA Logo">
+            <a th:href="@{/v1/main}"><img src="/images/yama_logo.png" alt="YAMA Logo"></a>
         </div>
         <div class="footer-info">
             <div class="footer-contact">

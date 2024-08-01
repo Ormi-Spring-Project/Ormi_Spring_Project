@@ -13,11 +13,6 @@ main {
     flex: 1;
 }
 
-.back-button-container {
-    display: flex;
-    justify-content: start;
-}
-
 .category-title {
     font-size: 36px;
     font-weight: bold;

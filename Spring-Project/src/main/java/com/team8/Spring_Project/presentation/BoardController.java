@@ -114,6 +114,7 @@ public class BoardController {
             throw new AccessDeniedException("권한 정지로 인해 글을 생성할 수 없습니다.");
         }
 
+        model.addAttribute("userDTO", userDTO);
         model.addAttribute("board", new BoardDTO());
         model.addAttribute("categories", categoryService.getAllCategories());
         return "writePost";
@@ -161,6 +162,7 @@ public class BoardController {
 
         model.addAttribute("board", board);
         model.addAttribute("type", type);
+        System.out.println("타입은 ㅇㄻㅇㄹㅇㅁㄴㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅇㅁㄹ" + board.getType());
         model.addAttribute("categories", categories);
         model.addAttribute("userDTO", userDTO);
 

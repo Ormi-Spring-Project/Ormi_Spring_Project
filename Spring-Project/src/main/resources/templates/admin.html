@@ -15,7 +15,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="/images/yama_logo.png" alt="YAMA Logo">
+                <a th:href="@{/v1/main}"><img src="/images/yama_logo.png" alt="YAMA Logo"></a>
             </div>
             <nav>
                 <ul>
@@ -29,7 +29,7 @@
     <main>
 
         <div class="back-button-container">
-            <button th:onclick="|location.href='@{/v1/main}'|" class="back-button">Go To Back</button>
+            <button class="back-button" onclick="history.back()">Go To Back</button>
         </div>
 
         <p class="AdminManagement-title">Admin Management</p>
@@ -68,7 +68,7 @@
     <footer>
         <div class="footer-container">
             <div class="footer-logo">
-                <img src="/images/yama_logo.png" alt="YAMA Logo">
+                <a th:href="@{/v1/main}"><img src="/images/yama_logo.png" alt="YAMA Logo"></a>
             </div>
             <div class="footer-info">
                 <div class="footer-contact">

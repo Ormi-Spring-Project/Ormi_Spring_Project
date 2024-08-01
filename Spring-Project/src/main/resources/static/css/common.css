@@ -12,6 +12,12 @@ button {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+.back-button-container {
+    display: flex;
+    justify-content: start;
+    width: 100%;
+}
+
 .back-button {
     font-size: 16px;
     padding: 8px 16px 8px 16px;
