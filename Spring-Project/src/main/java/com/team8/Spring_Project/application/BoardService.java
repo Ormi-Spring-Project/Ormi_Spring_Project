@@ -5,7 +5,9 @@ import com.team8.Spring_Project.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +70,7 @@ public class BoardService {
 
     // 게시글 생성
     @Transactional
-    public void createBoard(BoardDTO boardDto, UserDTO userDTO, CategoryDTO categoryDTO) {
+    public void createBoard(BoardDTO boardDto, UserDTO userDTO, CategoryDTO categoryDTO) throws IOException {
 
         BoardDTO createdBoardDTO = BoardDTO.createFrom(boardDto, userDTO, categoryDTO);
 

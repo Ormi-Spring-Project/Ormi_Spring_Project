@@ -15,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.file.AccessDeniedException;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -121,14 +123,16 @@ public class BoardController {
     // 게시글 생성
     @PostMapping
     public String createPost(@ModelAttribute("board") BoardDTO boardDto,
-                             @ModelAttribute("file") MultipartFile file,
-                             HttpServletRequest request) {
+                             @RequestPart("file") MultipartFile file,
+                             HttpServletRequest request) throws IOException {
 
         HttpSession session = request.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("login");
         Long categoryId = boardDto.getCategoryId();
 
         CategoryDTO categoryDto = categoryService.getCategoryById(categoryId);
+        boardDto.setPicture(file.getBytes());
+
         boardService.createBoard(boardDto, userDTO, categoryDto);
 
         return "redirect:/v1/posts";
@@ -161,7 +165,6 @@ public class BoardController {
 
         model.addAttribute("board", board);
         model.addAttribute("type", type);
-        System.out.println("타입은 ㅇㄻㅇㄹㅇㅁㄴㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅇㅁㄹ" + board.getType());
         model.addAttribute("categories", categories);
         model.addAttribute("userDTO", userDTO);
 

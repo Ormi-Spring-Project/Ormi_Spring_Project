@@ -31,12 +31,12 @@
         <button class="back-button" onclick="history.back()">Go To Back</button>
     </div>
     <section class="post-container">
-        <form th:action="@{/v1/posts}" th:object="${board}" method="post" id="write" class="input">
+        <form th:action="@{/v1/posts}" th:object="${board}" method="post" id="write" class="input" enctype="multipart/form-data">
 
             <div th:if="${userDTO.getAuthority().name() == 'USER'}" class="icon">
-                <img src="" class="icon-img" onerror="this.src='/images/img-place-holder.png'">
+                <img src="/images/img-place-holder.png" id="preview" class="icon-img">
                 <!--            <button class="icon-img-add-button">Add Icon</button>-->
-                <input type="file" onchange="preview(this)" id="file" class="icon-img-add-button" accept="image/*">
+                <input type="file" id="file" name="file" class="icon-img-add-button" accept="image/*">
             </div>
 
             <input th:field="*{title}" class="input-title input-img" type="text" placeholder="Input your [title]">

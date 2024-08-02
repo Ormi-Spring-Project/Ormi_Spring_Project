@@ -4,6 +4,7 @@ import com.team8.Spring_Project.domain.Category;
 import com.team8.Spring_Project.domain.Post;
 import com.team8.Spring_Project.domain.User;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 
@@ -25,6 +26,8 @@ public class PostDTO {
 
     private String application;
 
+    private byte[] picture;
+
     private Timestamp createdAt;
 
     private Timestamp updatedAt;
@@ -45,6 +48,7 @@ public class PostDTO {
                 .content(post.getContent())
                 .tag(post.getTag())
                 .application(post.getApplication())
+                .picture(post.getPicture())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .userId(post.getUser().getId())
@@ -62,6 +66,7 @@ public class PostDTO {
                 .content(this.content)
                 .tag(this.tag)
                 .application(this.application)
+                .picture(this.picture)
                 .createdAt(this.createdAt)
                 .updatedAt(this.updatedAt)
                 .user(user)
