@@ -1,11 +1,16 @@
 package com.team8.Spring_Project.presentation;
 
+import com.team8.Spring_Project.application.CategoryService;
+import com.team8.Spring_Project.application.PostService;
 import com.team8.Spring_Project.application.UserService;
+import com.team8.Spring_Project.application.dto.CategoryDTO;
+import com.team8.Spring_Project.application.dto.PostDTO;
 import com.team8.Spring_Project.application.dto.UserDTO;
 import com.team8.Spring_Project.domain.Authority;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +22,16 @@ import java.util.List;
 public class UserController {
 
     UserService userService;
+    CategoryService categoryService;
+    PostService postService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService,
+                          CategoryService categoryService,
+                          PostService postService) {
         this.userService = userService;
+        this.categoryService = categoryService;
+        this.postService = postService;
     }
 
     @GetMapping("/main")
@@ -29,13 +40,20 @@ public class UserController {
         HttpSession session = request.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("login");
 
-        if (userDTO == null) {
-            model.addAttribute("userDTO", null);
-            return "main";
-        }
+        List<CategoryDTO> categories = categoryService.getAllCategories();
 
+        model.addAttribute("categories", categories);
         model.addAttribute("userDTO", userDTO);
+
         return "main";
+    }
+
+    // main에 카테고리에 해당하는 데이터 반환하는 메서드
+    @GetMapping("/article-items")
+    @ResponseBody
+    public ResponseEntity<List<PostDTO>> getPostsByCategory(@RequestParam Long categoryId) {
+        List<PostDTO> posts = postService.getAllPostsByCategory(categoryId);
+        return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/signup")
