@@ -180,6 +180,7 @@ public class BoardController {
     public String updatePost(@PathVariable("id") Long id,
                              @ModelAttribute("board") BoardDTO boardDto,
                              @RequestPart("file") MultipartFile file,
+                             HttpSession session,
                              HttpServletRequest request) throws IOException {
 
         String path = request.getRequestURI();
@@ -191,10 +192,21 @@ public class BoardController {
             type = "post";
         }
 
-        boardDto.setPicture(file.getBytes());
+        if (file.isEmpty()) {
+            UserDTO userDTO = (UserDTO) session.getAttribute("login");
+            BoardDTO temp = boardService.getBoardById(id, userDTO, type);
+            boardDto.setPicture(temp.getPicture());
+        } else {
+            boardDto.setPicture(file.getBytes());
+        }
+
         boardService.updateBoard(id, boardDto, type);
 
-        return "redirect:/v1/posts";
+        if (type.equals("notice")) {
+            return "redirect:/v1/posts/notice" + id;
+        }
+
+        return "redirect:/v1/posts/post/" + id;
     }
 
     // 게시글 삭제
