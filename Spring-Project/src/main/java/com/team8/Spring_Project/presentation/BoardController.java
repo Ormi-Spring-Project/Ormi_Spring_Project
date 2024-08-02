@@ -92,9 +92,12 @@ public class BoardController {
         // ( 본인은 본인 글만 or 관리자 ) 일 경우 수정 가능
         boolean canEdit = isAuthor || userDTO.getAuthority() == Authority.ADMIN;
 
+        if (type.equals("post")) {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(board.getPicture()));
+        }
+
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("board", board);
-        model.addAttribute("image", Base64.getEncoder().encodeToString(board.getPicture()));
         model.addAttribute("type", type);
         model.addAttribute("canEdit", canEdit);
         model.addAttribute("categoryId", categoryId);
@@ -125,7 +128,7 @@ public class BoardController {
     // 게시글 생성
     @PostMapping
     public String createPost(@ModelAttribute("board") BoardDTO boardDto,
-                             @RequestPart("file") MultipartFile file,
+                             @RequestPart(value = "file", required = false) MultipartFile file,
                              HttpServletRequest request) throws IOException {
 
         HttpSession session = request.getSession();
@@ -133,7 +136,10 @@ public class BoardController {
         Long categoryId = boardDto.getCategoryId();
 
         CategoryDTO categoryDto = categoryService.getCategoryById(categoryId);
-        boardDto.setPicture(file.getBytes());
+
+        if (userDTO.getAuthority() == Authority.USER) {
+            boardDto.setPicture(file.getBytes());
+        }
 
         boardService.createBoard(boardDto, userDTO, categoryDto);
 
@@ -165,8 +171,11 @@ public class BoardController {
 
         List<CategoryDTO> categories = categoryService.getAllCategories();
 
+        if (type.equals("post")) {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(board.getPicture()));
+        }
+
         model.addAttribute("board", board);
-        model.addAttribute("image", Base64.getEncoder().encodeToString(board.getPicture()));
         model.addAttribute("type", type);
         model.addAttribute("categories", categories);
         model.addAttribute("userDTO", userDTO);
@@ -179,7 +188,7 @@ public class BoardController {
     @PutMapping({"post/{id}/edit", "notice/{id}/edit"})
     public String updatePost(@PathVariable("id") Long id,
                              @ModelAttribute("board") BoardDTO boardDto,
-                             @RequestPart("file") MultipartFile file,
+                             @RequestPart(value = "file", required = false) MultipartFile file,
                              HttpSession session,
                              HttpServletRequest request) throws IOException {
 
@@ -192,7 +201,7 @@ public class BoardController {
             type = "post";
         }
 
-        if (file.isEmpty()) {
+        if (file == null) {
             UserDTO userDTO = (UserDTO) session.getAttribute("login");
             BoardDTO temp = boardService.getBoardById(id, userDTO, type);
             boardDto.setPicture(temp.getPicture());
@@ -203,7 +212,7 @@ public class BoardController {
         boardService.updateBoard(id, boardDto, type);
 
         if (type.equals("notice")) {
-            return "redirect:/v1/posts/notice" + id;
+            return "redirect:/v1/posts/notice/" + id;
         }
 
         return "redirect:/v1/posts/post/" + id;

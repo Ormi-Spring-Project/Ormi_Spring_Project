@@ -1,6 +1,7 @@
 body {
     display: flex;
     flex-direction: column;
+    margin: 0;
 }
 
 main {
@@ -57,7 +58,7 @@ textarea {
 }
 
 .icon-img-add-button {
-    width: 85px;
+    width: 80px;
     height: 50px;
     margin-left: 50px;
     margin-top: 200px;
