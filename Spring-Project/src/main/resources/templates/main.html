@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <script th:src="@{/js/logout.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
 <header>
@@ -18,7 +19,8 @@
         <nav>
             <ul>
                 <li th:if="${userDTO != null and userDTO.getAuthority().name() != 'BANNED'}">
-                    <a th:if="${userDTO.getAuthority().name() == 'USER'}" th:href="@{/v1/user/{id}(id=${userDTO.getId()})}">My Page</a>
+                    <a th:if="${userDTO.getAuthority().name() == 'USER'}"
+                       th:href="@{/v1/user/{id}(id=${userDTO.getId()})}">My Page</a>
                     <a th:if="${userDTO.getAuthority().name() == 'ADMIN'}" th:href="@{/v1/admin}">Admin</a>
                 </li>
                 <li th:if="${userDTO == null}"><a th:href="@{/v1/signup}">Sign Up</a></li>
@@ -42,12 +44,15 @@
         <h3>Categories</h3>
         <div class="category-slider">
             <button class="slider-arrow left">&lt;</button>
-            <div class="category-items">
-                <div class="category-item card"><p>Docs</p></div>
-                <div class="category-item card"><p>Financial</p></div>
-                <div class="category-item card active"><p>Lifestyle</p></div>
-                <div class="category-item card"><p>Fitness</p></div>
-                <div class="category-item card"><p>Music</p></div>
+            <div class="category-item-slider">
+                <div class="category-items">
+                    <div th:each="category : ${categories}"
+                         class="category-item card"
+                         th:category-id="${category.id}"
+                         th:category-name="${category.name}">
+                        <p th:text="${category.name}"></p>
+                    </div>
+                </div>
             </div>
             <button class="slider-arrow right">&gt;</button>
         </div>
@@ -55,49 +60,16 @@
 
 
     <section class="articles">
-        <a href="#" class="see-all">See All Article &gt;</a>
+        <a href="" class="see-all">See All Article &gt;</a>
         <div class="article-grid">
             <a href="#" class="article-card">
-                <img src="/images/cat-icon.png" alt="Cat Icon">
-                <h4>고양이 키우기</h4>
+                <img class="article-img" alt="Cat Icon">
+                <h4></h4>
                 <div class="article-info">
-                    <p class="article-author">사용자 닉네임</p>
-                    <p class="article-createAt"> 2024-07-23</p>
+                    <p class="article-author"></p>
+                    <p class="article-createAt"></p>
                 </div>
             </a>
-            <a href="#" class="article-card">
-                <img src="/images/cat-icon.png" alt="Cat Icon">
-                <h4>고양이 키우기</h4>
-                <div class="article-info">
-                    <p class="article-author">사용자 닉네임</p>
-                    <p class="article-createAt"> 2024-07-23</p>
-                </div>
-            </a>
-            <a href="#" class="article-card">
-                <img src="/images/cat-icon.png" alt="Cat Icon">
-                <h4>고양이 키우기</h4>
-                <div class="article-info">
-                    <p class="article-author">사용자 닉네임</p>
-                    <p class="article-createAt"> 2024-07-23</p>
-                </div>
-            </a>
-            <a href="#" class="article-card">
-                <img src="/images/cat-icon.png" alt="Cat Icon">
-                <h4>고양이 키우기</h4>
-                <div class="article-info">
-                    <p class="article-author">사용자 닉네임</p>
-                    <p class="article-createAt"> 2024-07-23</p>
-                </div>
-            </a>
-            <a href="#" class="article-card">
-                <img src="/images/cat-icon.png" alt="Cat Icon">
-                <h4>고양이 키우기</h4>
-                <div class="article-info">
-                    <p class="article-author">사용자 닉네임</p>
-                    <p class="article-createAt"> 2024-07-23</p>
-                </div>
-            </a>
-            <!-- Repeat article-card div for other articles -->
         </div>
 
     </section>
