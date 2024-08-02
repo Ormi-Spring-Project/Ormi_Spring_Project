@@ -70,7 +70,7 @@
         <div class="user-post-container" th:if="${type == 'post'}">
             <h1 th:text="${board.getTitle()}"></h1>
             <div class="icon">
-                <img class="icon-img" src="/images/img-place-holder.png">
+                <img class="icon-img" th:src="'data:image;base64,'+${image}">
                 <div class="edit-delete-container" th:if="${canEdit}">
                     <button
                             th:onclick="|location.href='@{/v1/posts/post/{id}/edit(id=${board.id})}'|"

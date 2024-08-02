@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -85,6 +86,8 @@ public class BoardController {
             return "권한이 없습니다.";
         }
 
+        System.out.println(Arrays.toString(board.getPicture()));
+
         // 본인 인증
         boolean isAuthor = userDTO.getId().equals(board.getUserId());
 
@@ -93,6 +96,7 @@ public class BoardController {
 
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("board", board);
+        model.addAttribute("image", Base64.getEncoder().encodeToString(board.getPicture()));
         model.addAttribute("type", type);
         model.addAttribute("canEdit", canEdit);
         model.addAttribute("categoryId", categoryId);

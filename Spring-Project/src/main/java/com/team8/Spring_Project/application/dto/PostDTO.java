@@ -82,6 +82,7 @@ public class PostDTO {
                 .id(postDTO.getId()) // 상세보기를 위한 BoardDto id 필드 추가에 따른 id 변환
                 .title(postDTO.getTitle())
                 .userId(postDTO.getUserId())
+                .picture(postDTO.getPicture())
                 .content(postDTO.getContent())
                 .application(postDTO.getApplication())
                 .createdAt(postDTO.getCreatedAt())
