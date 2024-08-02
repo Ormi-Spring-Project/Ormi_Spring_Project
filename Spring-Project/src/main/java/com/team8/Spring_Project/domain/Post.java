@@ -48,6 +48,7 @@ public class Post{
     private Category category;
 
     public void update(String title,
+                       byte[] picture,
                        String content,
                        String tag,
                        String application,
@@ -56,6 +57,7 @@ public class Post{
 
 
         this.title = title;
+        this.picture = picture;
         this.content = content;
         this.tag = tag;
         this.application = application;

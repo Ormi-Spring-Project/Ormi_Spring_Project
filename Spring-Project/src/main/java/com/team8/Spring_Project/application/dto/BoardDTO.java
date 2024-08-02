@@ -44,8 +44,8 @@ public class BoardDTO {
                                       CategoryDTO categoryDTO) {
         return BoardDTO.builder()
                 .title(boardDto.getTitle())
-                .picture(boardDto.getPicture())
                 .authorName(userDTO.getNickname())
+                .picture(boardDto.getPicture())
                 .content(boardDto.getContent())
                 .createdAt(new Timestamp(System.currentTimeMillis()))
                 .updatedAt(new Timestamp(System.currentTimeMillis()))

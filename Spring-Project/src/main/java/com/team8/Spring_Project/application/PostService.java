@@ -70,8 +70,10 @@ public class PostService {
 
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
+
         post.update(
                 postDto.getTitle(),
+                postDto.getPicture(),
                 postDto.getContent(),
                 postDto.getTag(),
                 postDto.getApplication(),

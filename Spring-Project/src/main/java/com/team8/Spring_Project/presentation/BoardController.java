@@ -86,8 +86,6 @@ public class BoardController {
             return "권한이 없습니다.";
         }
 
-        System.out.println(Arrays.toString(board.getPicture()));
-
         // 본인 인증
         boolean isAuthor = userDTO.getId().equals(board.getUserId());
 
@@ -168,6 +166,7 @@ public class BoardController {
         List<CategoryDTO> categories = categoryService.getAllCategories();
 
         model.addAttribute("board", board);
+        model.addAttribute("image", Base64.getEncoder().encodeToString(board.getPicture()));
         model.addAttribute("type", type);
         model.addAttribute("categories", categories);
         model.addAttribute("userDTO", userDTO);
@@ -180,7 +179,8 @@ public class BoardController {
     @PutMapping({"post/{id}/edit", "notice/{id}/edit"})
     public String updatePost(@PathVariable("id") Long id,
                              @ModelAttribute("board") BoardDTO boardDto,
-                             HttpServletRequest request) {
+                             @RequestPart("file") MultipartFile file,
+                             HttpServletRequest request) throws IOException {
 
         String path = request.getRequestURI();
         String type;
@@ -191,6 +191,7 @@ public class BoardController {
             type = "post";
         }
 
+        boardDto.setPicture(file.getBytes());
         boardService.updateBoard(id, boardDto, type);
 
         return "redirect:/v1/posts";
