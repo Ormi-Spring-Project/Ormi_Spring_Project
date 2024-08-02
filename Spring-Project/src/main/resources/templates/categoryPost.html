@@ -36,7 +36,7 @@
             <button class="back-button" onclick="history.back()">Go To Back</button>
         </div>
 
-        <p class="category-title">Business</p>
+        <p class="category-title" th:text="${categoryName}"></p>
 
         <div class="category-list-container">
             <select class="category-list" name="categoryId"

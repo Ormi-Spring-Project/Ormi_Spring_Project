@@ -42,20 +42,16 @@ public class BoardController {
         HttpSession session = request.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("login");
         CategoryDTO categoryDto = categoryService.getCategoryById(categoryId);
-
-        // 권한이 없으면 게시글 리스트를 못본다.
-        if (userDTO == null) {
-            model.addAttribute("userDTO", null);
-            return "redirect:/login";
-        }
+        String categoryName = categoryDto.getName();
 
         List<BoardDTO> boards = boardService.getAllBoards(categoryDto);
         List<CategoryDTO> categories = categoryService.getAllCategories();
 
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("boards", boards);
-        model.addAttribute("categories", categories); // 카테고리 목록을 모델에 추가
+        model.addAttribute("categories", categories);
         model.addAttribute("selectedCategoryId", categoryId);
+        model.addAttribute("categoryName", categoryName);
 
         return "categoryPost";
     }

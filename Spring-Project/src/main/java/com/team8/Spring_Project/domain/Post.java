@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "Post")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
