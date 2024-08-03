@@ -41,10 +41,29 @@
         <img src="/images/pointing-hand.png" alt="Pointing Hand" class="pointing-hand">
     </section>
 
+<!--    <section class="card categories">-->
+<!--        <h3>Categories</h3>-->
+<!--        <div class="category-slider">-->
+<!--            <button class="slider-arrow left">&lt;</button>-->
+<!--            <div class="category-item-slider">-->
+<!--                <div class="category-items">-->
+<!--                    <div th:each="category : ${categories}"-->
+<!--                         class="category-item card"-->
+<!--                         th:category-id="${category.id}"-->
+<!--                         th:category-name="${category.name}">-->
+<!--                        <p th:text="${category.name}"></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <button class="slider-arrow right">&gt;</button>-->
+<!--        </div>-->
+<!--    </section>-->
+
     <section class="card categories">
         <h3>Categories</h3>
+        <button class="slider-arrow left">&lt;</button>
+        <button class="slider-arrow right">&gt;</button>
         <div class="category-slider">
-            <button class="slider-arrow left">&lt;</button>
             <div class="category-item-slider">
                 <div class="category-items">
                     <div th:each="category : ${categories}"
@@ -55,10 +74,8 @@
                     </div>
                 </div>
             </div>
-            <button class="slider-arrow right">&gt;</button>
         </div>
     </section>
-
 
     <section class="articles">
         <a href="" class="see-all">See All Article &gt;</a>
