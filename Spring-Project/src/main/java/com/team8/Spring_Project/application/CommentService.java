@@ -34,6 +34,7 @@ public class CommentService {
     public CommentDTO createComment(CommentDTO commentDTO) {
         Comment comment = new Comment();
         comment.setContent(commentDTO.getContent());
+        comment.setRating(commentDTO.getRating());  // 별점 설정 추가
 
         User user = userRepository.findById(commentDTO.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
@@ -55,7 +56,8 @@ public class CommentService {
                 comment.getUser().getNickname(),
                 comment.getCreatedAt(),
                 comment.getUpdatedAt(),
-                comment.getPost().getId()
+                comment.getPost().getId(),
+                comment.getRating()  // rating 필드 추가
         );
     }
 
@@ -68,6 +70,7 @@ public class CommentService {
         }
 
         comment.setContent(commentDTO.getContent());
+        comment.setRating(commentDTO.getRating());  // 별점 업데이트 추가
         Comment updatedComment = commentRepository.save(comment);
         return convertToDTO(updatedComment);
     }
@@ -81,5 +84,17 @@ public class CommentService {
         }
 
         commentRepository.delete(comment);
+    }
+
+    // 평균 별점 계산 메소드 추가
+    public double getAverageRatingForPost(Long postId) {
+        List<Comment> comments = commentRepository.findByPostId(postId);
+        if (comments.isEmpty()) {
+            return 0.0;
+        }
+        double sum = comments.stream()
+                .mapToInt(Comment::getRating)
+                .sum();
+        return sum / comments.size();
     }
 }

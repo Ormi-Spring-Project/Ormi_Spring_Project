@@ -15,6 +15,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+    private Integer rating;  // 별점 필드 추가
     private Timestamp createdAt;
     private Timestamp updatedAt;
 

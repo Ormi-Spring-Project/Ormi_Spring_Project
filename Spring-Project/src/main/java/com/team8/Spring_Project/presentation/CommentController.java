@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -77,5 +76,11 @@ public class CommentController {
 
         commentService.deleteComment(commentId, userDTO.getId());
         return ResponseEntity.noContent().build();
+    }
+//    평균평점
+    @GetMapping("/average-rating")
+    public ResponseEntity<Double> getAverageRating(@PathVariable Long postId) {
+        double averageRating = commentService.getAverageRatingForPost(postId);
+        return ResponseEntity.ok(averageRating);
     }
 }

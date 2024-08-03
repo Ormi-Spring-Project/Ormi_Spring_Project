@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (postId && currentUserId) {
         loadComments();
+        // 별점 관련 모듈화=>기능설명 추가 필요
+        window.ratingModule.loadAverageRating(postId);
+        window.ratingModule.initializeRating();
     } else {
         console.error('Required data is missing');
     }
@@ -38,6 +41,11 @@ function createCommentElement(comment) {
         second: '2-digit'
     });
 
+    // 별점을 별 문자로 표시하는 함수 추가
+    const renderStars = (rating) => {
+        return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+    };
+
     commentDiv.innerHTML = `
         <div class="author-createdAt-delete-update-container">
             <div class="author-createdAt-container">
@@ -54,6 +62,10 @@ function createCommentElement(comment) {
         <div class="content-container">
             <p>${comment.content}</p>
         </div>
+<!--댓글내 부여한 평점 표기-->
+        <div class="rating-container"> 
+            <p>평점: ${comment.rating ? renderStars(comment.rating) : 'No rating'}</p>
+        </div>
     `;
 
     return commentDiv;
@@ -61,17 +73,34 @@ function createCommentElement(comment) {
 
 function submitComment() {
     const content = document.getElementById('commentContent').value;
+    // 평점 선택 추가
+    const selectedRating = window.ratingModule.getSelectedRating();
+
+    if (!content.trim()) {
+        alert('댓글 내용을 입력해주세요.');
+        return;
+    }
+    if (selectedRating === 0) {
+        alert('별점을 선택해주세요.');
+        return;
+    }
+
     fetch(`/api/posts/${postId}/comments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content: content }),
+        // 별점추가
+        body: JSON.stringify({ content: content, rating: selectedRating }),
     })
         .then(response => response.json())
         .then(comment => {
             document.getElementById('commentContent').value = '';
+            // 별점 추가
+            window.ratingModule.resetRating();
             loadComments();
+            // 평균별점
+            window.ratingModule.loadAverageRating(postId);
         });
 }
 
@@ -132,7 +161,16 @@ function deleteComment(commentId) {
             .then(response => {
                 if (response.ok) {
                     loadComments();
+                    // 게시글별 평규평점
+                    window.ratingModule.loadAverageRating(postId);
                 }
             });
     }
 }
+
+// 전역 스코프에서 함수 노출=>부가설명 필요
+window.submitComment = submitComment;
+window.editComment = editComment;
+window.saveEditedComment = saveEditedComment;
+window.cancelEdit = cancelEdit;
+window.deleteComment = deleteComment;

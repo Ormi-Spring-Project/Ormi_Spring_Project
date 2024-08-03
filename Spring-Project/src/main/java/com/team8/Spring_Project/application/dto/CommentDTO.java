@@ -6,6 +6,9 @@ import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
+//생성자 자동생성 추가(전역 사용할때)
+@AllArgsConstructor
+@Builder
 public class CommentDTO {
     private Long id;
     private String content;
@@ -14,15 +17,6 @@ public class CommentDTO {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Long postId;
+    private Integer rating;  // 별점 관련 추가
 
-    // 필요한 경우 생성자 추가
-    public CommentDTO(Long id, String content, Long userId, String authorNickname, Timestamp createdAt, Timestamp updatedAt, Long postId) {
-        this.id = id;
-        this.content = content;
-        this.userId = userId;
-        this.authorNickname = authorNickname;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.postId = postId;
-    }
 }
