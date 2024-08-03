@@ -1,8 +1,6 @@
 body {
     display: flex;
     flex-direction: column;
-    /*알수 없는이유로  body vcs margin 8px가 생김... 해당부분 없애는 코드 적용*/
-    margin: 0;
 }
 
 main {
