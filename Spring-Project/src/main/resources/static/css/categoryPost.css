@@ -19,6 +19,11 @@ main {
     text-align: center;
 }
 
+.write-button {
+    margin-left: 1480px;
+    margin-bottom: 0;
+}
+
 .category-list-container {
     display: flex;
     justify-content: end;
