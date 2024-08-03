@@ -3,6 +3,7 @@ package com.team8.Spring_Project.presentation;
 import com.team8.Spring_Project.application.RatingService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +19,16 @@ public class RatingController {
     }
 
     @GetMapping("/post/{postId}")
-    public ResponseEntity<Double> getAverageRatingForPost(@PathVariable Long postId) {
+    public ResponseEntity<?> getAverageRatingForPost(@PathVariable Long postId) {
         try {
             double averageRating = ratingService.getAverageRatingForPost(postId);
             return ResponseEntity.ok(averageRating);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error calculating average rating: " + e.getMessage());
         }
     }
 

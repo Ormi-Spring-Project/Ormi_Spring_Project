@@ -13,7 +13,7 @@ public class CommentDTO {
     private Long id;
     private String content;
     private Long userId;
-    private String authorNickname; // authorName 대신 authorNickname 사용
+    private String authorNickname;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Long postId;

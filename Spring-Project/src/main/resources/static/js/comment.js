@@ -41,30 +41,28 @@ function createCommentElement(comment) {
         second: '2-digit'
     });
 
-    // 별점을 별 문자로 표시하는 함수 추가
     const renderStars = (rating) => {
         return '★'.repeat(rating) + '☆'.repeat(5 - rating);
     };
 
     commentDiv.innerHTML = `
-        <div class="author-createdAt-delete-update-container">
-            <div class="author-createdAt-container">
-                <p class="author">${comment.authorNickname}</p>
-                <p class="createdAt">${formattedDate}</p>
+        <div class="comment-header">
+            <div class="author-info">
+                <span class="author">${comment.authorNickname}</span>
+                <span class="createdAt">${formattedDate}</span>
             </div>
             <div class="delete-update-container">
                 ${currentUserId == comment.userId ? `
-                    <p class="update" onclick="editComment(${comment.id})">수정</p>
-                    <p class="delete" onclick="deleteComment(${comment.id})">삭제</p>
+                    <span class="update" onclick="editComment(${comment.id})">수정</span>
+                    <span class="delete" onclick="deleteComment(${comment.id})">삭제</span>
                 ` : ''}
             </div>
         </div>
+        <div class="rating-container"> 
+            <p>${comment.rating ? renderStars(comment.rating) : '평점 없음'}</p>
+        </div>
         <div class="content-container">
             <p>${comment.content}</p>
-        </div>
-<!--댓글내 부여한 평점 표기-->
-        <div class="rating-container"> 
-            <p>평점: ${comment.rating ? renderStars(comment.rating) : 'No rating'}</p>
         </div>
     `;
 
@@ -161,7 +159,7 @@ function deleteComment(commentId) {
             .then(response => {
                 if (response.ok) {
                     loadComments();
-                    // 게시글별 평규평점
+                    // 게시글별 평균평점
                     window.ratingModule.loadAverageRating(postId);
                 }
             });

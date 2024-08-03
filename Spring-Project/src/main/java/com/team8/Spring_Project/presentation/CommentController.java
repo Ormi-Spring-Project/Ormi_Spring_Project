@@ -77,10 +77,4 @@ public class CommentController {
         commentService.deleteComment(commentId, userDTO.getId());
         return ResponseEntity.noContent().build();
     }
-//    평균평점
-    @GetMapping("/average-rating")
-    public ResponseEntity<Double> getAverageRating(@PathVariable Long postId) {
-        double averageRating = commentService.getAverageRatingForPost(postId);
-        return ResponseEntity.ok(averageRating);
-    }
 }

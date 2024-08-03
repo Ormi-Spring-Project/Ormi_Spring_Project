@@ -5,7 +5,6 @@
     <title>Your App? My App! YAMA - 게시글 보기</title>
     <script th:src="@{/js/rating.js}"></script>
     <script th:src="@{/js/comment.js}"></script>
-    <script th:src="@{/js/enter.js}"></script>
     <script th:src="@{/js/logout.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/footer.css}">
@@ -120,10 +119,12 @@
 <!--        </div>-->
             <div th:if="${board.getType().equals('post')}" class="comment-section">
 
-                <!-- 평균 별점 표시 -->
+                <!-- 평점 표시 -->
                 <div class="average-rating-section">
-                    <h3>평균 별점</h3>
-                    <p id="averageRating">Loading...</p>
+                    <div class="rating-summary">
+                        <span class="stars" id="averageRatingStars"></span>
+                        <span class="average-rating" id="averageRating"></span>
+                    </div>
                 </div>
                 <h2>댓글</h2>
                 <div id="commentContainer">

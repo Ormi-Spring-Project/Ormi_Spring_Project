@@ -35,4 +35,5 @@ public class RatingDTO {
         private Long userId;
         private Long postId;
     }
+
 }
