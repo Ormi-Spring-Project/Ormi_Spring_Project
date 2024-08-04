@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +78,7 @@ public class UserController {
 
     @GetMapping("/user/{id}")
     // 여기는 My Page이기 때문에 id 검사가 필요해 메서드 수준에서 2차 검증.
+    // id와 User 검증이 같이 필요한 경우에만 메서드 수준에서 2차 검증.
     @PreAuthorize("authentication.principal.id == #id and hasRole('USER')")
     public String getMyPage(@PathVariable("id") Long id,
                             Model model) {
