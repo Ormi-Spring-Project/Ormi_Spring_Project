@@ -2,14 +2,18 @@ package com.team8.Spring_Project.presentation;
 
 import com.team8.Spring_Project.application.BoardService;
 import com.team8.Spring_Project.application.CategoryService;
+import com.team8.Spring_Project.application.PostService;
 import com.team8.Spring_Project.application.dto.BoardDTO;
 import com.team8.Spring_Project.application.dto.CategoryDTO;
+import com.team8.Spring_Project.application.dto.PostDTO;
 import com.team8.Spring_Project.application.dto.UserDTO;
 import com.team8.Spring_Project.domain.Authority;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +27,15 @@ public class BoardController {
 
     private final BoardService boardService;
     private final CategoryService categoryService;
+    private final PostService postService;
 
     @Autowired
     public BoardController(BoardService boardService,
-                           CategoryService categoryService) {
+                           CategoryService categoryService,
+                           PostService postService) {
         this.boardService = boardService;
         this.categoryService = categoryService;
+        this.postService = postService;
     }
 
     // 게시글 리스트 페이지 요청
@@ -53,6 +60,13 @@ public class BoardController {
         model.addAttribute("categoryName", categoryName);
 
         return "categoryPost";
+    }
+
+    @GetMapping("/article-items")
+    @ResponseBody
+    public ResponseEntity<List<PostDTO>> getPostsByCategory(@RequestParam Long categoryId) {
+        List<PostDTO> posts = postService.getAllPostsByCategory(categoryId);
+        return ResponseEntity.ok(posts);
     }
 
     // 게시글 상세보기
