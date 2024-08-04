@@ -9,7 +9,6 @@ import com.team8.Spring_Project.application.dto.PostDTO;
 import com.team8.Spring_Project.application.dto.UserDTO;
 import com.team8.Spring_Project.domain.Authority;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,10 +42,9 @@ public class BoardController {
     @ResponseStatus(HttpStatus.OK)
     public String getAllBoards(@RequestParam(name = "categoryId", required = false, defaultValue = "1") Long categoryId,
                                Model model,
-                               HttpServletRequest request) {
+                               Authentication authentication) {
 
-        HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
         CategoryDTO categoryDto = categoryService.getCategoryById(categoryId);
         String categoryName = categoryDto.getName();
 
@@ -74,10 +72,10 @@ public class BoardController {
     public String getBoardById(@PathVariable Long id,
                            @RequestParam(required = false) Long categoryId,
                            HttpServletRequest request,
+                           Authentication authentication,
                            Model model) {
 
-        HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
         String path = request.getRequestURI();
 
         BoardDTO board;
@@ -86,11 +84,10 @@ public class BoardController {
         try {
             if (path.contains("/notice/")) {
                 type = "notice";
-                board = boardService.getBoardById(id, userDTO, type);
             } else {
                 type = "post";
-                board = boardService.getBoardById(id, userDTO, type);
             }
+            board = boardService.getBoardById(id, userDTO, type);
         } catch (AccessDeniedException e) {
             // 원래는 뭐 에러 페이지나 다른 것을 띄워줘야 할 것 같다.
             return "권한이 없습니다.";
@@ -114,10 +111,10 @@ public class BoardController {
     @GetMapping("/write")
     @ResponseStatus(HttpStatus.OK)
     public String getWritePost(Model model,
-                               HttpServletRequest request) throws AccessDeniedException {
+                               Authentication authentication) throws AccessDeniedException {
 
-        HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
+        List<CategoryDTO> categoryDTOList = categoryService.getAllCategories();
 
         // 권한이 없으면 글쓰기 버튼 누를 경우 예외 던짐.
         if (userDTO.getAuthority() == Authority.BANNED) {
@@ -126,17 +123,17 @@ public class BoardController {
 
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("board", new BoardDTO());
-        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("categories", categoryDTOList);
         return "writePost";
 
     }
 
     // 게시글 생성
     @PostMapping
-    public String createPost(@ModelAttribute("board") BoardDTO boardDto, HttpServletRequest request) {
+    public String createPost(@ModelAttribute("board") BoardDTO boardDto, Authentication authentication) {
 
-        HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
+
         Long categoryId = boardDto.getCategoryId();
 
         CategoryDTO categoryDto = categoryService.getCategoryById(categoryId);
@@ -149,30 +146,27 @@ public class BoardController {
     // 수정 페이지 요청
     @GetMapping({"post/{id}/edit", "notice/{id}/edit"})
     public String getEditPost(@PathVariable("id") Long id,
+                              Authentication authentication,
                               HttpServletRequest request,
                               Model model) throws AccessDeniedException {
 
-        // 내부 주석 다 풀면 된다.
-        HttpSession session = request.getSession();
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
         String path = request.getRequestURI();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
 
         BoardDTO board;
         String type;
 
         if (path.contains("/notice/")) {
             type = "notice";
-            board = boardService.getBoardById(id, userDTO, type);
         } else {
             type = "post";
-            board = boardService.getBoardById(id, userDTO, type);
         }
+        board = boardService.getBoardById(id, userDTO, type);
 
         List<CategoryDTO> categories = categoryService.getAllCategories();
 
         model.addAttribute("board", board);
         model.addAttribute("type", type);
-        System.out.println("타입은 ㅇㄻㅇㄹㅇㅁㄴㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅇㅁㄹ" + board.getType());
         model.addAttribute("categories", categories);
         model.addAttribute("userDTO", userDTO);
 
