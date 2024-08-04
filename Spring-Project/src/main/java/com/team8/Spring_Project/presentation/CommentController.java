@@ -3,12 +3,10 @@ package com.team8.Spring_Project.presentation;
 import com.team8.Spring_Project.application.CommentService;
 import com.team8.Spring_Project.application.dto.CommentDTO;
 import com.team8.Spring_Project.application.dto.UserDTO;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -31,9 +29,9 @@ public class CommentController {
     public ResponseEntity<CommentDTO> createComment(
             @PathVariable Long postId,
             @RequestBody CommentDTO commentDto,
-            HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+            Authentication authentication) {
+
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
 
         if (userDTO == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -51,9 +49,9 @@ public class CommentController {
             @PathVariable Long postId,
             @PathVariable Long commentId,
             @RequestBody CommentDTO commentDto,
-            HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+            Authentication authentication) {
+
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
 
         if (userDTO == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -67,9 +65,9 @@ public class CommentController {
     public ResponseEntity<Void> deleteComment(
             @PathVariable Long postId,
             @PathVariable Long commentId,
-            HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+            Authentication authentication) {
+
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
 
         if (userDTO == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
