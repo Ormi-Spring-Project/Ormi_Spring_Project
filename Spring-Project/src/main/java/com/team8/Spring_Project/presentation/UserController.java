@@ -4,13 +4,12 @@ import com.team8.Spring_Project.application.CategoryService;
 import com.team8.Spring_Project.application.PostService;
 import com.team8.Spring_Project.application.UserService;
 import com.team8.Spring_Project.application.dto.CategoryDTO;
-import com.team8.Spring_Project.application.dto.PostDTO;
 import com.team8.Spring_Project.application.dto.UserDTO;
-import com.team8.Spring_Project.domain.Authority;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,26 +34,25 @@ public class UserController {
     }
 
     @GetMapping("/main")
-    public String getMainPage(Model model, HttpServletRequest request) {
-
-        HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+    public String getMainPage(Model model, Authentication authentication) {
 
         List<CategoryDTO> categories = categoryService.getAllCategories();
-
         model.addAttribute("categories", categories);
-        model.addAttribute("userDTO", userDTO);
+
+        if(authentication == null) {
+            // 해당 필요한 작업 수행
+        }
+
+        // 기존의 session 객체를 authentication 이 대체
+        if (authentication != null && authentication.isAuthenticated()) {
+            UserDTO userDTO = (UserDTO) authentication.getPrincipal();
+            model.addAttribute("userDTO", userDTO);
+        }
 
         return "main";
     }
 
-    // main에 카테고리에 해당하는 데이터 반환하는 메서드
-    @GetMapping("/article-items")
-    @ResponseBody
-    public ResponseEntity<List<PostDTO>> getPostsByCategory(@RequestParam Long categoryId) {
-        List<PostDTO> posts = postService.getAllPostsByCategory(categoryId);
-        return ResponseEntity.ok(posts);
-    }
+
 
     @GetMapping("/signup")
     public String getSignUpPage(Model model) {
@@ -73,61 +71,50 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String getLoginPage(Model model) {
-        model.addAttribute("userDTO", new UserDTO());
+    public String getLoginPage() {
         return "signin";
     }
 
-    @PostMapping("/login")
-    public String login(@ModelAttribute UserDTO userDTO, HttpServletRequest request) {
-        UserDTO loginedUserDTO = userService.login(userDTO);
-
-        if (loginedUserDTO == null) {
-            return "redirect:/v1/login";
-        }
-
-        HttpSession session = request.getSession();
-        session.setAttribute("login", loginedUserDTO);
-
-        return "redirect:/v1/main";
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpSession httpSession) {
-        httpSession.invalidate();
-        return "redirect:/v1/main";
-    }
+    // Spring Security가 login, logout 담당하므로 login, logout 기능 삭제 처리.
 
     @GetMapping("/user/{id}")
-    public String getMyPage(@PathVariable("id") Long id, Model model) {
+    // 여기는 My Page이기 때문에 id 검사가 필요해 메서드 수준에서 2차 검증.
+    @PreAuthorize("authentication.principal.id == #id and hasRole('USER')")
+    public String getMyPage(@PathVariable("id") Long id,
+                            Model model) {
+
         UserDTO userDTO = userService.findUser(id);
         model.addAttribute("userDTO", userDTO);
+
         return "mypage";
     }
 
     @PutMapping("/user/{id}")
-    public String updateMyInformation(@ModelAttribute UserDTO userDTO) {
+    // MyPage에 들어갈 때 검증을 했더라도 업데이트 시 또 검증 해주는게 보안상 좋다.
+    @PreAuthorize("authentication.principal.id == #id and hasRole('USER')")
+    public String updateMyInformation(@PathVariable("id") Long id,
+                                      @ModelAttribute UserDTO userDTO) {
+
+        // id와 userDTO.getId()가 일치하는지 추가 검증
+        if (!id.equals(userDTO.getId())) {
+            throw new AccessDeniedException("수정할 권한이 없습니다.");
+        }
+
         userService.updateUser(userDTO);
         return "redirect:/v1/user/" + userDTO.getId();
     }
 
     @DeleteMapping("/user/{id}")
+    @PreAuthorize("authentication.principal.id == #id or hasRole('USER') or hasRole('ADMIN')")
     public String deleteUser(@ModelAttribute UserDTO userDTO) {
         userService.deleteUser(userDTO);
         return "redirect:/v1/main";
     }
 
     @GetMapping("/admin")
-    public String getAdminPage(HttpSession httpSession, Model model) {
-        UserDTO userDTO = (UserDTO) httpSession.getAttribute("login");
-
-        if (userDTO.getAuthority() != Authority.ADMIN) {
-            return "redirect:/v1/main";
-        }
-
+    public String getAdminPage(Model model) {
         List<UserDTO> userDTOList = userService.getAllUsers();
         model.addAttribute("userList", userDTOList);
-
         return "admin";
     }
 
