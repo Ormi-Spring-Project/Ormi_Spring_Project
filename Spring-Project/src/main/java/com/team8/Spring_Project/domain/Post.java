@@ -45,12 +45,16 @@ public class Post{
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @Column(name = "average_rating")
+    private Double averageRating;
+
     public void update(String title,
                        String content,
                        String tag,
                        String application,
                        Timestamp updatedAt,
-                       Category category) {
+                       Category category,
+                       double averageRating) {
 
 
         this.title = title;
@@ -59,6 +63,7 @@ public class Post{
         this.application = application;
         this.updatedAt = updatedAt;
         this.category = category;
+        this.averageRating = averageRating;
 
     }
 

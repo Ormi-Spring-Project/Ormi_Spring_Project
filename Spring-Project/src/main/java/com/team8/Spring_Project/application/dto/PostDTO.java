@@ -35,6 +35,8 @@ public class PostDTO {
 
     private Long categoryId;
 
+    private double averageRating;
+
     // Entity -> DTO
     public static PostDTO fromEntity(Post post) {
 
@@ -50,6 +52,8 @@ public class PostDTO {
                 .userId(post.getUser().getId())
                 .categoryName(post.getCategory().getName())
                 .categoryId(post.getCategory().getId())
+                //실행시 null값으로 오류 발생 null인경우 기본값 0.0 을 제공하도록 삼항연산자 이용
+                .averageRating(post.getAverageRating() != null ? post.getAverageRating().doubleValue() : 0.0) //별점 평균 null이 아니면 값을 반환, null이면 0.0 반환
                 .build();
 
     }
@@ -66,6 +70,7 @@ public class PostDTO {
                 .updatedAt(this.updatedAt)
                 .user(user)
                 .category(category)
+                .averageRating(this.averageRating)  // 별점 평균
                 .build();
 
     }
@@ -88,5 +93,4 @@ public class PostDTO {
                 .build();
 
     }
-
 }
