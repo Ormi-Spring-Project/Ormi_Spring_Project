@@ -85,16 +85,4 @@ public class CommentService {
 
         commentRepository.delete(comment);
     }
-
-    // 평균 별점 계산 메소드 추가
-    public double getAverageRatingForPost(Long postId) {
-        List<Comment> comments = commentRepository.findByPostId(postId);
-        if (comments.isEmpty()) {
-            return 0.0;
-        }
-        double sum = comments.stream()
-                .mapToInt(Comment::getRating)
-                .sum();
-        return sum / comments.size();
-    }
 }

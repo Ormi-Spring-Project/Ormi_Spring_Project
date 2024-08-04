@@ -167,8 +167,10 @@ function deleteComment(commentId) {
 }
 
 // 전역 스코프에서 함수 노출=>부가설명 필요
-window.submitComment = submitComment;
-window.editComment = editComment;
-window.saveEditedComment = saveEditedComment;
-window.cancelEdit = cancelEdit;
-window.deleteComment = deleteComment;
+// 웹페이지 어느곳에서는 해당 함수들을 사용할수 있게 해줌
+// 굳이 영역 지정된 기능들이라 사용은 불필요->주석처리함
+// window.submitComment = submitComment;
+// window.editComment = editComment;
+// window.saveEditedComment = saveEditedComment;
+// window.cancelEdit = cancelEdit;
+// window.deleteComment = deleteComment;

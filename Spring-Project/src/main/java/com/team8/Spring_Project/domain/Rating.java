@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Rating")
@@ -34,13 +33,4 @@ public class Rating {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    public Rating(Integer value, Comment comment, User user) {
-        this.value = value;
-        this.comment = comment;
-        this.user = user;
-    }
-
-    public void updateValue(Integer value) {
-        this.value = value;
-    }
 }

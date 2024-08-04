@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+//메서드 반환값을 직접 HTTP 응답 본문으로 변환 기존매서드와 차이점 이해 필요
 @RequestMapping("/api/posts/{postId}/comments")
 public class CommentController {
     private final CommentService commentService;

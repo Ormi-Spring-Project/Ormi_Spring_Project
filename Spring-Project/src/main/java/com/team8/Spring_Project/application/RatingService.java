@@ -2,7 +2,6 @@ package com.team8.Spring_Project.application;
 
 import com.team8.Spring_Project.domain.Comment;
 import com.team8.Spring_Project.domain.Post;
-import com.team8.Spring_Project.domain.Rating;
 import com.team8.Spring_Project.infrastructure.persistence.CommentRepository;
 import com.team8.Spring_Project.infrastructure.persistence.PostRepository;
 import com.team8.Spring_Project.infrastructure.persistence.RatingRepository;

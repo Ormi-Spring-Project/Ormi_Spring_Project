@@ -1,12 +1,16 @@
 package com.team8.Spring_Project.application.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-//생성자 자동생성 추가(전역 사용할때)
 @AllArgsConstructor
 @Builder
 public class CommentDTO {
@@ -18,5 +22,4 @@ public class CommentDTO {
     private Timestamp updatedAt;
     private Long postId;
     private Integer rating;  // 별점 관련 추가
-
 }
