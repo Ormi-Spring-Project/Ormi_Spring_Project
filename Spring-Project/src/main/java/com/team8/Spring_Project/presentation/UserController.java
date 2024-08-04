@@ -105,7 +105,7 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{id}")
-    @PreAuthorize("authentication.principal.id == #id or hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("authentication.principal.id == #userDTO.id or hasAnyRole('USER', 'ADMIN')")
     public String deleteUser(@ModelAttribute UserDTO userDTO) {
         userService.deleteUser(userDTO);
         return "redirect:/v1/main";
