@@ -71,4 +71,7 @@ public class Post{
 
     }
 
+    public void setAverageRating(double rating) {
+        this.averageRating = rating;
+    }
 }

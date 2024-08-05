@@ -148,14 +148,6 @@ public class PostService {
                     .orElse(0.0);
             //평균평점 객체 설정
             post.setAverageRating(averageRating);
-            // 아래와 같음
-//            public class Post {
-//                private Double averageRating;
-//
-//                public void setAverageRating(Double averageRating) {
-//                    this.averageRating = averageRating;
-//                }
-//            }
         }
         //데이터베이스에 저장
         postRepository.save(post);

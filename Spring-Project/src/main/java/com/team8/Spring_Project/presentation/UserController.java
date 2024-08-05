@@ -70,7 +70,8 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String getLoginPage() {
+    public String getLoginPage(Model model) {
+        model.addAttribute("userDTO", new UserDTO());
         return "signin";
     }
 
