@@ -5,9 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
-@Table(name = "User")
+@Table(name = "users")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,10 +24,10 @@ public class User {
     private String phoneNumber;
     private Authority authority;
 
-    public void updateUser(String email, String nickname, String password, String phoneNumber) {
+    public void updateUser(String email, String nickname, String password, String phoneNumber, PasswordEncoder passwordEncoder) {
         if (email != null) this.email = email;
         if (nickname != null) this.nickname = nickname;
-        if (password != null) this.password = password;
+        if (password != null) this.password = passwordEncoder.encode(password);
         if (phoneNumber != null) this.phoneNumber = phoneNumber;
     }
 

@@ -2,14 +2,17 @@ package com.team8.Spring_Project.presentation;
 
 import com.team8.Spring_Project.application.BoardService;
 import com.team8.Spring_Project.application.CategoryService;
+import com.team8.Spring_Project.application.PostService;
 import com.team8.Spring_Project.application.dto.BoardDTO;
 import com.team8.Spring_Project.application.dto.CategoryDTO;
+import com.team8.Spring_Project.application.dto.PostDTO;
 import com.team8.Spring_Project.application.dto.UserDTO;
 import com.team8.Spring_Project.domain.Authority;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +30,15 @@ public class BoardController {
 
     private final BoardService boardService;
     private final CategoryService categoryService;
+    private final PostService postService;
 
     @Autowired
     public BoardController(BoardService boardService,
-                           CategoryService categoryService) {
+                           CategoryService categoryService,
+                           PostService postService) {
         this.boardService = boardService;
         this.categoryService = categoryService;
+        this.postService = postService;
     }
 
     // 게시글 리스트 페이지 요청
@@ -40,10 +46,9 @@ public class BoardController {
     @ResponseStatus(HttpStatus.OK)
     public String getAllBoards(@RequestParam(name = "categoryId", required = false, defaultValue = "1") Long categoryId,
                                Model model,
-                               HttpServletRequest request) {
+                               Authentication authentication) {
 
-        HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
         CategoryDTO categoryDto = categoryService.getCategoryById(categoryId);
         String categoryName = categoryDto.getName();
 
@@ -84,15 +89,22 @@ public class BoardController {
         return "categoryPost";
     }
 
+    @GetMapping("/article-items")
+    @ResponseBody
+    public ResponseEntity<List<PostDTO>> getPostsByCategory(@RequestParam Long categoryId) {
+        List<PostDTO> posts = postService.getAllPostsByCategory(categoryId);
+        return ResponseEntity.ok(posts);
+    }
+
     // 게시글 상세보기
     @GetMapping({"post/{id}", "notice/{id}"})
     public String getBoardById(@PathVariable Long id,
                            @RequestParam(required = false) Long categoryId,
                            HttpServletRequest request,
+                           Authentication authentication,
                            Model model) {
 
-        HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
         String path = request.getRequestURI();
 
         BoardDTO board;
@@ -132,10 +144,10 @@ public class BoardController {
     @GetMapping("/write")
     @ResponseStatus(HttpStatus.OK)
     public String getWritePost(Model model,
-                               HttpServletRequest request) throws AccessDeniedException {
+                               Authentication authentication) throws AccessDeniedException {
 
-        HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
+        List<CategoryDTO> categoryDTOList = categoryService.getAllCategories();
 
         // 권한이 없으면 글쓰기 버튼 누를 경우 예외 던짐.
         if (userDTO.getAuthority() == Authority.BANNED) {
@@ -144,7 +156,7 @@ public class BoardController {
 
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("board", new BoardDTO());
-        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("categories", categoryDTOList);
         return "writePost";
 
     }
@@ -152,11 +164,12 @@ public class BoardController {
     // 게시글 생성
     @PostMapping
     public String createPost(@ModelAttribute("board") BoardDTO boardDto,
+                             Authentication authentication,
                              @RequestPart(value = "file", required = false) MultipartFile file,
                              HttpServletRequest request) throws IOException {
 
-        HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
+  
         Long categoryId = boardDto.getCategoryId();
 
         CategoryDTO categoryDto = categoryService.getCategoryById(categoryId);
@@ -174,24 +187,22 @@ public class BoardController {
     // 수정 페이지 요청
     @GetMapping({"post/{id}/edit", "notice/{id}/edit"})
     public String getEditPost(@PathVariable("id") Long id,
+                              Authentication authentication,
                               HttpServletRequest request,
                               Model model) throws AccessDeniedException {
 
-        // 내부 주석 다 풀면 된다.
-        HttpSession session = request.getSession();
+        UserDTO userDTO = (UserDTO) authentication.getPrincipal();
         String path = request.getRequestURI();
-        UserDTO userDTO = (UserDTO) session.getAttribute("login");
 
         BoardDTO board;
         String type;
 
         if (path.contains("/notice/")) {
             type = "notice";
-            board = boardService.getBoardById(id, userDTO, type);
         } else {
             type = "post";
-            board = boardService.getBoardById(id, userDTO, type);
         }
+        board = boardService.getBoardById(id, userDTO, type);
 
         List<CategoryDTO> categories = categoryService.getAllCategories();
 

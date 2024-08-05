@@ -6,13 +6,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Collection;
+import java.util.Collections;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
-
+public class UserDTO implements UserDetails {
+    
     private Long id;
     private String email;
     private String nickname;
@@ -20,11 +27,43 @@ public class UserDTO {
     private String phoneNumber;
     private Authority authority;
 
-    public User toEntity() {
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + authority.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    // 이 아래로는 각각 경우에 따른 설정을 해야함. 일단은 true.
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public User toEntity(PasswordEncoder passwordEncoder) {
+
         return User.builder()
                 .email(this.email)
                 .nickname(this.nickname)
-                .password(this.password)
+                .password(passwordEncoder.encode(this.password))
                 .phoneNumber(this.phoneNumber)
                 .authority(this.authority)
                 .build();
