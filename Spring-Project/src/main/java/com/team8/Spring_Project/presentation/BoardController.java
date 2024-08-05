@@ -182,7 +182,11 @@ public class BoardController {
             boardDto.setPicture(file.getBytes());
         }
 
-        boardDto.setTitle("[공지] " + boardDto.getTitle());
+        if (userDTO.getAuthority() == Authority.ADMIN) {
+            boardDto.setTitle("[공지] " + boardDto.getTitle());
+        }
+
+        System.out.println("사진이 비었지롱~" + boardDto.getPicture());
 
         boardService.createBoard(boardDto, userDTO, categoryDto);
 

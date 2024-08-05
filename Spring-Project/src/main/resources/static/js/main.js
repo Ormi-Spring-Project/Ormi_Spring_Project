@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const categoryItems = document.querySelectorAll('.category-item');
     const articleGrid = document.querySelector('.article-grid');
     const sliderLeft = document.querySelector('.slider-arrow.left');
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 카테고리 클릭 이벤트
     categoryItems.forEach(item => {
-        item.addEventListener('click', function() {
+        item.addEventListener('click', function () {
             categoryItems.forEach(i => i.classList.remove('active'));
             this.classList.add('active');
             const categoryId = this.getAttribute('category-id');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let scrollAmount = 0;
     const scrollStep = 1010;
 
-    sliderLeft.addEventListener('click', function() {
+    sliderLeft.addEventListener('click', function () {
         scrollAmount = Math.max(scrollAmount - scrollStep, 0);
         categoryItemSlider.scrollTo({
             left: scrollAmount,
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    sliderRight.addEventListener('click', function() {
+    sliderRight.addEventListener('click', function () {
         scrollAmount = Math.min(scrollAmount + scrollStep, categoryItemSlider.scrollWidth - categoryItemSlider.clientWidth);
         categoryItemSlider.scrollTo({
             left: scrollAmount,
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(posts => {
-                updateArticleCards(posts,categoryId);
+                updateArticleCards(posts, categoryId);
                 updateSeeAllLink(categoryId, categoryName)
             })
             .catch(error => {
@@ -69,8 +69,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const card = document.createElement('a');
         card.href = `/v1/posts/post/${post.id}?categoryId=${categoryId}`; // 게시글 상세 페이지 링크
         card.className = 'article-card';
+
+        console.log(post.picture.length);
+        let image = '';
+        if (post.picture.length !== 0) {
+            image = `<img class="article-img" src="data:image;base64,${post.picture}"/>`;
+        } else {
+            image = `<img class="article-img" src="/images/img-place-holder.png"/>`;
+        }
         card.innerHTML = `
-            <img class="article-img" src="data:image;base64,${post.picture}">
+            ${image}
             <h4>${post.title}</h4>
             <div class="article-info">
                 <p class="article-author">${post.authorName}</p>
@@ -81,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function formatDate(dateString) {
-        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const options = {year: 'numeric', month: '2-digit', day: '2-digit'};
         return new Date(dateString).toLocaleDateString('ko-KR', options);
     }
 

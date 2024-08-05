@@ -2,6 +2,11 @@
     font-family: Arial, sans-serif;
 }
 
+a {
+    text-decoration-line: none;
+    color: black;
+}
+
 body {
     height: 100%;
     margin: 0;

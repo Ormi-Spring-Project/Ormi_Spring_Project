@@ -80,13 +80,14 @@
                     <img th:if="${board.getType() == 'notice'}" src="/images/speaker.png" alt="Cat Icon">
                 </td>
                 <td>
-                    <a th:href="@{/v1/posts/{type}/{id}(type=${board.type == 'notice' ? 'notice' : 'post'},
-                     id=${board.id}, categoryId=${selectedCategoryId})}"
-                       th:text="${board.title}">
-                    </a>
+                    <b th:if="${board.getType() == 'notice'}"><a th:href="@{/v1/posts/notice/{id}
+                    (id=${board.id}, categoryId=${selectedCategoryId})}" th:text="${board.title}">
+                    </a></b>
+                    <a th:if="${board.getType() == 'post'}" th:href="@{/v1/posts/post/{id}(id=${board.id},
+                    categoryId=${selectedCategoryId})}" th:text="${board.title}"></a>
                 </td>
-                <td th:text="${board.authorName}">관리자</td>
-                <td th:text="${board.updatedAt}">2024-07-24</td>
+                <td th:text="${board.authorName}"></td>
+                <td th:text="${board.updatedAt}"></td>
             </tr>
             <tr>
             </tr>
