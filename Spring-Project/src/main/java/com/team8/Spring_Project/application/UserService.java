@@ -44,6 +44,10 @@ public class UserService implements UserDetailsService {
             return null;
         }
 
+        if (userRepository.findByNickname(userDTO.getNickname()) != null) {
+            return null;
+        }
+
         userDTO.setAuthority(Authority.USER); // 유저 생성하는 로직이니까 일단 이렇게 해뒀는데 이거 해결해야함.
         userRepository.save(userDTO.toEntity(passwordEncoder));
         return userDTO;
@@ -82,13 +86,18 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findById(userDTO.getId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 id를 가진 User가 존재하지 않습니다."));
 
-        user.updateUser(
-                userDTO.getEmail(),
-                userDTO.getNickname(),
-                userDTO.getPassword(),
-                userDTO.getPhoneNumber(),
-                passwordEncoder
-        );
+        User emailCheck = userRepository.findByEmail(userDTO.getEmail());
+        User nicknameCheck = userRepository.findByNickname(userDTO.getNickname());
+
+        if (emailCheck == null && nicknameCheck == null) {
+            user.updateUser(
+                    userDTO.getEmail(),
+                    userDTO.getNickname(),
+                    userDTO.getPassword(),
+                    userDTO.getPhoneNumber(),
+                    passwordEncoder
+            );
+        }
 
         return userDTO.fromEntity(user);
     }
