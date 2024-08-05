@@ -47,7 +47,11 @@
                    placeholder="Input your keyword for searching ..." onkeypress="if (event.keyCode===13) {form.submit()}">
         </form>
 
-        <button class="write-button" th:onclick="|location.href='@{/v1/posts/write}'|">글쓰기</button>
+        <form th:action="@{/v1/posts/write}" method="get">
+            <input type="hidden" th:name="categoryId" th:value="${selectedCategoryId}">
+            <button type="submit" class="write-button">글쓰기</button>
+        </form>
+
 
         <div class="category-list-container">
             <select class="category-list" name="categoryId"
@@ -75,7 +79,7 @@
                     <img th:if="${board.getType() == 'notice'}" src="/images/speaker.png" alt="Cat Icon">
                 </td>
                 <td>
-                    <a th:href="@{/v1/posts/{type}/{id}(type=${board.type == 'notice' ? 'notice' : 'post'},
+                    <a th:href="@{/v1/posts/{type}/{id}(type=${board.type},
                      id=${board.id}, categoryId=${selectedCategoryId})}"
                        th:text="${board.title}">
                     </a>

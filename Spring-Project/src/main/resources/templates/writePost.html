@@ -42,10 +42,11 @@
             <input th:field="*{title}" class="input-title input-img" type="text" placeholder="Input your [title]">
             <input th:if="${userDTO.getAuthority().name() == 'USER'}" th:field="*{application}" class="input-link input-img" type="text"
                    placeholder="Input your [application download link]">
-            <select th:field="*{categoryId}" class="input-tag-select">
+            <select name="categoryId" class="input-tag-select">
                 <option th:each="category : ${categories}"
                         th:value="${category.id}"
-                        th:text="${category.name}">General</option>
+                        th:text="${category.name}"
+                        th:selected="${category.id} == ${selectedCategoryId}">General</option>
             </select>
             <textarea th:field="*{content}" placeholder="사용해 본 Application에 대한 후기를 남겨주세요!"></textarea>
 

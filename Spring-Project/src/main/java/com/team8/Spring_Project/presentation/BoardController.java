@@ -99,10 +99,10 @@ public class BoardController {
     // 게시글 상세보기
     @GetMapping({"post/{id}", "notice/{id}"})
     public String getBoardById(@PathVariable Long id,
-                           @RequestParam(required = false) Long categoryId,
-                           HttpServletRequest request,
-                           Authentication authentication,
-                           Model model) {
+                               @RequestParam(required = false) Long categoryId,
+                               HttpServletRequest request,
+                               Authentication authentication,
+                               Model model) {
 
         UserDTO userDTO = (UserDTO) authentication.getPrincipal();
         String path = request.getRequestURI();
@@ -144,6 +144,7 @@ public class BoardController {
     @GetMapping("/write")
     @ResponseStatus(HttpStatus.OK)
     public String getWritePost(Model model,
+                               @RequestParam("categoryId") Long categoryId,
                                Authentication authentication) throws AccessDeniedException {
 
         UserDTO userDTO = (UserDTO) authentication.getPrincipal();
@@ -154,9 +155,12 @@ public class BoardController {
             throw new AccessDeniedException("권한 정지로 인해 글을 생성할 수 없습니다.");
         }
 
+        System.out.println("selectedCategoryId" + categoryId);
         model.addAttribute("userDTO", userDTO);
+        model.addAttribute("selectedCategoryId", categoryId);
         model.addAttribute("board", new BoardDTO());
         model.addAttribute("categories", categoryDTOList);
+
         return "writePost";
 
     }
@@ -165,11 +169,10 @@ public class BoardController {
     @PostMapping
     public String createPost(@ModelAttribute("board") BoardDTO boardDto,
                              Authentication authentication,
-                             @RequestPart(value = "file", required = false) MultipartFile file,
-                             HttpServletRequest request) throws IOException {
+                             @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
 
         UserDTO userDTO = (UserDTO) authentication.getPrincipal();
-  
+
         Long categoryId = boardDto.getCategoryId();
 
         CategoryDTO categoryDto = categoryService.getCategoryById(categoryId);
