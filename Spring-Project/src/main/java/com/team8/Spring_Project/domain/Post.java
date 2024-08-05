@@ -25,9 +25,6 @@ public class Post{
     @Column
     private String content;
 
-    @Column
-    private String tag;
-
     @Column(columnDefinition = "LONGBLOB")
     private byte[] picture;
 
@@ -57,7 +54,6 @@ public class Post{
     public void update(String title,
                        byte[] picture,
                        String content,
-                       String tag,
                        String application,
                        Timestamp updatedAt,
                        Category category,
@@ -67,7 +63,6 @@ public class Post{
         this.title = title;
         this.picture = picture;
         this.content = content;
-        this.tag = tag;
         this.application = application;
         this.updatedAt = updatedAt;
         this.category = category;

@@ -22,8 +22,6 @@ public class PostDTO {
 
     private String content;
 
-    private String tag;
-
     private String application;
 
     private byte[] picture;
@@ -48,7 +46,6 @@ public class PostDTO {
                 .title(post.getTitle())
                 .authorName(post.getUser().getNickname())
                 .content(post.getContent())
-                .tag(post.getTag())
                 .application(post.getApplication())
                 .picture(post.getPicture())
                 .createdAt(post.getCreatedAt())
@@ -68,7 +65,6 @@ public class PostDTO {
         return Post.builder()
                 .title(this.title)
                 .content(this.content)
-                .tag(this.tag)
                 .application(this.application)
                 .picture(this.picture)
                 .createdAt(this.createdAt)

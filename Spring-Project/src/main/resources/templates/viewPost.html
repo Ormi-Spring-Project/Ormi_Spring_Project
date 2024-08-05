@@ -99,7 +99,8 @@
 
                 <div class="download" th:if="${board.application != null}">
                     <img class="download-img" src="/images/link.png">
-                    <a th:href="${board.application}" th:text="${board.application}">애플리케이션 링크</a>
+                    <a th:href="@{https://{url}(url=${board.application})}"
+                       target="_blank" th:text="${board.application}">애플리케이션 링크</a>
                 </div>
             </div>
             <div class="content" th:utext="${board.content}"></div>

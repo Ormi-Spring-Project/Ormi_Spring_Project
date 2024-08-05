@@ -108,7 +108,6 @@ public class PostService {
                 postDto.getTitle(),
                 postDto.getPicture(),
                 postDto.getContent(),
-                postDto.getTag(),
                 postDto.getApplication(),
                 new Timestamp(System.currentTimeMillis()),
                 category,

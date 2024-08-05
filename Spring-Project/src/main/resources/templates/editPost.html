@@ -31,7 +31,8 @@
         <button class="back-button" onclick="history.back()">Go To Back</button>
     </div>
     <section class="post-container">
-        <form th:action="${type == 'notice'} ? @{/v1/posts/notice/{id}/edit(id=${board.id})} : @{/v1/posts/post/{id}/edit(id=${board.id})}" th:object="${board}" class="input" method="post" enctype="multipart/form-data">
+        <form th:action="${type == 'notice'} ? @{/v1/posts/notice/{id}/edit(id=${board.id})} : @{/v1/posts/post/{id}/edit(id=${board.id})}"
+              th:object="${board}" class="input" method="post" enctype="multipart/form-data">
             <div th:if="${board.getType().equals('post')}" class="icon">
                 <img th:if="${!image.isEmpty()}" id="preview" class="icon-img" th:src="'data:image;base64,'+${image}">
                 <img th:if="${image.isEmpty()}" class="icon-img" src="/images/img-place-holder.png">
@@ -39,7 +40,8 @@
             </div>
             <input type="hidden" name="_method" value="put"/>
             <input name="title" class="input-title input-img" type="text" placeholder="Input your [title]" th:value="${board.title}">
-            <input th:if="${userDTO.getAuthority() == 'USER'}" name="application" class="input-link input-img" type="text" placeholder="Input your [application download link]" th:value="${board.application}">
+            <input th:if="${board.getType().equals('post')}" name="application" class="input-link input-img" type="text"
+                   placeholder="Input your [application download link]" th:value="${board.application}">
             <select name="categoryId" class="input-tag-select">
                 <option th:each="category : ${categories}"
                          th:value="${category.id}"
