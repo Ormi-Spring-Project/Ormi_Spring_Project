@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function loadPostsByCategory(categoryId, categoryName) {
-        fetch(`/v1/article-items?categoryId=${categoryId}`)
+        fetch(`/v1/posts/article-items?categoryId=${categoryId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);

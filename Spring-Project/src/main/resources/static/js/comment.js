@@ -1,18 +1,73 @@
 let postId, currentUserId;
 
+const ratingModule = {
+    selectedRating: 0,
+
+    initializeRating: function() {
+        const stars = document.querySelectorAll('.rating-stars .star');
+        stars.forEach(star => {
+            star.addEventListener('click', this.setRating.bind(this));
+        });
+    },
+
+    setRating: function(event) {
+        this.selectedRating = parseInt(event.target.getAttribute('data-value'));
+        this.updateStars();
+    },
+
+    updateStars: function() {
+        const stars = document.querySelectorAll('.rating-stars .star');
+        stars.forEach((star, index) => {
+            if (index < this.selectedRating) {
+                star.classList.add('selected');
+            } else {
+                star.classList.remove('selected');
+            }
+        });
+    },
+
+    getSelectedRating: function() {
+        return this.selectedRating;
+    },
+
+    resetRating: function() {
+        this.selectedRating = 0;
+        this.updateStars();
+    },
+
+    loadAverageRating: function(postId) {
+        fetch(`/v1/posts/${postId}/comments/average-rating`)
+            .then(response => response.json())
+            .then(averageRating => {
+                const averageRatingElement = document.getElementById('averageRating');
+                const averageRatingStarsElement = document.getElementById('averageRatingStars');
+                if (averageRatingElement && averageRatingStarsElement) {
+                    averageRatingElement.textContent = averageRating.toFixed(1);
+                    averageRatingStarsElement.textContent = this.renderStars(averageRating);
+                }
+            });
+    },
+
+    renderStars: function(rating) {
+        return '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+    }
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     postId = document.getElementById('postId')?.value;
     currentUserId = document.getElementById('currentUserId')?.value;
 
     if (postId && currentUserId) {
         loadComments();
+        ratingModule.loadAverageRating(postId);
+        ratingModule.initializeRating();
     } else {
         console.error('Required data is missing');
     }
 });
 
 function loadComments() {
-    fetch(`/api/posts/${postId}/comments`)
+    fetch(`/v1/posts/${postId}/comments`)
         .then(response => response.json())
         .then(comments => {
             const commentContainer = document.getElementById('commentContainer');
@@ -39,17 +94,20 @@ function createCommentElement(comment) {
     });
 
     commentDiv.innerHTML = `
-        <div class="author-createdAt-delete-update-container">
-            <div class="author-createdAt-container">
-                <p class="author">${comment.authorNickname}</p>
-                <p class="createdAt">${formattedDate}</p>
+        <div class="comment-header">
+            <div class="author-info">
+                <span class="author">${comment.authorNickname}</span>
+                <span class="createdAt">${formattedDate}</span>
             </div>
             <div class="delete-update-container">
                 ${currentUserId == comment.userId ? `
-                    <p class="update" onclick="editComment(${comment.id})">수정</p>
-                    <p class="delete" onclick="deleteComment(${comment.id})">삭제</p>
+                    <span class="update" onclick="editComment(${comment.id})">수정</span>
+                    <span class="delete" onclick="deleteComment(${comment.id})">삭제</span>
                 ` : ''}
             </div>
+        </div>
+        <div class="rating-container"> 
+            <p>${comment.rating ? ratingModule.renderStars(comment.rating) : '평점 없음'}</p>
         </div>
         <div class="content-container">
             <p>${comment.content}</p>
@@ -61,17 +119,30 @@ function createCommentElement(comment) {
 
 function submitComment() {
     const content = document.getElementById('commentContent').value;
-    fetch(`/api/posts/${postId}/comments`, {
+    const selectedRating = ratingModule.getSelectedRating();
+
+    if (!content.trim()) {
+        alert('댓글 내용을 입력해주세요.');
+        return;
+    }
+    if (selectedRating === 0) {
+        alert('별점을 선택해주세요.');
+        return;
+    }
+
+    fetch(`/v1/posts/${postId}/comments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content: content }),
+        body: JSON.stringify({ content: content, rating: selectedRating }),
     })
         .then(response => response.json())
         .then(comment => {
             document.getElementById('commentContent').value = '';
+            ratingModule.resetRating();
             loadComments();
+            ratingModule.loadAverageRating(postId);
         });
 }
 
@@ -99,7 +170,7 @@ function saveEditedComment(commentId) {
     const textarea = commentDiv.querySelector('textarea');
     const newContent = textarea.value;
 
-    fetch(`/api/posts/${postId}/comments/${commentId}`, {
+    fetch(`/v1/posts/${postId}/comments/${commentId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -126,12 +197,13 @@ function cancelEdit(commentId, originalContent) {
 
 function deleteComment(commentId) {
     if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
-        fetch(`/api/posts/${postId}/comments/${commentId}`, {
+        fetch(`/v1/posts/${postId}/comments/${commentId}`, {
             method: 'DELETE',
         })
             .then(response => {
                 if (response.ok) {
                     loadComments();
+                    ratingModule.loadAverageRating(postId);
                 }
             });
     }

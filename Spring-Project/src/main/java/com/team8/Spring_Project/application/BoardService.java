@@ -12,6 +12,7 @@ import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BoardService {
@@ -53,7 +54,7 @@ public class BoardService {
             throw new AccessDeniedException("일반 게시글에 대해 접근 권한이 없습니다.");
         }
 
-        if("notice".equals(type)) {
+        if ("notice".equals(type)) {
 
             // 공지사항 상세보기
             NoticeDTO noticeDTO = noticeService.getNoticeById(boardId);
@@ -67,6 +68,23 @@ public class BoardService {
 
         }
 
+    }
+
+    public List<BoardDTO> getBoardByKeyword(String keyword, String categoryName) {
+
+        List<BoardDTO> noticeList = noticeService.searchPostByKeyword(keyword).stream()
+                .map((NoticeDTO noticeDTO) -> NoticeDTO.convertNoticeDtoToBoardDto(noticeDTO, "notice"))
+                .toList();
+
+        List<BoardDTO> postList = postService.searchPostByKeyword(keyword, categoryName).stream()
+                .map((PostDTO postDTO) -> PostDTO.convertPostDtoToBoardDto(postDTO, "post"))
+                .toList();
+
+        List<BoardDTO> boardList = new ArrayList<>();
+        boardList.addAll(noticeList);
+        boardList.addAll(postList);
+
+        return boardList;
     }
 
     // 게시글 생성
@@ -96,7 +114,7 @@ public class BoardService {
     @Transactional
     public void updateBoard(Long id, BoardDTO boardDto, String type) {
 
-        if("notice".equals(type)) {
+        if ("notice".equals(type)) {
 
             // 공지사항 수정
             NoticeDTO noticeDto = BoardDTO.convertBoardDtoToNoticeDto(boardDto);

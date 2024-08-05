@@ -39,8 +39,6 @@
 
         <p class="category-title" th:text="${categoryName}"></p>
 
-        <button class="write-button" th:onclick="|location.href='@{/v1/posts/write}'|">글쓰기</button>
-
         <div class="category-list-container">
             <select class="category-list" name="categoryId"
                     th:onchange="'location.href=\'' + @{/v1/posts} + '?categoryId=\' + this.value'">
@@ -51,6 +49,7 @@
                 </option>
             </select>
         </div>
+
 
         <table>
             <thead>
@@ -78,7 +77,11 @@
             </tbody>
         </table>
 
+        <button class="back-button" th:onclick="|location.href='@{/v1/posts/write}'|">글쓰기</button>
+
+
     </main>
+
     <footer>
         <div class="footer-container">
             <div class="footer-logo">

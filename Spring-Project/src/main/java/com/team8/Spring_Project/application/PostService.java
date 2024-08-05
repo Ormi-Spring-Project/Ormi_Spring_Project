@@ -1,10 +1,12 @@
 package com.team8.Spring_Project.application;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.team8.Spring_Project.application.dto.PostDTO;
-import com.team8.Spring_Project.domain.Category;
-import com.team8.Spring_Project.domain.Post;
-import com.team8.Spring_Project.domain.User;
+import com.team8.Spring_Project.domain.*;
+import com.team8.Spring_Project.infrastructure.persistence.CommentRepository;
 import com.team8.Spring_Project.infrastructure.persistence.PostRepository;
+import com.team8.Spring_Project.infrastructure.persistence.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +22,17 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserService userService;
     private final CategoryService categoryService;
+    private final JPAQueryFactory jpaQueryFactory;
+    private final CommentRepository commentRepository; // 모든 게시물 조회
 
     @Autowired
-    public PostService(PostRepository postRepository,  UserService userService, CategoryService categoryService) {
+    public PostService(PostRepository postRepository, UserService userService, CategoryService categoryService, CommentRepository commentRepository,
+                      JPAQueryFactory jpaQueryFactory) {
         this.postRepository = postRepository;
         this.userService = userService;
         this.categoryService = categoryService;
+        this.commentRepository = commentRepository;
+        this.jpaQueryFactory = jpaQueryFactory;
     }
 
     // 카테고리 id 기반 일반 게시글 리스트
@@ -46,6 +53,33 @@ public class PostService {
                 .map(PostDTO::fromEntity)
                 .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
 
+    }
+
+    // 일반 게시글 검색
+    @Transactional(readOnly = true)
+    public List<PostDTO> searchPostByKeyword(String keyword, String categoryName) {
+        QPost post = QPost.post;
+        QUser user = QUser.user;
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        if (keyword != null && !keyword.isEmpty()) {
+            builder.or(post.title.containsIgnoreCase(keyword))
+                    .or(post.user.nickname.containsIgnoreCase(keyword));
+        }
+
+        if (categoryName != null && !categoryName.isEmpty()) {
+            builder.and(post.category.name.eq(categoryName));
+        }
+
+        List<Post> searchedPosts = jpaQueryFactory.selectFrom(post)
+                .leftJoin(post.user, user)
+                .where(builder)
+                .fetch();
+
+        return searchedPosts.stream()
+                .map(PostDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -78,7 +112,9 @@ public class PostService {
                 postDto.getTag(),
                 postDto.getApplication(),
                 new Timestamp(System.currentTimeMillis()),
-                category
+                category,
+                postDto.getAverageRating() //평균 평점
+
         );
 
     }
@@ -92,5 +128,36 @@ public class PostService {
 
     }
 
+    @Transactional
+    //평균평점 계산
+    public void calculateAverageRating(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
+    //해당 게시물 모든 댓글 불러오기
+        List<Comment> comments = commentRepository.findByPostId(postId);
 
+        if (comments.isEmpty()) {
+            post.setAverageRating(0.0);
+        } else {
+            double averageRating = comments.stream()
+                    //각평점을 정수로 변환
+                    .mapToInt(Comment::getRating)
+                    //평균계산
+                    .average()
+                    //결과 없으면 0.0
+                    .orElse(0.0);
+            //평균평점 객체 설정
+            post.setAverageRating(averageRating);
+            // 아래와 같음
+//            public class Post {
+//                private Double averageRating;
+//
+//                public void setAverageRating(Double averageRating) {
+//                    this.averageRating = averageRating;
+//                }
+//            }
+        }
+        //데이터베이스에 저장
+        postRepository.save(post);
+    }
 }

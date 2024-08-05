@@ -8,11 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class CategoryDTO {
-
     Long id;
-
     String name;
-
     String icon;
 
     // Entity -> DTO

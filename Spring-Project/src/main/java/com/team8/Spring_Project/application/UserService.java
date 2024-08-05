@@ -5,6 +5,10 @@ import com.team8.Spring_Project.domain.Authority;
 import com.team8.Spring_Project.domain.User;
 import com.team8.Spring_Project.infrastructure.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,39 +16,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     UserRepository userRepository;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional(readOnly = true)
-    public UserDTO login(UserDTO userDTO) {
-        User user = userRepository.findByEmail(userDTO.getEmail());
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
 
         if (user == null) {
-            return null;
+            throw new UsernameNotFoundException("해당 유저 닉네임이 없습니다.");
         }
 
-        if (!user.getPassword().equals(userDTO.getPassword())) {
-            return null;
-        }
-
-        return userDTO.fromEntity(user);
+        return new UserDTO().fromEntity(user);
     }
 
     public UserDTO signUp(UserDTO userDTO) {
-        User user = userRepository.findByEmail(userDTO.getEmail());
-
-        if (user != null) {
+        // 중복 검사하는 로직.
+        if (userRepository.findByEmail(userDTO.getEmail()) != null) {
             return null;
         }
 
-        userDTO.setAuthority(Authority.USER);
-        userRepository.save(userDTO.toEntity());
+        userDTO.setAuthority(Authority.USER); // 유저 생성하는 로직이니까 일단 이렇게 해뒀는데 이거 해결해야함.
+        userRepository.save(userDTO.toEntity(passwordEncoder));
         return userDTO;
     }
 
@@ -85,7 +86,8 @@ public class UserService {
                 userDTO.getEmail(),
                 userDTO.getNickname(),
                 userDTO.getPassword(),
-                userDTO.getPhoneNumber()
+                userDTO.getPhoneNumber(),
+                passwordEncoder
         );
 
         return userDTO.fromEntity(user);
@@ -101,12 +103,12 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 id를 가진 User가 존재하지 않습니다."));
 
-        if (user.getAuthority().equals(Authority.USER)) {
+        if (user.getAuthority() == Authority.USER) {
             user.banUser(Authority.BANNED);
             return;
         }
 
-        if (user.getAuthority().equals(Authority.BANNED)) {
+        if (user.getAuthority() == Authority.BANNED) {
             user.activateUser(Authority.USER);
         }
     }

@@ -1,3 +1,8 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 .page-container {
     display: flex;
     flex-direction: column;
@@ -12,11 +17,6 @@ main {
     font-size: 36px;
     font-weight: bold;
     text-align: center;
-}
-
-.write-button {
-    margin-left: 1480px;
-    margin-bottom: 0;
 }
 
 .category-list-container {
