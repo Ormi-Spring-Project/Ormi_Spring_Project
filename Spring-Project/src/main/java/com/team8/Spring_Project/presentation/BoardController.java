@@ -50,6 +50,7 @@ public class BoardController {
 
         UserDTO userDTO = (UserDTO) authentication.getPrincipal();
         CategoryDTO categoryDto = categoryService.getCategoryById(categoryId);
+        System.out.println("dfdfdff" + categoryDto.getName());
         String categoryName = categoryDto.getName();
 
         List<BoardDTO> boards = boardService.getAllBoards(categoryDto);
@@ -183,7 +184,7 @@ public class BoardController {
 
         boardService.createBoard(boardDto, userDTO, categoryDto);
 
-        return "redirect:/v1/posts";
+        return "redirect:/v1/posts?categoryId=" + categoryId;
 
     }
 

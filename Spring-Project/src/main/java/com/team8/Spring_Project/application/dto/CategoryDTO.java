@@ -10,7 +10,6 @@ import lombok.*;
 public class CategoryDTO {
     Long id;
     String name;
-    String icon;
 
     // Entity -> DTO
     public static CategoryDTO fromEntity(Category category) {
@@ -18,7 +17,6 @@ public class CategoryDTO {
         return CategoryDTO.builder()
                 .id(category.getId())
                 .name(category.getName())
-                .icon(category.getIcon())
                 .build();
 
     }
@@ -28,7 +26,6 @@ public class CategoryDTO {
 
         return Category.builder()
                 .name(this.getName())
-                .icon(this.getIcon())
                 .build();
 
     }
