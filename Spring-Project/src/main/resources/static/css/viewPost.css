@@ -8,9 +8,25 @@ main {
     margin-right: 150px;
 }
 
+.go-back {
+    align-self: flex-start;
+    background-color: #CD31AB;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
 form {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
+    margin-bottom: 50px;
+    gap: 50px;
+    padding-left: 300px;
+    padding-right: 300px;
 }
 
 input {
@@ -38,74 +54,69 @@ textarea {
     vertical-align: middle;
 }
 
+.back-button-container {
+    display: flex;
+    justify-content: start;
+}
+
+.back-button {
+    font-size: 16px;
+    border-radius: 32px;
+    padding: 8px 16px;
+    margin: 30px;
+    background-color: #CD31AB;
+    color: white;
+    width: 150px;
+    align-items: center;
+}
+
 .post-container {
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.admin-notice-container {
-    width: 750px;
-}
-
+/*게시판 제목 및 내용 가운데 정렬 추가*/
 .post-container h1 {
     text-align: center;
     width: 100%;
 }
-
 .post-container .content {
-    margin-top: 50px;
-    margin-bottom: 100px;
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-
-.post-container .user-post-container {
-    width: 750px;
+    text-align: center;
 }
 
 .icon {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
+    margin-left: 150px;
+    margin-bottom: 100px;
 }
 
 .icon-img {
-    justify-content: center;
     width: 250px;
     height: 250px;
-    margin-bottom: 50px;
-}
-
-.edit-delete-container {
-
-    display: flex;
-    align-items: center;
-    margin-bottom: 50px;
-}
-
-.delete-form {
-    width: 85px;
-    height: 50px;
 }
 
 .icon-img-add-button {
     width: 80px;
     height: 50px;
+    margin-left: 50px;
+    margin-top: 200px;
     align-items: center;
-    margin-right: 100px;
+    line-height: 45px;
 }
-
 
 .user-information {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    gap: 340px;
     /*게시글 작성정보 유저,시간 위치이동*/
+    margin-left: 150px;
 }
 
 .user-information div {
+    width: 200px;
     word-break: break-all;
 }
 
@@ -243,8 +254,7 @@ textarea {
 .comment-button-container {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
-    margin-bottom: 50px;
+    margin-top: 10px;
 }
 
 .comment-button {
@@ -255,4 +265,93 @@ textarea {
     color: white;
     border: none;
     cursor: pointer;
+}
+/*별점관련*/
+.star {
+    cursor: pointer;
+    color: #ddd;
+}
+
+.star.selected {
+    color: gold;
+}
+
+.rating-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stars {
+    color: gold;
+    font-size: 24px;
+}
+
+.average-rating {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.total-ratings {
+    color: #666;
+    font-size: 14px;
+}
+.comment-container {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+}
+
+.author {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.createdAt {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.delete-update-container {
+    display: flex;
+}
+
+.delete-update-container span {
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.delete-update-container .delete {
+    color: red;
+}
+
+.rating-container {
+    margin: 8px 0;
+}
+
+.rating-container p {
+    margin: 0;
+    color: gold;
+    font-size: 1.2em;
+}
+
+.content-container {
+    margin-top: 8px;
+}
+
+.content-container p {
+    margin: 0;
 }
