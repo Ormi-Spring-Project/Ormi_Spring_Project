@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>CategoryPost</title>
@@ -47,7 +47,9 @@
                    placeholder="Input your keyword for searching ..." onkeypress="if (event.keyCode===13) {form.submit()}">
         </form>
 
-        <button class="write-button" th:onclick="|location.href='@{/v1/posts/write}'|">글쓰기</button>
+        <button class="write-button"
+                sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"
+                th:onclick="|location.href='@{/v1/posts/write}'|">글쓰기</button>
 
         <div class="category-list-container">
             <select class="category-list" name="categoryId"
