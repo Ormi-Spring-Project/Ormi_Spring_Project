@@ -20,7 +20,8 @@
             <nav>
                 <ul>
                     <li th:if="${userDTO != null and userDTO.getAuthority().name() != 'BANNED'}">
-                        <a th:if="${userDTO.getAuthority().name() == 'USER'}" th:href="@{/v1/user/{id}(id=${userDTO.getId()})}">My Page</a>
+                        <a th:if="${userDTO.getAuthority().name() == 'USER'}"
+                           th:href="@{/v1/user/{id}(id=${userDTO.getId()})}">My Page</a>
                         <a th:if="${userDTO.getAuthority().name() == 'ADMIN'}" th:href="@{/v1/admin}">Admin</a>
                     </li>
                     <li th:if="${userDTO == null}"><a th:href="@{/v1/signup}">Sign Up</a></li>
@@ -39,6 +40,15 @@
 
         <p class="category-title" th:text="${categoryName}"></p>
 
+        <form th:action="@{/v1/posts(categoryId=${selectedCategoryId}, keyword=${keyword})}"
+              class="search" onsubmit="return false" method="get">
+            <input th:name="categoryId" th:value="${selectedCategoryId}" type="hidden">
+            <input th:name="keyword" th:value="${keyword}" class="search-text" type="text"
+                   placeholder="Input your keyword for searching ..." onkeypress="if (event.keyCode===13) {form.submit()}">
+        </form>
+
+        <button class="write-button" th:onclick="|location.href='@{/v1/posts/write}'|">글쓰기</button>
+
         <div class="category-list-container">
             <select class="category-list" name="categoryId"
                     th:onchange="'location.href=\'' + @{/v1/posts} + '?categoryId=\' + this.value'">
@@ -49,7 +59,6 @@
                 </option>
             </select>
         </div>
-
 
         <table>
             <thead>
@@ -77,11 +86,7 @@
             </tbody>
         </table>
 
-        <button class="back-button" th:onclick="|location.href='@{/v1/posts/write}'|">글쓰기</button>
-
-
     </main>
-
     <footer>
         <div class="footer-container">
             <div class="footer-logo">
