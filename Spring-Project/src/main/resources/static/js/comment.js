@@ -3,6 +3,7 @@ let postId, currentUserId;
 const ratingModule = {
     selectedRating: 0,
 
+    // 초기 별점 설정
     initializeRating: function() {
         const stars = document.querySelectorAll('.rating-stars .star');
         stars.forEach(star => {
@@ -10,11 +11,13 @@ const ratingModule = {
         });
     },
 
+    // 별점 설정
     setRating: function(event) {
         this.selectedRating = parseInt(event.target.getAttribute('data-value'));
         this.updateStars();
     },
 
+    // 별점 UI 업데이트
     updateStars: function() {
         const stars = document.querySelectorAll('.rating-stars .star');
         stars.forEach((star, index) => {
@@ -26,15 +29,18 @@ const ratingModule = {
         });
     },
 
+    // 선택된 별점 반환
     getSelectedRating: function() {
         return this.selectedRating;
     },
 
+    // 별점 초기화
     resetRating: function() {
         this.selectedRating = 0;
         this.updateStars();
     },
 
+    // 평균 별점 로드
     loadAverageRating: function(postId) {
         fetch(`/v1/posts/${postId}/comments/average-rating`)
             .then(response => response.json())
@@ -48,11 +54,40 @@ const ratingModule = {
             });
     },
 
+    // 별점 렌더링
     renderStars: function(rating) {
         return '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+    },
+
+    // 댓글 수정 시 별점 편집 기능
+    editRating: function(commentId, initialRating) {
+        this.selectedRating = initialRating;
+        const ratingContainer = document.querySelector(`#comment-${commentId} .edit-rating-container`);
+        const stars = ratingContainer.querySelectorAll('.star');
+
+        stars.forEach(star => {
+            star.addEventListener('click', (event) => {
+                this.selectedRating = parseInt(event.target.getAttribute('data-value'));
+                this.updateEditStars(stars);
+            });
+        });
+
+        this.updateEditStars(stars);
+    },
+
+    // 댓글 수정 시 별점 UI 업데이트 기능
+    updateEditStars: function(stars) {
+        stars.forEach((star, index) => {
+            if (index < this.selectedRating) {
+                star.classList.add('selected');
+            } else {
+                star.classList.remove('selected');
+            }
+        });
     }
 };
 
+// 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
     postId = document.getElementById('postId')?.value;
     currentUserId = document.getElementById('currentUserId')?.value;
@@ -66,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// 댓글 로드 기능
 function loadComments() {
     fetch(`/v1/posts/${postId}/comments`)
         .then(response => response.json())
@@ -79,6 +115,7 @@ function loadComments() {
         });
 }
 
+// 댓글 요소 생성 기능
 function createCommentElement(comment) {
     const commentDiv = document.createElement('div');
     commentDiv.className = 'comment-container';
@@ -117,6 +154,7 @@ function createCommentElement(comment) {
     return commentDiv;
 }
 
+// 댓글 제출 기능
 function submitComment() {
     const content = document.getElementById('commentContent').value;
     const selectedRating = ratingModule.getSelectedRating();
@@ -146,44 +184,65 @@ function submitComment() {
         });
 }
 
+// 댓글 수정 UI 생성 기능
 function editComment(commentId) {
     const commentDiv = document.getElementById(`comment-${commentId}`);
     const contentContainer = commentDiv.querySelector('.content-container');
     const contentP = contentContainer.querySelector('p');
     const originalContent = contentP.textContent;
+    const originalRating = commentDiv.querySelector('.rating-container p').textContent.trim().length;
 
     const textarea = document.createElement('textarea');
     textarea.value = originalContent;
     contentP.replaceWith(textarea);
 
+    const ratingContainer = document.createElement('div');
+    ratingContainer.className = 'edit-rating-container';
+    ratingContainer.innerHTML = `
+        <div class="rating-stars">
+            ${['★', '★', '★', '★', '★'].map((star, index) =>
+        `<span class="star ${index < originalRating ? 'selected' : ''}" data-value="${index + 1}">${star}</span>`
+    ).join('')}
+        </div>
+    `;
+    contentContainer.insertBefore(ratingContainer, textarea);
+
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'edit-button-container';
     buttonContainer.innerHTML = `
         <button class="edit-button save-button" onclick="saveEditedComment(${commentId})">저장</button>
-        <button class="edit-button cancel-button" onclick="cancelEdit(${commentId}, '${originalContent}')">취소</button>
+        <button class="edit-button cancel-button" onclick="cancelEdit(${commentId}, '${originalContent}', ${originalRating})">취소</button>
     `;
     contentContainer.appendChild(buttonContainer);
+
+    // [수정] 별점 수정 기능 초기화
+    ratingModule.editRating(commentId, originalRating);
 }
 
+// [수정] 수정된 댓글 저장 기능
 function saveEditedComment(commentId) {
     const commentDiv = document.getElementById(`comment-${commentId}`);
     const textarea = commentDiv.querySelector('textarea');
     const newContent = textarea.value;
+    const rating = ratingModule.getSelectedRating();
 
     fetch(`/v1/posts/${postId}/comments/${commentId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content: newContent }),
+        body: JSON.stringify({ content: newContent, rating: rating }),
     })
         .then(response => response.json())
         .then(comment => {
             loadComments();
+            ratingModule.loadAverageRating(postId);
+            ratingModule.resetRating();
         });
 }
 
-function cancelEdit(commentId, originalContent) {
+// 댓글 수정 취소 기능
+function cancelEdit(commentId, originalContent, originalRating) {
     const commentDiv = document.getElementById(`comment-${commentId}`);
     const contentContainer = commentDiv.querySelector('.content-container');
     const textarea = contentContainer.querySelector('textarea');
@@ -191,10 +250,19 @@ function cancelEdit(commentId, originalContent) {
     contentP.textContent = originalContent;
     textarea.replaceWith(contentP);
 
+    const ratingContainer = commentDiv.querySelector('.rating-container');
+    ratingContainer.innerHTML = `<p>${'★'.repeat(originalRating)}</p>`;
+
+    const editRatingContainer = contentContainer.querySelector('.edit-rating-container');
+    if (editRatingContainer) {
+        editRatingContainer.remove();
+    }
+
     const buttonContainer = contentContainer.querySelector('.edit-button-container');
     buttonContainer.remove();
 }
 
+// 댓글 삭제 기능
 function deleteComment(commentId) {
     if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
         fetch(`/v1/posts/${postId}/comments/${commentId}`, {
@@ -208,3 +276,6 @@ function deleteComment(commentId) {
             });
     }
 }
+//ratingModule에 editRating과 updateEditStars 메서드 추가
+// editComment 함수에서 ratingModule.editRating 호출
+// saveEditedComment 함수에서 ratingModule.getSelectedRating() 사용

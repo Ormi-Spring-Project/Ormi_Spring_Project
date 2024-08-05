@@ -31,7 +31,7 @@
 </header>
 <main>
     <div class="back-button-container">
-        <button class="back-button" onclick="history.back()">Go To Back</button>
+        <button class="back-button" th:onclick="|location.href='@{/v1/posts(categoryId=${categoryId})}'|">Go To Back</button>
     </div>
     <section class="post-container">
         <!-- notice 유형 게시글 -->

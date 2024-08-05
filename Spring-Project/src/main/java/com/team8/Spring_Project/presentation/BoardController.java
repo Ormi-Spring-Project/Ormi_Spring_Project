@@ -224,8 +224,10 @@ public class BoardController {
     public String updatePost(@PathVariable("id") Long id,
                              @ModelAttribute("board") BoardDTO boardDto,
                              @RequestPart(value = "file", required = false) MultipartFile file,
-                             HttpSession session,
+                             Authentication authentication,
                              HttpServletRequest request) throws IOException {
+
+        System.out.println("rating: " + boardDto.getRating());
 
         String path = request.getRequestURI();
         String type;
@@ -236,8 +238,8 @@ public class BoardController {
             type = "post";
         }
 
-        if (file == null) {
-            UserDTO userDTO = (UserDTO) session.getAttribute("login");
+        if (file == null || file.getBytes().length == 0) {
+            UserDTO userDTO = (UserDTO) authentication.getPrincipal();
             BoardDTO temp = boardService.getBoardById(id, userDTO, type);
             boardDto.setPicture(temp.getPicture());
         } else {
@@ -250,7 +252,7 @@ public class BoardController {
             return "redirect:/v1/posts/notice/" + id;
         }
 
-        return "redirect:/v1/posts/post/" + id;
+        return "redirect:/v1/posts/post/" + id + "?categoryId=" + boardDto.getCategoryId();
     }
 
     // 게시글 삭제
@@ -271,6 +273,5 @@ public class BoardController {
 
         return "redirect:/v1/posts";
     }
-
 
 }

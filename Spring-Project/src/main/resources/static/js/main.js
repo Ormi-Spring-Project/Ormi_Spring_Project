@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
         card.href = `/v1/posts/post/${post.id}?categoryId=${categoryId}`; // 게시글 상세 페이지 링크
         card.className = 'article-card';
         card.innerHTML = `
-            <img class="article-img" src="${post.imageUrl || '/images/cat-icon.png'}" alt="${post.title}">
+            <img class="article-img" src="data:image;base64,${post.picture}">
             <h4>${post.title}</h4>
             <div class="article-info">
                 <p class="article-author">${post.authorName}</p>

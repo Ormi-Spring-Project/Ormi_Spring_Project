@@ -71,7 +71,9 @@
             </thead>
             <tbody>
             <tr th:each="board : ${boards}">
-                <td><img src="/images/cat-icon.png" alt="Cat Icon"></td>
+                <td>
+                    <img th:if="${board.getType() == 'notice'}" src="/images/speaker.png" alt="Cat Icon">
+                </td>
                 <td>
                     <a th:href="@{/v1/posts/{type}/{id}(type=${board.type == 'notice' ? 'notice' : 'post'},
                      id=${board.id}, categoryId=${selectedCategoryId})}"

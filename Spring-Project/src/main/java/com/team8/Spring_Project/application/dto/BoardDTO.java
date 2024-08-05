@@ -23,6 +23,8 @@ public class BoardDTO {
 
     private String content;
 
+    private double rating;
+
     private Timestamp createdAt;
 
     private Timestamp updatedAt;
@@ -47,6 +49,7 @@ public class BoardDTO {
                 .authorName(userDTO.getNickname())
                 .picture(boardDto.getPicture())
                 .content(boardDto.getContent())
+                .rating(boardDto.getRating())
                 .createdAt(new Timestamp(System.currentTimeMillis()))
                 .updatedAt(new Timestamp(System.currentTimeMillis()))
                 .userId(userDTO.getId())
@@ -63,6 +66,7 @@ public class BoardDTO {
                 .title(boardDto.getTitle())
                 .picture(boardDto.getPicture())
                 .content(boardDto.getContent())
+                .averageRating(boardDto.getRating())
                 .application(boardDto.getApplication())
                 .createdAt(boardDto.getCreatedAt())
                 .updatedAt(boardDto.getUpdatedAt())

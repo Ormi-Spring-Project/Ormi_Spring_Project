@@ -88,7 +88,7 @@ public class CommentController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/average-rating")
+    @GetMapping("/average-rating")
     ///http://localhost:8080/v1/posts/post/1?categoryId=1
     //게시글 id=1 일때 /posts/1/average-rating
     //id=1 을 매개 변수로 가져옴

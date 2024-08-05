@@ -6,7 +6,6 @@ import com.team8.Spring_Project.application.dto.PostDTO;
 import com.team8.Spring_Project.domain.*;
 import com.team8.Spring_Project.infrastructure.persistence.CommentRepository;
 import com.team8.Spring_Project.infrastructure.persistence.PostRepository;
-import com.team8.Spring_Project.infrastructure.persistence.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -114,8 +113,9 @@ public class PostService {
                 new Timestamp(System.currentTimeMillis()),
                 category,
                 postDto.getAverageRating() //평균 평점
-
         );
+
+        calculateAverageRating(id);
 
     }
 
@@ -135,6 +135,7 @@ public class PostService {
                 .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
     //해당 게시물 모든 댓글 불러오기
         List<Comment> comments = commentRepository.findByPostId(postId);
+        System.out.println("댓글 리스트~" + comments);
 
         if (comments.isEmpty()) {
             post.setAverageRating(0.0);
