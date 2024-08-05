@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/editPost.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/common.css}">
+    <script th:src="@{/js/common.js}"></script>
     <title>Your App? My App! YAMA - 게시글 작성</title>
 </head>
 <body>
@@ -30,14 +31,14 @@
         <button class="back-button" onclick="history.back()">Go To Back</button>
     </div>
     <section class="post-container">
-        <div th:if="${board.getType().equals('post')}" class="icon">
-            <img class="icon-img" src="/images/img-place-holder.png">
-            <button class="icon-img-add-button">Edit Icon</button>
-        </div>
-        <form th:action="${type == 'notice'} ? @{/v1/posts/notice/{id}/edit(id=${board.id})} : @{/v1/posts/post/{id}/edit(id=${board.id})}" th:object="${board}" class="input" method="post">
+        <form th:action="${type == 'notice'} ? @{/v1/posts/notice/{id}/edit(id=${board.id})} : @{/v1/posts/post/{id}/edit(id=${board.id})}" th:object="${board}" class="input" method="post" enctype="multipart/form-data">
+            <div th:if="${board.getType().equals('post')}" class="icon">
+                <img id="preview" class="icon-img" th:src="'data:image;base64,'+${image}">
+                <input type="file" id="file" name="file" class="icon-img-add-button" accept="image/*">
+            </div>
             <input type="hidden" name="_method" value="put"/>
             <input name="title" class="input-title input-img" type="text" placeholder="Input your [title]" th:value="${board.title}">
-            <input name="application" class="input-link input-img" type="text" placeholder="Input your [application download link]" th:value="${board.application}">
+            <input th:if="${userDTO.getAuthority() == 'USER'}" name="application" class="input-link input-img" type="text" placeholder="Input your [application download link]" th:value="${board.application}">
             <select name="categoryId" class="input-tag-select">
                 <option th:each="category : ${categories}"
                          th:value="${category.id}"
@@ -77,5 +78,6 @@
         </div>
     </div>
 </footer>
+<script th:src="@{/js/sendImage.js}"></script>
 </body>
 </html>

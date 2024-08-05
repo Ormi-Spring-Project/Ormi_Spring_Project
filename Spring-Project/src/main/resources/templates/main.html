@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
     <script th:src="@{/js/logout.js}"></script>
     <script th:src="@{/js/main.js}"></script>
 </head>
@@ -39,11 +40,11 @@
         </div>
         <img src="/images/pointing-hand.png" alt="Pointing Hand" class="pointing-hand">
     </section>
-
     <section class="card categories">
         <h3>Categories</h3>
+        <button class="slider-arrow left">&lt;</button>
+        <button class="slider-arrow right">&gt;</button>
         <div class="category-slider">
-            <button class="slider-arrow left">&lt;</button>
             <div class="category-item-slider">
                 <div class="category-items">
                     <div th:each="category : ${categories}"
@@ -54,10 +55,8 @@
                     </div>
                 </div>
             </div>
-            <button class="slider-arrow right">&gt;</button>
         </div>
     </section>
-
 
     <section class="articles">
         <a href="" class="see-all">See All Article &gt;</a>

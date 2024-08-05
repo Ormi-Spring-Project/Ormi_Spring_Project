@@ -12,6 +12,10 @@ spring:
     resources:
       static-locations: classpath:/static/
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
   datasource:
     url: jdbc:mysql://localhost:3306/yama
     username: root

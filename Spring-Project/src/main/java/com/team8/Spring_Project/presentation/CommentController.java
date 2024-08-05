@@ -1,23 +1,34 @@
 package com.team8.Spring_Project.presentation;
 
 import com.team8.Spring_Project.application.CommentService;
+import com.team8.Spring_Project.application.PostService;
 import com.team8.Spring_Project.application.dto.CommentDTO;
+import com.team8.Spring_Project.application.dto.PostDTO;
 import com.team8.Spring_Project.application.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import com.team8.Spring_Project.domain.Post;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts/{postId}/comments")
+@RequestMapping("/v1/posts/{postId}/comments")
 public class CommentController {
     private final CommentService commentService;
+    private final PostService postService; // PostService 추가
 
     @Autowired
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, PostService postService) {
         this.commentService = commentService;
+        this.postService = postService;
     }
 
     @GetMapping
@@ -75,5 +86,18 @@ public class CommentController {
 
         commentService.deleteComment(commentId, userDTO.getId());
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/average-rating")
+    ///http://localhost:8080/v1/posts/post/1?categoryId=1
+    //게시글 id=1 일때 /posts/1/average-rating
+    //id=1 을 매개 변수로 가져옴
+    public ResponseEntity<Double> getAverageRating(@PathVariable Long postId) {
+        try {
+            PostDTO postDto = postService.getPostById(postId);
+            return ResponseEntity.ok(postDto.getAverageRating());
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

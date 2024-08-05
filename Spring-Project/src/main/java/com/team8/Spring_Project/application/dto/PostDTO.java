@@ -4,6 +4,7 @@ import com.team8.Spring_Project.domain.Category;
 import com.team8.Spring_Project.domain.Post;
 import com.team8.Spring_Project.domain.User;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 
@@ -25,6 +26,8 @@ public class PostDTO {
 
     private String application;
 
+    private byte[] picture;
+
     private Timestamp createdAt;
 
     private Timestamp updatedAt;
@@ -34,6 +37,8 @@ public class PostDTO {
     private String categoryName;
 
     private Long categoryId;
+
+    private double averageRating;
 
     // Entity -> DTO
     public static PostDTO fromEntity(Post post) {
@@ -45,11 +50,14 @@ public class PostDTO {
                 .content(post.getContent())
                 .tag(post.getTag())
                 .application(post.getApplication())
+                .picture(post.getPicture())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .userId(post.getUser().getId())
                 .categoryName(post.getCategory().getName())
                 .categoryId(post.getCategory().getId())
+                //실행시 null값으로 오류 발생 null인경우 기본값 0.0 을 제공하도록 삼항연산자 이용
+                .averageRating(post.getAverageRating() != null ? post.getAverageRating().doubleValue() : 0.0) //별점 평균 null이 아니면 값을 반환, null이면 0.0 반환
                 .build();
 
     }
@@ -62,10 +70,12 @@ public class PostDTO {
                 .content(this.content)
                 .tag(this.tag)
                 .application(this.application)
+                .picture(this.picture)
                 .createdAt(this.createdAt)
                 .updatedAt(this.updatedAt)
                 .user(user)
                 .category(category)
+                .averageRating(this.averageRating)  // 별점 평균
                 .build();
 
     }
@@ -77,6 +87,7 @@ public class PostDTO {
                 .id(postDTO.getId()) // 상세보기를 위한 BoardDto id 필드 추가에 따른 id 변환
                 .title(postDTO.getTitle())
                 .userId(postDTO.getUserId())
+                .picture(postDTO.getPicture())
                 .content(postDTO.getContent())
                 .application(postDTO.getApplication())
                 .createdAt(postDTO.getCreatedAt())
@@ -88,5 +99,4 @@ public class PostDTO {
                 .build();
 
     }
-
 }

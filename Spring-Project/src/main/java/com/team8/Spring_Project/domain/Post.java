@@ -27,6 +27,9 @@ public class Post{
     @Column
     private String tag;
 
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] picture;
+
     @Column
     private String application;
 
@@ -44,20 +47,27 @@ public class Post{
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @Column(name = "average_rating")
+    private Double averageRating;
+
     public void update(String title,
+                       byte[] picture,
                        String content,
                        String tag,
                        String application,
                        Timestamp updatedAt,
-                       Category category) {
+                       Category category,
+                       double averageRating) {
 
 
         this.title = title;
+        this.picture = picture;
         this.content = content;
         this.tag = tag;
         this.application = application;
         this.updatedAt = updatedAt;
         this.category = category;
+        this.averageRating = averageRating;
 
     }
 

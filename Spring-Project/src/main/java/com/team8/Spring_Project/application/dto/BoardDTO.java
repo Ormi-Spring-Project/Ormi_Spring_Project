@@ -1,7 +1,9 @@
 package com.team8.Spring_Project.application.dto;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 
 @Getter
@@ -14,6 +16,8 @@ public class BoardDTO {
     private Long id;
 
     private String title;
+
+    private byte[] picture;
 
     private String authorName;
 
@@ -36,10 +40,12 @@ public class BoardDTO {
     private String type;
 
     // BoardDTO SET
-    public static BoardDTO createFrom(BoardDTO boardDto, UserDTO userDTO, CategoryDTO categoryDTO) {
+    public static BoardDTO createFrom(BoardDTO boardDto, UserDTO userDTO,
+                                      CategoryDTO categoryDTO) {
         return BoardDTO.builder()
                 .title(boardDto.getTitle())
                 .authorName(userDTO.getNickname())
+                .picture(boardDto.getPicture())
                 .content(boardDto.getContent())
                 .createdAt(new Timestamp(System.currentTimeMillis()))
                 .updatedAt(new Timestamp(System.currentTimeMillis()))
@@ -55,6 +61,7 @@ public class BoardDTO {
 
         return PostDTO.builder()
                 .title(boardDto.getTitle())
+                .picture(boardDto.getPicture())
                 .content(boardDto.getContent())
                 .application(boardDto.getApplication())
                 .createdAt(boardDto.getCreatedAt())

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 슬라이더 기능
     let scrollAmount = 0;
-    const scrollStep = 500;
+    const scrollStep = 1010;
 
     sliderLeft.addEventListener('click', function() {
         scrollAmount = Math.max(scrollAmount - scrollStep, 0);
