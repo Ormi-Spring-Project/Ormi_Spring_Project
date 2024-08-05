@@ -1,10 +1,9 @@
 package com.team8.Spring_Project.application;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.team8.Spring_Project.application.dto.PostDTO;
-import com.team8.Spring_Project.domain.Category;
-import com.team8.Spring_Project.domain.Comment;
-import com.team8.Spring_Project.domain.Post;
-import com.team8.Spring_Project.domain.User;
+import com.team8.Spring_Project.domain.*;
 import com.team8.Spring_Project.infrastructure.persistence.CommentRepository;
 import com.team8.Spring_Project.infrastructure.persistence.PostRepository;
 import com.team8.Spring_Project.infrastructure.persistence.CategoryRepository;
@@ -23,14 +22,17 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserService userService;
     private final CategoryService categoryService;
+    private final JPAQueryFactory jpaQueryFactory;
     private final CommentRepository commentRepository; // 모든 게시물 조회
 
     @Autowired
-    public PostService(PostRepository postRepository, UserService userService, CategoryService categoryService, CommentRepository commentRepository) {
+    public PostService(PostRepository postRepository, UserService userService, CategoryService categoryService, CommentRepository commentRepository,
+                      JPAQueryFactory jpaQueryFactory) {
         this.postRepository = postRepository;
         this.userService = userService;
         this.categoryService = categoryService;
         this.commentRepository = commentRepository;
+        this.jpaQueryFactory = jpaQueryFactory;
     }
 
     // 카테고리 id 기반 일반 게시글 리스트
@@ -51,6 +53,33 @@ public class PostService {
                 .map(PostDTO::fromEntity)
                 .orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
 
+    }
+
+    // 일반 게시글 검색
+    @Transactional(readOnly = true)
+    public List<PostDTO> searchPostByKeyword(String keyword, String categoryName) {
+        QPost post = QPost.post;
+        QUser user = QUser.user;
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        if (keyword != null && !keyword.isEmpty()) {
+            builder.or(post.title.containsIgnoreCase(keyword))
+                    .or(post.user.nickname.containsIgnoreCase(keyword));
+        }
+
+        if (categoryName != null && !categoryName.isEmpty()) {
+            builder.and(post.category.name.eq(categoryName));
+        }
+
+        List<Post> searchedPosts = jpaQueryFactory.selectFrom(post)
+                .leftJoin(post.user, user)
+                .where(builder)
+                .fetch();
+
+        return searchedPosts.stream()
+                .map(PostDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Transactional

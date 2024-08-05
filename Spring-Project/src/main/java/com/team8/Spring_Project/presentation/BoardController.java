@@ -52,6 +52,31 @@ public class BoardController {
 
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("boards", boards);
+        model.addAttribute("keyword", "");
+        model.addAttribute("categories", categories);
+        model.addAttribute("selectedCategoryId", categoryId);
+        model.addAttribute("categoryName", categoryName);
+
+        return "categoryPost";
+    }
+
+    // 게시글 제목 또는 작성자 기준 특정 키워드로 검색
+    @GetMapping(params = {"categoryId", "keyword"})
+    public String getBoardsByKeyword(@RequestParam(name = "categoryId", required = false, defaultValue = "1") Long categoryId,
+                                     @RequestParam("keyword") String keyword,
+                                     HttpServletRequest request,
+                                     Model model) {
+
+        HttpSession session = request.getSession();
+        UserDTO userDTO = (UserDTO) session.getAttribute("login");
+        CategoryDTO categoryDto = categoryService.getCategoryById(categoryId);
+        String categoryName = categoryDto.getName();
+
+        List<BoardDTO> boards = boardService.getBoardByKeyword(keyword, categoryName);
+        List<CategoryDTO> categories = categoryService.getAllCategories();
+
+        model.addAttribute("userDTO", userDTO);
+        model.addAttribute("boards", boards);
         model.addAttribute("categories", categories);
         model.addAttribute("selectedCategoryId", categoryId);
         model.addAttribute("categoryName", categoryName);
@@ -76,11 +101,10 @@ public class BoardController {
         try {
             if (path.contains("/notice/")) {
                 type = "notice";
-                board = boardService.getBoardById(id, userDTO, type);
             } else {
                 type = "post";
-                board = boardService.getBoardById(id, userDTO, type);
             }
+            board = boardService.getBoardById(id, userDTO, type);
         } catch (AccessDeniedException e) {
             // 원래는 뭐 에러 페이지나 다른 것을 띄워줘야 할 것 같다.
             return "권한이 없습니다.";

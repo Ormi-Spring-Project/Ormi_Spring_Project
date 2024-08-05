@@ -1,9 +1,3 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
 body {
     display: flex;
     flex-direction: column;
@@ -41,7 +35,6 @@ body {
 
 .login_icon {
     text-align: center;
-    margin-top : 100px;
 }
 
 .login_icon img {
