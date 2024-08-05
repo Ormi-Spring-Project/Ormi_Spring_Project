@@ -182,6 +182,8 @@ public class BoardController {
             boardDto.setPicture(file.getBytes());
         }
 
+        boardDto.setTitle("[공지] " + boardDto.getTitle());
+
         boardService.createBoard(boardDto, userDTO, categoryDto);
 
         return "redirect:/v1/posts?categoryId=" + categoryId;
