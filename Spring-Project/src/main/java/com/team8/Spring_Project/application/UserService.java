@@ -112,4 +112,11 @@ public class UserService implements UserDetailsService {
             user.activateUser(Authority.USER);
         }
     }
+
+    // 실시간 권한 변경 처리를 위한 권한
+    public Authority getUserAuthority(String email) {
+        User user = userRepository.findByEmail(email);
+        return user.getAuthority();
+    }
+
 }
