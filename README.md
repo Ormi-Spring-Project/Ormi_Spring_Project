@@ -1,6 +1,3 @@
-# Ormi_Spring_Project
-
-
 # Yama! 유용한 앱 공유 커뮤니티 서비스
 
 ## 1. 목표와 기능
@@ -22,27 +19,24 @@
 - 디자인 : 이현준, 이동현, 최의현
 
 
-## 2. Git Convention // 일단 보류 or 노션 캡쳐본 사용
+## 2. Git Convention
 
-- `feat: {something}` : 새로운 기능을 추가했을 때
-- `fix: {something}` : 기능 중 버그를 수정했을 때
-- `design: {something}` : 디자인 일부를 변경했을 때
-- `refactor: {something}` : 코드를 재정비 하였을 때
-- `chore: {something}` : 빌드 관련 업무를 수정하거나 패키지 매니저를 수정했을 때
-- `docs: {something}` : README와 같은 문서를 변경했을 때
-- `test: {something}` : 테스트 코드를 추가했을 때
+<img width=60% alt="스크린샷 2024-08-06 오전 10 21 54" src="https://github.com/user-attachments/assets/0841f1a1-fe53-4312-b954-dd86e64941ed">
 
 
 ## 3. 개발 환경 및 배포 URL
-### 3.1 개발 환경 아래 내용 or 동현님이랑 통일
+### 3.1 개발 환경
 
 - IDE: IntelliJ IDEA 
 - 언어: Java 17
 - 빌드 도구: Gradle 8.x
-- Web Framework : Spring Boot 3.3.x
 - 서비스 배포 환경 : Amazon Lightsail
-    
-### 3.2 배포 URL X
+
+### 3.2 기술 스택
+
+<img width=60% alt="스크린샷 2024-08-06 오전 10 21 54" src="https://github.com/user-attachments/assets/b1ded36c-7f42-4af3-900b-2f551bfae594">
+
+### 3.3 배포 URL
 - https://www.studyin.co.kr/
 - 테스트용 계정
   ```
@@ -52,35 +46,35 @@
 
 ### 3.3 URL 구조
 
-| URL                                                 | 요청 방식  | 설명                              | 결과 구현 여부 |
-|-----------------------------------------------------|--------|---------------------------------|----------|
-| /v1/main                                            | GET    | 메인 페이지 요청                       | 200      |
-| /v1/login                                           | GET    | 로그인 페이지 요청                      | 200      |
-| /v1/signup                                          | GET    | 회원가입 페이지 요청                     | 200      |
-| /v1/signup                                          | POST   | 회원가입 요청                         | 302      |
-| /v1/user/{id}                                       | GET    | 해당 id를 가진 User의 마이페이지 요청        | 200      |
-| /v1/user/{id}                                       | PUT    | 해당 id를 가진 User의 마이페이지의 정보 수정 요청 | 302      |
-| /v1/user/{id}                                       | DELETE | 해당 id를 가진 User의 정보 삭제 요청        | 302      |
-| /v1/admin                                           | GET    | 관리자가 관리자 페이지 요청                 | 200      |
-| /v1/admin/{user_id}                                 | PUT    | 관리자가 해당 id를 가진 User의 권한 변경 요청   | 302      |
-| /v1/posts                                           | GET    | User가 게시글 리스트 페이지 요청            | 200      |
-| /v1/posts                                           | POST   | User가 새로운 게시글 작성 요청             | 302      |
-| /v1/posts/write                                     | GET    | User가 게시글 작성 페이지 요청             | 200      |
-| /v1/posts/notice/{id}/edit                          | GET    | Admin이 공지사항 수정 페이지 요청           | 200      |
-| /v1/posts/notice/{id}/edit                          | PUT    | Admin이 공지사항 수정 요청               | 302      |
-| /v1/posts/post/{id}/edit                            | GET    | User가 게시글 수정 페이지 요청             | 200      |
-| /v1/posts/post/{id}/edit                            | PUT    | User가 게시글 수정 요청                 | 302      |
-| /v1/posts/notice/{id}                               | GET    | User가 공지사항 페이지 요청               | 200      |
-| /v1/posts/notice/{id}                               | DELETE | Admin이 공지사항 삭제 요청               | 302      |
-| /v1/posts/post/{id}                                 | GET    | User가 post_id에 해당하는 게시글 상세보기 요청 | 200      |
-| /v1/posts/post/{id}                                 | DELETE | User가 post_id에 해당하는 게시글 삭제 요청   | 302      |
-| /v1/posts?categoryId={categoryId}&keyword={keyword} | GET    | 게시글 키워드 검색                      | 200      |
-| /v1/posts/article-items?categoryId={categoryId}     | GET    | 카테고리 ID에 따른 게시물 목록 요청           | 200      |
-| /v1/posts/{postId}/comments                         | GET    | 게시글에 작성된 댓글 조회 요청               | 200      |
-| /v1/posts/{postId}/comments                         | POST   | 게시글의 댓글 작성 요청                   | 201      |
-| /v1/posts/{postId}/comments/{commentId}             | PUT    | 게시글의 댓글 수정 요청                   | 204      |
-| /v1/posts/{postId}/comments                         | DELETE | 게시글의 댓글 삭제 요청                   | 204      |
-| /v1/posts/{postId}/average-rating                   | GET    | 게시글의 댓글 총 평점 조회 요청              | 200      |
+| URL                                                 | 요청 방식  | 설명                              
+|-----------------------------------------------------|--------|---------------------------------|
+| /v1/main                                            | GET    | 메인 페이지 요청                       | 
+| /v1/login                                           | GET    | 로그인 페이지 요청                      | 
+| /v1/signup                                          | GET    | 회원가입 페이지 요청                     | 
+| /v1/signup                                          | POST   | 회원가입 요청                         | 
+| /v1/user/{id}                                       | GET    | 해당 id를 가진 User의 마이페이지 요청        | 
+| /v1/user/{id}                                       | PUT    | 해당 id를 가진 User의 마이페이지의 정보 수정 요청 | 
+| /v1/user/{id}                                       | DELETE | 해당 id를 가진 User의 정보 삭제 요청        | 
+| /v1/admin                                           | GET    | 관리자가 관리자 페이지 요청                 | 
+| /v1/admin/{user_id}                                 | PUT    | 관리자가 해당 id를 가진 User의 권한 변경 요청   | 
+| /v1/posts                                           | GET    | User가 게시글 리스트 페이지 요청            | 
+| /v1/posts                                           | POST   | User가 새로운 게시글 작성 요청             | 
+| /v1/posts/write                                     | GET    | User가 게시글 작성 페이지 요청             | 
+| /v1/posts/notice/{id}/edit                          | GET    | Admin이 공지사항 수정 페이지 요청           | 
+| /v1/posts/notice/{id}/edit                          | PUT    | Admin이 공지사항 수정 요청               | 
+| /v1/posts/post/{id}/edit                            | GET    | User가 게시글 수정 페이지 요청             |
+| /v1/posts/post/{id}/edit                            | PUT    | User가 게시글 수정 요청                 | 
+| /v1/posts/notice/{id}                               | GET    | User가 공지사항 페이지 요청               | 
+| /v1/posts/notice/{id}                               | DELETE | Admin이 공지사항 삭제 요청               | 
+| /v1/posts/post/{id}                                 | GET    | User가 post_id에 해당하는 게시글 상세보기 요청 | 
+| /v1/posts/post/{id}                                 | DELETE | User가 post_id에 해당하는 게시글 삭제 요청   |
+| /v1/posts?categoryId={categoryId}&keyword={keyword} | GET    | 게시글 키워드 검색                      | 
+| /v1/posts/article-items?categoryId={categoryId}     | GET    | 카테고리 ID에 따른 게시물 목록 요청           | 
+| /v1/posts/{postId}/comments                         | GET    | 게시글에 작성된 댓글 조회 요청               | 
+| /v1/posts/{postId}/comments                         | POST   | 게시글의 댓글 작성 요청                   | 
+| /v1/posts/{postId}/comments/{commentId}             | PUT    | 게시글의 댓글 수정 요청                   | 
+| /v1/posts/{postId}/comments                         | DELETE | 게시글의 댓글 삭제 요청                   | 
+| /v1/posts/{postId}/average-rating                   | GET    | 게시글의 댓글 총 평점 조회 요청              |
 
 
 ## 4. 프로젝트 구조와 개발 일정
@@ -91,9 +85,7 @@ wbs 첨부
 
 ### 4.2 프로젝트 구조
 
-우리가 어떤 아키텍처를 선택해서 패키지 구조를 만들었는지? --> 기억해야함
-
-어떠한 패턴을 기반으로 패키지 구조를 생성했습니다.
+도메인 주도 설계 원칙을 따르는 아키텍처 패턴으로 구현하였습니다.
 
 📦Spring_Project   
 ┣ 📂application    
@@ -278,65 +270,12 @@ mindmap
 
 ## 7. 데이터베이스 모델링(ERD)
 
-이거 아니면 erdCloud 캡쳐본
+<img src="https://github.com/user-attachments/assets/96ff1277-7e92-4195-9dff-e1d5e132b187" width=60%>
 
-```mermaid
-erDiagram
-    User {
-        Long id PK
-        VARCHAR(255) email
-        VARCHAR(255) nickname
-        VARCHAR(255) password
-        VARCHAR(255) phoneNumber
-        VARCHAR(255) authority
-    }
-    Category {
-        Long id PK
-        VARCHAR(255) name
-        VARCHAR(255) icon
-    }
-    Post {
-        Long id PK
-        VARCHAR(255) title
-        VARCHAR(255) content
-        VARCHAR(255) application
-        TIMESTAMP createdAt
-        TIMESTAMP updatedAt
-        Long userId FK
-        Long categoryId FK
-        LONGBLOB picture
-    }
-    Notice {
-        Long id PK
-        VARCHAR(255) title
-        VARCHAR(255) content
-        TIMESTAMP createdAt
-        TIMESTAMP updatedAt
-        Long userId FK
-    }
-    Comment {
-        Long id PK
-        VARCHAR(255) content
-        TIMESTAMP createdAt
-        TIMESTAMP updatedAt
-        Long postId FK
-        Long userId FK
-    }
 
-    User ||--o{ Post : creates
-    User ||--o{ Notice : creates
-    User ||--o{ Comment : writes
-    Category ||--o{ Post : belongs_to
-    Post ||--o{ Comment : has
-```
-
-## 10. 에러와 에러 해결
-
-트러블 슈팅 문서화 or 그냥 몇개 적기 or 없애기
-
-## 10. 개발하며 느낀점
+## 8. 개발하며 느낀점
 - 이현준 :
 
 - 이동현 :
 
-- 최의현 : 
+- 최의현 : 서비스 흐름도를 기반으로 한 사용자 중심 설계부터 시작하여 깃허브를 통한 협업, 백엔드 구현, 그리고 배포까지 전 과정을 경험을 할 수 있었다. 스프링을 이용한 백엔드 개발이 처음이라 쉽지는 않았지만 구조를 이해하고, 구현을 하는 것에 익숙해 질 수 있었다.
