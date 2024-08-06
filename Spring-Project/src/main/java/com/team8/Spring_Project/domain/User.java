@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -23,6 +25,12 @@ public class User {
     private String password;
     private String phoneNumber;
     private Authority authority;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 
     public void updateUser(String nickname, String password, String phoneNumber, PasswordEncoder passwordEncoder) {
         if (nickname != null) this.nickname = nickname;

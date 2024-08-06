@@ -138,6 +138,7 @@ public class UserService implements UserDetailsService {
     // 실시간 권한 변경 처리를 위한 권한
     public Authority getUserAuthority(String email) {
         User user = userRepository.findByEmail(email);
+        if (user == null) return null;
         return user.getAuthority();
     }
 

@@ -51,8 +51,6 @@ public class UserController {
         return "main";
     }
 
-
-
     @GetMapping("/signup")
     public String getSignUpPage(Model model) {
         model.addAttribute("userDTO", new UserDTO());
@@ -109,7 +107,7 @@ public class UserController {
     @PreAuthorize("authentication.principal.id == #userDTO.id or hasAnyRole('USER', 'ADMIN')")
     public String deleteUser(@ModelAttribute UserDTO userDTO) {
         userService.deleteUser(userDTO);
-        return "redirect:/v1/main";
+        return "redirect:/v1/logout";
     }
 
     @GetMapping("/admin")

@@ -38,6 +38,7 @@ public class UserStatusCheckFilter extends OncePerRequestFilter {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String userEmail = userDetails.getUsername();
             Authority currentAuthority = userService.getUserAuthority(userEmail);
+            if (currentAuthority == null) return;
 
             if (!hasAuthority(authentication, currentAuthority)) {
                 List<GrantedAuthority> newAuthorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + currentAuthority.name()));
