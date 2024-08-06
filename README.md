@@ -52,7 +52,7 @@
 
 ### 3.4 URL 구조
 
-User
+👱User
 
 | URL                                                 | 요청 방식  | 설명                              
 |-----------------------------------------------------|--------|---------------------------------|
@@ -66,7 +66,7 @@ User
 | /v1/admin                                           | GET    | 관리자가 관리자 페이지 요청                 | 
 | /v1/admin/{user_id}                                 | PUT    | 관리자가 해당 id를 가진 User의 권한 변경 요청   | 
 
-Post
+📝Post
 
 | URL                                                 | 요청 방식  | 설명                              
 |-----------------------------------------------------|--------|---------------------------------|
@@ -84,7 +84,7 @@ Post
 | /v1/posts?categoryId={categoryId}&keyword={keyword} | GET    | 게시글 키워드 검색                      | 
 | /v1/posts/article-items?categoryId={categoryId}     | GET    | 카테고리 ID에 따른 게시물 목록 요청           | 
 
-Comment
+🔖Comment
 
 | URL                                                 | 요청 방식  | 설명                              
 |-----------------------------------------------------|--------|---------------------------------|
@@ -286,49 +286,53 @@ mindmap
             <td>메인</td>
             <td>로그인</td>
             <td>회원가입</td>
+        </tr>
+        <tr>
+            <td>
+                <img src="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" width="250" height="350" alt="main">
+            </td>
+            <td>
+                <img src="https://github.com/user-attachments/assets/b5b88f3c-5aa3-4b9d-956d-2c2800d30b61" width="250" height="350" alt="signin">
+            </td>
+            <td>
+                <img src="https://github.com/user-attachments/assets/627c940c-61a7-4bcb-bb85-80aa53f64f6e" width="250" height="350" alt="signup">
+            </td>
+        </tr>
+        <tr>
             <td>정보수정</td>
             <td>관리자 페이지</td>
-        </tr>
-        <tr>
-            <td>
-		            <img src="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" width="160" height="200" alt="main">
-            </td>
-            <td>
-                <img src="https://github.com/user-attachments/assets/b5b88f3c-5aa3-4b9d-956d-2c2800d30b61" width="160" height="200" alt="signin">
-            </td>
-            <td>
-                <img src="https://github.com/user-attachments/assets/627c940c-61a7-4bcb-bb85-80aa53f64f6e" width="160" height="200" alt="signup">
-            </td>
-            <td>
-                <img src="https://github.com/user-attachments/assets/3d72c248-8e2f-4c83-a3b6-cdfb156624bc" width="160" height="200" alt="userInfoEdit">
-            </td>
-            <td>
-	              <img src="https://github.com/user-attachments/assets/ecd0cf00-b9d2-4c74-b494-2c2a50c97e1f" width="160" height="200" alt="adminPage">
-            </td>
-        </tr>
-        <tr>
             <td>게시글 리스트</td>
+        </tr>
+        <tr>
+            <td>
+                <img src="https://github.com/user-attachments/assets/3d72c248-8e2f-4c83-a3b6-cdfb156624bc" width="250" height="350" alt="userInfoEdit">
+            </td>
+            <td>
+                <img src="https://github.com/user-attachments/assets/ecd0cf00-b9d2-4c74-b494-2c2a50c97e1f" width="250" height="350" alt="adminPage">
+            </td>
+            <td>
+                <img src="https://github.com/user-attachments/assets/7d1cbb21-0bb1-40bf-a6c4-2b8c42b47061" width="250" height="350" alt="postList">
+            </td>
+        </tr>
+        <tr>
             <td>게시글 상세보기</td>
             <td>게시글 수정 / 삭제</td>
             <td>글쓰기</td>
         </tr>
         <tr>
             <td>
-                <img src="https://github.com/user-attachments/assets/7d1cbb21-0bb1-40bf-a6c4-2b8c42b47061" width="160" height="200" alt="postList">
+                <img src="https://github.com/user-attachments/assets/8c7e3abf-0e35-41d5-bf73-f791411a05ef" width="250" height="350" alt="postDetail">
             </td>
             <td>
-                <img src="https://github.com/user-attachments/assets/8c7e3abf-0e35-41d5-bf73-f791411a05ef" width="160" height="200" alt="postDetail">
+                <img src="https://github.com/user-attachments/assets/40a38f3b-a941-42be-ba33-f831532e9105" width="250" height="350" alt="postEdit">
             </td>
             <td>
-	              <img src="https://github.com/user-attachments/assets/40a38f3b-a941-42be-ba33-f831532e9105" width="160" height="200" alt="postEdit">
-            </td>
-            <td>
-                <img src="https://github.com/user-attachments/assets/f1e0452c-0945-4f61-ba0b-1179fc531269" width="160" height="200" alt="postWrite">
+                <img src="https://github.com/user-attachments/assets/f1e0452c-0945-4f61-ba0b-1179fc531269" width="250" height="350" alt="postWrite">
             </td>
         </tr>
-        <tr>
     </tbody>
 </table>
+
 
 ## 7. 데이터베이스 모델링(ERD)
 
