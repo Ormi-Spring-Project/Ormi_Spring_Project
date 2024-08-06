@@ -20,7 +20,6 @@ public class Notice{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // nullable = true, length = 255 기본값.
     @Column
     private String title;
 

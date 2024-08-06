@@ -36,7 +36,8 @@
                 <div class="icon-wrapper">
                     <img src="/images/mail_icon.png" alt="Email icon"/>
                 </div>
-                <input th:field="${userDTO.email}" th:value="${userDTO.getEmail()}" type="email" placeholder="Input your [email]" required>
+                <input th:field="${userDTO.email}" th:value="${userDTO.getEmail()}" type="email"
+                       readonly placeholder="Input your [email]" required>
             </div>
             <div class="input-group">
                 <div class="icon-wrapper">

@@ -24,8 +24,7 @@ public class User {
     private String phoneNumber;
     private Authority authority;
 
-    public void updateUser(String email, String nickname, String password, String phoneNumber, PasswordEncoder passwordEncoder) {
-        if (email != null) this.email = email;
+    public void updateUser(String nickname, String password, String phoneNumber, PasswordEncoder passwordEncoder) {
         if (nickname != null) this.nickname = nickname;
         if (password != null) this.password = passwordEncoder.encode(password);
         if (phoneNumber != null) this.phoneNumber = phoneNumber;

@@ -86,18 +86,31 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findById(userDTO.getId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 id를 가진 User가 존재하지 않습니다."));
 
-        User emailCheck = userRepository.findByEmail(userDTO.getEmail());
-        User nicknameCheck = userRepository.findByNickname(userDTO.getNickname());
+        String usingNickname = userDTO.getNickname();
 
-        if (emailCheck == null && nicknameCheck == null) {
-            user.updateUser(
-                    userDTO.getEmail(),
-                    userDTO.getNickname(),
-                    userDTO.getPassword(),
-                    userDTO.getPhoneNumber(),
-                    passwordEncoder
-            );
+        boolean findNickname = userRepository.existsByNickname(usingNickname);
+
+        // 1. 다른 사람하고 겹치면 안된다.
+        // 2. 이전과 같은 정보(수정되지 않은 정보)는 유지한다.
+
+        boolean nicknameCheck = !findNickname;
+
+        if (findNickname) {
+            if (user.getNickname().equals(usingNickname)) {
+                nicknameCheck = true;
+            }
         }
+
+        if (!nicknameCheck) {
+            return new UserDTO().fromEntity(user);
+        }
+
+        user.updateUser(
+                userDTO.getNickname(),
+                userDTO.getPassword(),
+                userDTO.getPhoneNumber(),
+                passwordEncoder
+        );
 
         return userDTO.fromEntity(user);
     }
