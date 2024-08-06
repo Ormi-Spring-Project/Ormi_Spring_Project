@@ -38,16 +38,16 @@
 
 - Thymeleaf: 3.3.1
 - Spring Boot: 3.3.1
-- Spring Security: 3.3.1
-- Spring Data JPA: 3.3.1
-- MySQL: 8.0
+- Spring Security: 6.3.1
+- Spring Data JPA: 3.1.0
+- MySQL: 8.3.0
 
 ### 3.3 배포 URL
-- https://www.studyin.co.kr/
+- http://3.36.65.194:8080/v1/main
 - 테스트용 계정
   ```
-  id : test@test.test
-  pw : test11!!
+  id : test@test.com
+  pw : 1111
   ```
 
 ### 3.4 URL 구조
