@@ -256,7 +256,7 @@ gantt
             </td>
             <td>
                 <a href="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" target="_blank"></a>
-                <img src="https://github.com/user-attachments/assets/ecd0cf00-b9d2-4c74-b494-2c2a50c97e1f" width="250" height="350" alt="adminPage">
+                <img src="https://github.com/user-attachments/assets/af2a96a9-cb7f-4e51-97f1-26373cd81087" width="250" height="350" alt="adminPage">
             </td>
             <td>
                 <a href="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" target="_blank"></a>
