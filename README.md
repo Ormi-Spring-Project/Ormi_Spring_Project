@@ -45,12 +45,13 @@
 ### 3.2 기술 스택
 
 <img width=60% alt="스크린샷 2024-08-06 오전 10 21 54" src="https://github.com/user-attachments/assets/b1ded36c-7f42-4af3-900b-2f551bfae594">
+<br><br>
+<img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=flat-square&logo=Thymeleaf-&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=Spring Boot-&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat-square&logo=Spring Security-&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring Data JPA-DB33F?style=flat-square&logo=Spring Data JPA&logoColor=white"/>
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL-&logoColor=white"/>
 
-- Thymeleaf: 3.3.1
-- Spring Boot: 3.3.1
-- Spring Security: 6.3.1
-- Spring Data JPA: 3.1.0
-- MySQL: 8.3.0
 
 ### 3.3 배포 URL
 - http://3.36.65.194:8080/v1/main
