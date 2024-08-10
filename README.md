@@ -110,7 +110,7 @@
 ## 4. 프로젝트 구조와 개발 일정
 
 ### 4.1 개발 일정
-<img src="https://github.com/user-attachments/assets/9e3166cc-19ae-41ac-a422-3ae828b70259" width=90%>
+<img src="https://github.com/user-attachments/assets/9e3166cc-19ae-41ac-a422-3ae828b70259" width=95%>
 
 ```mermaid
 gantt
