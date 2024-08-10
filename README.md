@@ -44,11 +44,9 @@
 
 ### 3.2 기술 스택
 
-<img width=96% alt="스크린샷 2024-08-06 오전 10 21 54" src="https://github.com/user-attachments/assets/b1ded36c-7f42-4af3-900b-2f551bfae594">
-<br><br>
-LD
-<img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=flat-square&logo=Thymeleaf-&logoColor=white"/><img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=Spring Boot-&logoColor=white"/><img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat-square&logo=Spring Security-&logoColor=white"/><img src="https://img.shields.io/badge/Spring Data JPA-DB33F?style=flat-square&logo=Spring Data JPA&logoColor=white"/><img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL-&logoColor=white"/>
-
+<img width=60% alt="스크린샷 2024-08-06 오전 10 21 54" src="https://github.com/user-attachments/assets/b1ded36c-7f42-4af3-900b-2f551bfae594">
+<br>
+<img style="margin-right: 5px;" src="https://img.shields.io/badge/Thymeleaf-005F0F?style=flat-square&logo=Thymeleaf-&logoColor=white"/><img style="margin-right: 5px;" src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=Spring Boot-&logoColor=white"/><img style="margin-right: 5px;" src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat-square&logo=Spring Security-&logoColor=white"/><img style="margin-right: 5px;" src="https://img.shields.io/badge/Spring Data JPA-DB33F?style=flat-square&logo=Spring Data JPA&logoColor=white"/><img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL-&logoColor=white"/>
 
 
 ### 3.3 배포 URL
@@ -111,52 +109,6 @@ LD
 ### 4.1 개발 일정
 <img src="https://github.com/user-attachments/assets/9e3166cc-19ae-41ac-a422-3ae828b70259" width=95%>
 
-
-```mermaid
-gantt
-    title YAMA Project
-    dateFormat  YY-MM-DD
-    todayMarker off
-    section 팀 빌딩 및 기획
-        팀 빌딩           :2024-07-17, 1d
-        프로젝트 주제 선정 :2024-07-18, 1d
-        프로젝트 초기 설정 :2024-07-22, 1d
-    section 디자인
-        UI 설계 :2024-07-23, 1d
-    section FE
-        메인 페이지      :2024-07-24, 1d
-        회원 가입 페이지 :2024-07-24, 1d
-        로그인 페이지    :2024-07-24, 1d
-        마이 페이지 :2024-07-24, 1d
-        관리자 페이지  :2024-07-24, 1d
-        게시글 작성 페이지    :2024-07-24, 1d
-        게시글 수정 페이지    :2024-07-24, 1d
-        게시글 상세 보기 페이지    :2024-07-24, 1d
-        카테고리별 앱 소개 페이지    :2024-07-24, 1d
-    section BE
-        메인    :2024-08-01, 1d
-        회원가입:2024-07-26, 1d
-        로그인:2024-07-26, 1d
-        로그아웃:2024-07-26, 1d
-        회원 탈퇴:2024-07-26, 2d
-        회원 정보 수정:2024-07-26, 2d
-        회원 권한 변경:2024-07-26, 2d
-        게시글 등록    :2024-07-26, 1d
-        게시글 조회    :2024-07-27, 1d
-        게시글 수정    :2024-07-27, 2d
-        게시글 삭제    :2024-07-26, 1d
-        게시글 검색    :2024-08-02, 1d
-        댓글 등록:2024-07-26, 1d
-        댓글 조회:2024-07-27, 2d
-        댓글 수정:2024-07-31, 1d
-        댓글 삭제:2024-07-29, 1d
-        평점 부여:2024-08-02, 1d
-    section Fix & Deploy
-        기타 버그 수정 :2024-08-05, 2d
-        배포          :2024-08-06, 1d
-
-
-```
 
 
 ### 4.2 프로젝트 구조
@@ -352,7 +304,7 @@ mindmap
 ## 8. 주요기능
 ### 8.1 게시글 작성
 
-<img src="https://github.com/user-attachments/assets/c82f300c-2cfb-4afb-86af-2ce656e88c2a" width=90%>
+<img src="https://github.com/user-attachments/assets/c82f300c-2cfb-4afb-86af-2ce656e88c2a" width=60%>
 
 - 작성자가 사용했던 앱에 대한 후기를 작성하는 기능입니다.
 - 앱 분야별 카테고리를 설정할 수 있습니다.
@@ -361,21 +313,21 @@ mindmap
 
 ### 8.2 게시글 수정
 
-<img src="https://github.com/user-attachments/assets/35a49741-ac8a-4e67-a102-ca3bd38bdc80" width=90%>
+<img src="https://github.com/user-attachments/assets/35a49741-ac8a-4e67-a102-ca3bd38bdc80" width=60%>
 
 - 기존에 작성한 게시글을 수정하는 기능입니다.
 - 작성 시 설정하였던 아이콘, 제목, 카테고리, URL 및 본문을 수정할 수 있습니다.
 
 ### 8.3 게시글 검색
 
-<img src="https://github.com/user-attachments/assets/e0c14b87-a0c0-4ff4-8b33-c5fd48a46538" width=90%>
+<img src="https://github.com/user-attachments/assets/e0c14b87-a0c0-4ff4-8b33-c5fd48a46538" width=60%>
 
 - 게시글을 검색하는 기능입니다.
 - 본인이 원하는 카테고리를 설정 후 제목 또는 작성자 닉네임의 일부분을 이용하여 검색할 수 있습니다.
 
 ### 8.4 댓글 및 별점 작성
 
-<img src="https://github.com/user-attachments/assets/3ee1cfdf-2e39-40fd-8973-e65b1db31aa3" width=90%>
+<img src="https://github.com/user-attachments/assets/3ee1cfdf-2e39-40fd-8973-e65b1db31aa3" width=60%>
 
 - 댓글 및 별점을 작성하는 기능입니다.
 - 댓글 작성 시 별점 부여가 가능합니다.
@@ -384,7 +336,7 @@ mindmap
 
 ### 8.5 관리자 기능
 
-<img src="https://github.com/user-attachments/assets/b8273fed-cc86-4709-83f3-a7fef59346ae" width=90%>
+<img src="https://github.com/user-attachments/assets/b8273fed-cc86-4709-83f3-a7fef59346ae" width=60%>
 
 - 관리자 페이지로 유저별 권한을 설정하는 기능입니다.
 - 회원가입 시 게시글, 댓글 조회 및 작성이 가능한 일반 USER로 권한이 설정됩니다.
