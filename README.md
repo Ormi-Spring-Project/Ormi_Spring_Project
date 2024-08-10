@@ -209,17 +209,17 @@ gantt
 
 ### 화면 흐름도
 
-<img width="60%" alt="화면 흐름도" src="https://github.com/user-attachments/assets/642382a4-a48c-4848-981a-a4d206975fda">
+<img width="70%" alt="화면 흐름도" src="https://github.com/user-attachments/assets/642382a4-a48c-4848-981a-a4d206975fda">
 
 ### 요구 사항 및 기능 명세
 
-<img width="60%" alt="요구사항   기능 명세서" src="https://github.com/user-attachments/assets/d9a089f4-df47-414d-8e30-30511659a171">
+<img width="70%" alt="요구사항   기능 명세서" src="https://github.com/user-attachments/assets/d9a089f4-df47-414d-8e30-30511659a171">
 
 ## 6. 와이어프레임 / UI
 
 ### 6.1 와이어프레임
 
-<img width=60% src="https://github.com/user-attachments/assets/22b085e8-f57c-4e3c-bd75-416081fc74f9">
+<img width=70% src="https://github.com/user-attachments/assets/22b085e8-f57c-4e3c-bd75-416081fc74f9">
 
 ### 6.2 화면 설계
 
@@ -232,15 +232,15 @@ gantt
         </tr>
         <tr>
             <td>
-                <a href="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" target="_blank"></a>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/main.png" target="_blank"></a>
                 <img src="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" width="250" height="350" alt="main">
             </td>
             <td>
-                <a href="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" target="_blank"></a>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/login.png" target="_blank"></a>
                 <img src="https://github.com/user-attachments/assets/b5b88f3c-5aa3-4b9d-956d-2c2800d30b61" width="250" height="350" alt="signin">
             </td>
             <td>
-                <a href="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" target="_blank"></a>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/signup.png" target="_blank"></a>
                 <img src="https://github.com/user-attachments/assets/627c940c-61a7-4bcb-bb85-80aa53f64f6e" width="250" height="350" alt="signup">
             </td>
         </tr>
@@ -251,15 +251,15 @@ gantt
         </tr>
         <tr>
             <td>
-                <a href="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" target="_blank"></a>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/modify.png" target="_blank"></a>
                 <img src="https://github.com/user-attachments/assets/3d72c248-8e2f-4c83-a3b6-cdfb156624bc" width="250" height="350" alt="userInfoEdit">
             </td>
             <td>
-                <a href="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" target="_blank"></a>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/adminpage.png" target="_blank"></a>
                 <img src="https://github.com/user-attachments/assets/af2a96a9-cb7f-4e51-97f1-26373cd81087" width="250" height="350" alt="adminPage">
             </td>
             <td>
-                <a href="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" target="_blank"></a>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/postList.png" target="_blank"></a>
                 <img src="https://github.com/user-attachments/assets/7d1cbb21-0bb1-40bf-a6c4-2b8c42b47061" width="250" height="350" alt="postList">
             </td>
         </tr>
@@ -270,15 +270,15 @@ gantt
         </tr>
         <tr>
             <td>
-                <a href="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" target="_blank"></a>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/postDetail.png" target="_blank"></a>
                 <img src="https://github.com/user-attachments/assets/8c7e3abf-0e35-41d5-bf73-f791411a05ef" width="250" height="350" alt="postDetail">
             </td>
             <td>
-                <a href="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" target="_blank"></a>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/postModify.png" target="_blank"></a>
                 <img src="https://github.com/user-attachments/assets/40a38f3b-a941-42be-ba33-f831532e9105" width="250" height="350" alt="postEdit">
             </td>
             <td>
-                <a href="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" target="_blank"></a>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/postWrite.png" target="_blank"></a>
                 <img src="https://github.com/user-attachments/assets/f1e0452c-0945-4f61-ba0b-1179fc531269" width="250" height="350" alt="postWrite">
             </td>
         </tr>
