@@ -191,9 +191,7 @@ gantt
 ┃ ┗ 📜User   
 ┣ 📂infrastructure   
 ┃ ┣ 📂config   
-┃ ┃ ┣ 📜QueryDslConfig   
-┃ ┃ ┣ 📜Category   
-┃ ┃ ┣ 📜Comment    
+┃ ┃ ┣ 📜QueryDslConfig    
 ┃ ┗ 📂persistence    
 ┃ ┣ 📜CategoryRepository   
 ┃ ┣ 📜CommentRepository   
