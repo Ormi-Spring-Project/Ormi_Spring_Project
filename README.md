@@ -45,13 +45,10 @@
 ### 3.2 기술 스택
 
 <img width=60% alt="스크린샷 2024-08-06 오전 10 21 54" src="https://github.com/user-attachments/assets/b1ded36c-7f42-4af3-900b-2f551bfae594">
-<div style="display: flex; align-items: center; gap: 10px;">
-  <span style="background-color: #005F0F; color: white; padding: 5px 10px; border-radius: 5px;">Thymeleaf</span>
-  <span style="background-color: #6DB33F; color: white; padding: 5px 10px; border-radius: 5px;">Spring Boot</span>
-  <span style="background-color: #6DB33F; color: white; padding: 5px 10px; border-radius: 5px;">Spring Security</span>
-  <span style="background-color: #6DB33F; color: white; padding: 5px 10px; border-radius: 5px;">Spring Data JPA</span>
-  <span style="background-color: #4479A1; color: white; padding: 5px 10px; border-radius: 5px;">MySQL</span>
-</div>
+<br>
+<img src="https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white"><img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"><img src="https://img.shields.io/badge/spring security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"><img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"><img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+
+
 
 ### 3.3 배포 URL
 - http://3.36.65.194:8080/v1/main
