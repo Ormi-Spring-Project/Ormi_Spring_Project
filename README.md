@@ -348,10 +348,53 @@ mindmap
 
 ## 7. 데이터베이스 모델링(ERD)
 
-<img src="https://github.com/user-attachments/assets/96ff1277-7e92-4195-9dff-e1d5e132b187" width=60%>
+<img src="https://github.com/user-attachments/assets/06f8b0ad-c13a-46a2-85c7-b32ae5207471" width=90%>
+
+## 8. 주요기능
+### 8.1 게시글 작성
+
+<img src="https://github.com/user-attachments/assets/c82f300c-2cfb-4afb-86af-2ce656e88c2a" width=90%>
+
+- 작성자가 사용했던 앱에 대한 후기를 작성하는 기능입니다.
+- 앱 분야별 카테고리를 설정할 수 있습니다.
+- 앱 대표 이미지를 설정할 수 있습니다.
+- URL을 통한 직관적인 연결 기능을 제공합니다.
+
+### 8.2 게시글 수정
+
+<img src="https://github.com/user-attachments/assets/35a49741-ac8a-4e67-a102-ca3bd38bdc80" width=90%>
+
+- 기존에 작성한 게시글을 수정하는 기능입니다.
+- 작성 시 설정하였던 아이콘, 제목, 카테고리, URL 및 본문을 수정할 수 있습니다.
+
+### 8.3 게시글 검색
+
+<img src="https://github.com/user-attachments/assets/e0c14b87-a0c0-4ff4-8b33-c5fd48a46538" width=90%>
+
+- 게시글을 검색하는 기능입니다.
+- 본인이 원하는 카테고리를 설정 후 제목 또는 작성자 닉네임의 일부분을 이용하여 검색할 수 있습니다.
+
+### 8.4 댓글 및 별점 작성
+
+<img src="https://github.com/user-attachments/assets/3ee1cfdf-2e39-40fd-8973-e65b1db31aa3" width=90%>
+
+- 댓글 및 별점을 작성하는 기능입니다.
+- 댓글 작성 시 별점 부여가 가능합니다.
+- 댓글마다 부여된 별점은 평균 별점으로 게시글 본문 아래에 집계됩니다.
+- 댓글 수정 및 삭제 시에도 즉각적으로 수정된 별점이 반영됩니다.
+
+### 8.5 관리자 기능
+
+<img src="https://github.com/user-attachments/assets/b8273fed-cc86-4709-83f3-a7fef59346ae" width=90%>
+
+- 관리자 페이지로 유저별 권한을 설정하는 기능입니다.
+- 회원가입 시 게시글, 댓글 조회 및 작성이 가능한 일반 USER로 권한이 설정됩니다.
+- BAN으로 권한을 설정 시에는 공지사항만 조회할 수 있는 기능을 제공합니다.
 
 
-## 8. 프로젝트를 진행하며 느낀점
+
+
+## 9. 프로젝트를 진행하며 느낀점
 
 - Spring Security를 시도해보자라는 생각으로 적용시켜보며 의도치 않게 접근 권한을 설정하게 되는 것과 같은 문제를 겪었다. 이를 해결하며 적절한 권한 설정이 중요하다는 것을 깨달았고, 커스터마이징을 하며 Spring Security의 유연함을 체험해 볼 수 있었다. 백엔드 구현에 있어 중요한 부분인만큼 방대한 학습량과 지식이 필요하다는 것도 알 수 있었다.
 
