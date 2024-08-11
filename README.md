@@ -9,13 +9,12 @@
 [7. 데이터베이스 모델링(ERD)](#7-데이터베이스-모델링erd)  
 [8. 주요 기능](#8-주요-기능)  
 [9. 개발 이슈](#9-개발-이슈)  
-[10. 프로젝트를 진행하며 느낀점](#10-프로젝트를-진행하며-느낀점)  
-  
-  ---
+[10. 프로젝트를 진행하며 느낀점](#10-프로젝트를-진행하며-느낀점)
+
 ## 팀원 및 역할
 |열1|열2|열3|
-|---|---|---|
-|![이현준](https://github.com/user-attachments/assets/28af95d0-931c-4f86-bb5c-49bb57d0a25c)|![이동현](https://github.com/user-attachments/assets/40255dd3-e4ac-4ffb-9a08-14e7cc845502)|![최의현](https://github.com/user-attachments/assets/a0b1b9df-03ec-4c34-9234-b193cdde42f3)|
+|:---:|:---:|:---:|
+|<img width=50% alt="이현준" src="https://github.com/user-attachments/assets/bf0432d6-03af-4d6d-b629-83850fc082ee">|<img width=100% alt="이동현" src="https://github.com/user-attachments/assets/2dbb9e5b-b5d6-4204-92a4-3e46d5326390">|<img width=100% alt="최의현" src="https://github.com/user-attachments/assets/d0a87556-344c-4db1-a3f6-865f8290d9a3">
 |이현준|이동현|최의현|
 |팀장|팀원|팀원|
 |기능 명세서 작성<br>ERD 작성<br>UI 설계<br>User, Admin 기능 구현<br>프로젝트 배포(AWS Lightsail)|UI 설계<br>Comment 기능 구현<br>평점 기능 구현|ERD작성<br>UI 설계<br>Convention 작성<br>Post 기능 구현<br>Spring Security 적용|
@@ -351,10 +350,10 @@ mindmap
 - 회원가입 시 게시글, 댓글 조회 및 작성이 가능한 일반 USER로 권한이 설정됩니다.
 - BAN으로 권한을 설정 시에는 공지사항만 조회할 수 있는 기능을 제공합니다.
 
+## 9. 개발 이슈
 
 
-
-## 9. 프로젝트를 진행하며 느낀점
+## 10. 프로젝트를 진행하며 느낀점
 
 - Spring Security를 시도해보자라는 생각으로 적용시켜보며 의도치 않게 접근 권한을 설정하게 되는 것과 같은 문제를 겪었다. 이를 해결하며 적절한 권한 설정이 중요하다는 것을 깨달았고, 커스터마이징을 하며 Spring Security의 유연함을 체험해 볼 수 있었다. 백엔드 구현에 있어 중요한 부분인만큼 방대한 학습량과 지식이 필요하다는 것도 알 수 있었다.
 
