@@ -15,7 +15,7 @@
 ## 팀원 및 역할
 |열1|열2|열3|
 |---|---|---|
-|<img width=60% alt="사진" src="https://prod-files-secure.s3.us-west-2.amazonaws.com/e8f11927-b70c-4524-9227-a3efac08e7aa/ac67f771-d56d-46bf-9c95-4344f8d541ca/%EC%A6%9D%EC%82%AC.jpg">|<img width=60% alt="사진" src="https://prod-files-secure.s3.us-west-2.amazonaws.com/e8f11927-b70c-4524-9227-a3efac08e7aa/70b6d680-715d-4b8d-adaa-a3455f23e919/Untitled.png">|<img width=60% alt="사진" src="https://prod-files-secure.s3.us-west-2.amazonaws.com/e8f11927-b70c-4524-9227-a3efac08e7aa/f5322ea0-e94a-4266-80f2-c1f0ca6e08c5/%EC%B5%9C%EC%9D%98%ED%98%84_%EC%82%AC%EC%A7%84.jpg">|
+|![이현준](https://prod-files-secure.s3.us-west-2.amazonaws.com/e8f11927-b70c-4524-9227-a3efac08e7aa/ac67f771-d56d-46bf-9c95-4344f8d541ca/%EC%A6%9D%EC%82%AC.jpg)|![이동현](https://prod-files-secure.s3.us-west-2.amazonaws.com/e8f11927-b70c-4524-9227-a3efac08e7aa/70b6d680-715d-4b8d-adaa-a3455f23e919/Untitled.png)|![최의현](https://prod-files-secure.s3.us-west-2.amazonaws.com/e8f11927-b70c-4524-9227-a3efac08e7aa/f5322ea0-e94a-4266-80f2-c1f0ca6e08c5/%EC%B5%9C%EC%9D%98%ED%98%84_%EC%82%AC%EC%A7%84.jpg)|
 |이현준|이동현|최의현|
 |팀장|팀원|팀원|
 |기능 명세서 작성<br>ERD 작성<br>UI 설계<br>User, Admin 기능 구현<br>프로젝트 배포(AWS Lightsail)|UI 설계<br>Comment 기능 구현<br>평점 기능 구현|ERD작성<br>UI 설계<br>Convention 작성<br>Post 기능 구현<br>Spring Security 적용|
