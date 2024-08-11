@@ -54,50 +54,52 @@
   id : test@test.com
   pw : 1111
   ```
+### 3.4 배포 아키텍처
+![image](https://github.com/user-attachments/assets/96405f04-e674-44cf-a327-0ff7206f3769)
 
-### 3.4 URL 구조
+### 3.5 URL 구조
 
 👱User
 
-| URL                                                 | 요청 방식  | 설명                              
-|-----------------------------------------------------|--------|---------------------------------|
-| /v1/main                                            | GET    | 메인 페이지 요청                       | 
-| /v1/login                                           | GET    | 로그인 페이지 요청                      | 
-| /v1/signup                                          | GET    | 회원가입 페이지 요청                     | 
-| /v1/signup                                          | POST   | 회원가입 요청                         | 
-| /v1/user/{id}                                       | GET    | 해당 id를 가진 User의 마이페이지 요청        | 
-| /v1/user/{id}                                       | PUT    | 해당 id를 가진 User의 마이페이지의 정보 수정 요청 | 
-| /v1/user/{id}                                       | DELETE | 해당 id를 가진 User의 정보 삭제 요청        | 
-| /v1/admin                                           | GET    | 관리자가 관리자 페이지 요청                 | 
-| /v1/admin/{user_id}                                 | PUT    | 관리자가 해당 id를 가진 User의 권한 변경 요청   | 
+| URL                                                 | 요청 방식  | 설명 | Not Login | USER | ADMIN | BAN |                               
+|-----------------------------------------------------|--------|---------------------------------|----------|----------|----------|----------|
+| /v1/main                                            | GET    | 메인 페이지                       |✅|✅|✅|✅
+| /v1/login                                           | GET    | 로그인 페이지                     |✅||||
+| /v1/signup                                          | GET    | 회원가입 페이지                     |✅||||
+| /v1/signup                                          | POST   | 회원가입                         |✅|||| 
+| /v1/user/{id}                                       | GET    | 마이페이지        ||✅|||
+| /v1/user/{id}                                       | PUT    | 마이페이지 정보 수정 ||✅|||
+| /v1/user/{id}                                       | DELETE | 회원탈퇴        ||✅|||
+| /v1/admin                                           | GET    | 관리자 페이지    |||✅||
+| /v1/admin/{user_id}                                 | PUT    | User의 권한 변경   |||✅||
 
 📝Post
 
-| URL                                                 | 요청 방식  | 설명                              
-|-----------------------------------------------------|--------|---------------------------------|
-| /v1/posts                                           | GET    | User가 게시글 리스트 페이지 요청            | 
-| /v1/posts                                           | POST   | User가 새로운 게시글 작성 요청             | 
-| /v1/posts/write                                     | GET    | User가 게시글 작성 페이지 요청             | 
-| /v1/posts/notice/{id}/edit                          | GET    | Admin이 공지사항 수정 페이지 요청           | 
-| /v1/posts/notice/{id}/edit                          | PUT    | Admin이 공지사항 수정 요청               | 
-| /v1/posts/post/{id}/edit                            | GET    | User가 게시글 수정 페이지 요청             |
-| /v1/posts/post/{id}/edit                            | PUT    | User가 게시글 수정 요청                 | 
-| /v1/posts/notice/{id}                               | GET    | User가 공지사항 페이지 요청               | 
-| /v1/posts/notice/{id}                               | DELETE | Admin이 공지사항 삭제 요청               | 
-| /v1/posts/post/{id}                                 | GET    | User가 post_id에 해당하는 게시글 상세보기 요청 | 
-| /v1/posts/post/{id}                                 | DELETE | User가 post_id에 해당하는 게시글 삭제 요청   |
-| /v1/posts?categoryId={categoryId}&keyword={keyword} | GET    | 게시글 키워드 검색                      | 
-| /v1/posts/article-items?categoryId={categoryId}     | GET    | 카테고리 ID에 따른 게시물 목록 요청           | 
+| URL                                                 | 요청 방식  | 설명 | Not Login | USER | ADMIN | BAN |
+|-----------------------------------------------------|--------|---------------------------------|----------|----------|----------|----------|
+| /v1/posts                                           | GET    | 게시글 리스트 페이지     ||✅|✅|✅
+| /v1/posts                                           | POST   | 게시글 작성      ||✅|||
+| /v1/posts/write                                     | GET    | 게시글 작성 페이지     ||✅|||
+| /v1/posts/notice/{id}/edit                          | GET    | 공지사항 수정 페이지    |||✅|| 
+| /v1/posts/notice/{id}/edit                          | PUT    | 공지사항 수정        |||✅||
+| /v1/posts/post/{id}/edit                            | GET    | 게시글 수정 페이지     ||✅|✅||
+| /v1/posts/post/{id}/edit                            | PUT    | 게시글 수정       ||✅|✅||
+| /v1/posts/notice/{id}                               | GET    | 공지사항 페이지     ||✅|✅|✅
+| /v1/posts/notice/{id}                               | DELETE | 공지사항 삭제       |||✅| 
+| /v1/posts/post/{id}                                 | GET    | 게시글 상세보기 ||✅|✅||
+| /v1/posts/post/{id}                                 | DELETE | 게시글 삭제   ||✅|✅||
+| /v1/posts?categoryId={categoryId}&keyword={keyword} | GET    | 게시글 키워드 검색    ||✅|✅||
+| /v1/posts/article-items?categoryId={categoryId}     | GET    | (메인 페이지) 카테고리 ID에 따른 게시글 리스트           ||✅|✅|✅|
 
 🔖Comment
 
-| URL                                                 | 요청 방식  | 설명                              
-|-----------------------------------------------------|--------|---------------------------------|
-| /v1/posts/{postId}/comments                         | GET    | 게시글에 작성된 댓글 조회 요청               | 
-| /v1/posts/{postId}/comments                         | POST   | 게시글의 댓글 작성 요청                   | 
-| /v1/posts/{postId}/comments/{commentId}             | PUT    | 게시글의 댓글 수정 요청                   | 
-| /v1/posts/{postId}/comments                         | DELETE | 게시글의 댓글 삭제 요청                   | 
-| /v1/posts/{postId}/average-rating                   | GET    | 게시글의 댓글 총 평점 조회 요청              |
+| URL                                                 | 요청 방식  | 설명 | Not Login | USER | ADMIN | BAN |
+|-----------------------------------------------------|--------|---------------------------------|----------|----------|----------|----------|
+| /v1/posts/{postId}/comments                         | GET    | 댓글 조회         ||✅|✅||
+| /v1/posts/{postId}/comments                         | POST   | 댓글 작성         ||✅|✅|| 
+| /v1/posts/{postId}/comments/{commentId}             | PUT    | 댓글 수정      ||✅|✅||
+| /v1/posts/{postId}/comments                         | DELETE | 댓글 삭제      ||✅|✅||
+| /v1/posts/{postId}/average-rating                   | GET    | 게시글 총 평점 조회      ||✅|✅||
 
 
 
