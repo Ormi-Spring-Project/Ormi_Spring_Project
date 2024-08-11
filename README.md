@@ -51,7 +51,19 @@
 - 서비스 배포 : Amazon Lightsail
 
 ### 3.2 기술 스택
-<img src="https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/spring security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+
+#### Front-End
+<img src="https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">&nbsp;
+
+#### Back-End
+<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/spring security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">&nbsp;
+
+#### DB
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+
+#### Deploy
+<img src="https://img.shields.io/badge/light sail-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white">&nbsp;
+
 
 
 
@@ -167,89 +179,21 @@
 
 ## 5. 요구사항과 기능 명세
 
-### 요구 사항
+### 화면 흐름도
 
+<img width="70%" alt="화면 흐름도" src="https://github.com/user-attachments/assets/642382a4-a48c-4848-981a-a4d206975fda">
 
-```mermaid
-mindmap
-  root((프로젝트 요구사항))
-    1. 1단계 준비 및 환경 구축
-      GitHub 및 Notion 사용
-      개발용 develop 브랜치 생성
-      Pull Request로 코드 통합
-      MySQL 사용
-      API 문서화
-      ERD 작성
-    2. 2단계 기본 게시판 기능
-      글 목록 보기
-      글 상세 보기
-      글 수정하기
-      글 삭제하기
-      글쓰기
-      Thymeleaf로 UI 구현
-    3. 3단계 기능 심화
-      회원 관리
-        로그인
-        
-        회원 가입
-        회원 탈퇴
-      권한 관리
-        일반
-        관리자
-        정지
-      공지사항 기능
-        관리자만 작성/수정/삭제
-        모든 유저가 조회 가능
-        최근 5개 표시
-    4. 4단계 서비스 배포
-      AWS 배포
-        EC2 또는 Lightsail
-      외부 접근 가능한 IP/도메인
-```
+### 요구 사항 및 기능 명세
 
-
-### 기능 명세
-
-
-```mermaid
-mindmap
-  root((YAMA))
-    1. 사용자
-      1.1 로그인
-      1.2 회원 가입
-      1.3 회원탈퇴
-      1.4 마이 페이지
-    2. 게시글
-      2.1 글 쓰기
-      2.2 글 목록 보기
-      2.3 글 상세 보기
-      2.4 글 수정하기
-      2.5 글 삭제하기
-    3. 댓글
-      3.1 댓글 쓰기
-      3.2 댓글 보기
-      3.3 댓글 수정
-      3.4 댓글 삭제
-    4. 관리자
-      4.1 관리자 페이지
-        카테고리 관리
-        사용자 권한 관리
-    5. 평점(후기)
-      5.1 평점 등록
-    6. 검색
-      6.1 App 검색
-    7. 카테고리
-      7.1 App 카테고리
-```
+<img width="70%" alt="요구사항   기능 명세서" src="https://github.com/user-attachments/assets/d9a089f4-df47-414d-8e30-30511659a171">
 
 ## 6. 와이어프레임 / UI
 
 ### 6.1 와이어프레임
 
-<img width=60% src="https://github.com/user-attachments/assets/22b085e8-f57c-4e3c-bd75-416081fc74f9">
+<img width=70% src="https://github.com/user-attachments/assets/22b085e8-f57c-4e3c-bd75-416081fc74f9">
 
 ### 6.2 화면 설계
-
 
 <table>
     <tbody>
@@ -260,13 +204,19 @@ mindmap
         </tr>
         <tr>
             <td>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/main.png" target="_blank">
                 <img src="https://github.com/user-attachments/assets/cb701758-1717-46cc-ae5e-a10aa81a0c84" width="250" height="350" alt="main">
+                </a>
             </td>
             <td>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/login.png" target="_blank">
                 <img src="https://github.com/user-attachments/assets/b5b88f3c-5aa3-4b9d-956d-2c2800d30b61" width="250" height="350" alt="signin">
+</a>
             </td>
             <td>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/signup.png" target="_blank">
                 <img src="https://github.com/user-attachments/assets/627c940c-61a7-4bcb-bb85-80aa53f64f6e" width="250" height="350" alt="signup">
+</a>
             </td>
         </tr>
         <tr>
@@ -276,13 +226,19 @@ mindmap
         </tr>
         <tr>
             <td>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/modify.png" target="_blank">
                 <img src="https://github.com/user-attachments/assets/3d72c248-8e2f-4c83-a3b6-cdfb156624bc" width="250" height="350" alt="userInfoEdit">
+</a>
             </td>
             <td>
-                <img src="https://github.com/user-attachments/assets/ecd0cf00-b9d2-4c74-b494-2c2a50c97e1f" width="250" height="350" alt="adminPage">
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/adminpage.png" target="_blank">
+                <img src="https://github.com/user-attachments/assets/af2a96a9-cb7f-4e51-97f1-26373cd81087" width="250" height="350" alt="adminPage">
+</a>
             </td>
             <td>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/postList.png" target="_blank">
                 <img src="https://github.com/user-attachments/assets/7d1cbb21-0bb1-40bf-a6c4-2b8c42b47061" width="250" height="350" alt="postList">
+</a>
             </td>
         </tr>
         <tr>
@@ -292,13 +248,19 @@ mindmap
         </tr>
         <tr>
             <td>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/postDetail.png" target="_blank">
                 <img src="https://github.com/user-attachments/assets/8c7e3abf-0e35-41d5-bf73-f791411a05ef" width="250" height="350" alt="postDetail">
+</a>
             </td>
             <td>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/postModify.png" target="_blank">
                 <img src="https://github.com/user-attachments/assets/40a38f3b-a941-42be-ba33-f831532e9105" width="250" height="350" alt="postEdit">
+</a>
             </td>
             <td>
+                <a href="https://github.com/Ormi-Spring-Project/YAMA/blob/develop/Spring-Project/src/main/resources/static/images/postWrite.png" target="_blank">
                 <img src="https://github.com/user-attachments/assets/f1e0452c-0945-4f61-ba0b-1179fc531269" width="250" height="350" alt="postWrite">
+</a>
             </td>
         </tr>
     </tbody>
