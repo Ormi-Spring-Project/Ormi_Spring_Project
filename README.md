@@ -181,7 +181,7 @@
 
 ### 화면 흐름도
 
-<img width="70%" alt="화면 흐름도" src="https://github.com/user-attachments/assets/642382a4-a48c-4848-981a-a4d206975fda">
+<img width="70%" alt="화면 흐름도" src="https://github.com/user-attachments/assets/41ccc691-ccca-4042-ac4c-6843a2ed10ab">
 
 ### 요구 사항 및 기능 명세
 
