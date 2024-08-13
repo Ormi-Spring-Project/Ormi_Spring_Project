@@ -12,9 +12,8 @@
 [10. 프로젝트를 진행하며 느낀점](#10-프로젝트를-진행하며-느낀점)
 
 ## 팀원 및 역할
-|열1|열2|열3|
-|:---:|:---:|:---:|
 |<img width=50% alt="이현준" src="https://github.com/user-attachments/assets/bf0432d6-03af-4d6d-b629-83850fc082ee">|<img width=100% alt="이동현" src="https://github.com/user-attachments/assets/2dbb9e5b-b5d6-4204-92a4-3e46d5326390">|<img width=100% alt="최의현" src="https://github.com/user-attachments/assets/d0a87556-344c-4db1-a3f6-865f8290d9a3">
+|:---:|:---:|:---:|
 |이현준|이동현|최의현|
 |팀장|팀원|팀원|
 |기능 명세서 작성<br>ERD 작성<br>UI 설계<br>User, Admin 기능 구현<br>프로젝트 배포(AWS Lightsail)|UI 설계<br>Comment 기능 구현<br>평점 기능 구현|ERD작성<br>UI 설계<br>Convention 작성<br>Post 기능 구현<br>Spring Security 적용|
@@ -30,13 +29,6 @@
 
 ### 1.3 프로젝트 기간
 - '2024. 07. 22' ~ '2024. 08. 06'
-
-### 1.4 역할 분담
-
-- 팀장 : 이현준
-- FE : 이현준, 이동현, 최의현
-- BE : 이현준, 이동현, 최의현
-- 디자인 : 이현준, 이동현, 최의현
 
 
 ## 2. Git Convention
